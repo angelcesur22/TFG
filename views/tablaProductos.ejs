@@ -1,0 +1,50 @@
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Imagen</th>
+    <th>Tipo</th>
+    <th>Nombre</th>
+    <th>Marca</th>
+    <th>Talla</th>
+    <th>Precio</th>
+    <th>Stock</th>
+    <th>Acciones</th>
+  </tr>
+  <% productos.forEach(p => { %>
+    <% p.tallas.forEach(t => { %>
+    <tr>
+      <td>
+        <% if (p.imagenes) { %>
+          <img src="<%= p.imagenes %>" alt="imagenes" width="80">
+        <% } else { %>
+          <span>Sin imagen</span>
+        <% } %>
+      </td>
+      <td><%= p.tipo %></td>
+      <td><%= p.nombre %></td>
+      <td><%= p.marca %></td>
+      <td><%= t.talla %></td> <!-- Muestra la talla -->
+      <td>€<%= t.precio %></td> <!-- Muestra el precio -->
+      <td><%= t.stock %></td> <!-- Muestra el stock -->
+      
+      <td>
+        <a href="/admin/productos/editar/<%= p._id %>"><button class="buttonadd">✏️ Editar</button></a>
+        <form action="/admin/productos/eliminar/<%= p._id %>" method="POST" style="display:inline;" onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
+          <button type="submit" class="buttondelete">🗑️ Eliminar</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  <% }) %>
+</table>
+<!-- Paginación -->
+<!-- Paginación al final -->
+ <br>
+<div id="paginacion" style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+  <% for (let i = 1; i <= Math.ceil(totalProductos / productosPorPagina); i++) { %>
+    <button onclick="cambiarPagina(<%= i %>)" <%= i == paginaActual ? 'disabled' : '' %> style="background-color: #007bff; color: #fff; padding: 10px 15px; margin: 5px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+      <%= i %>
+    </button>
+  <% } %>
+</div>
+
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Producto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/editarproducto.css">
+</head>
+<body>
+    <h1>Editar Producto</h1>
+    <form method="POST" action="/admin/productos/editar/<%= producto._id %>" enctype="multipart/form-data">
+      <label for="nombre">Nombre:</label>
+      <input type="text" name="nombre" value="<%= producto.nombre %>">
+      <BR></BR>
+      <label for="marca">Marca:</label>
+      <input type="text" name="marca" value="<%= producto.marca %>">
+      <br>
+        
+      <br>
+      <label for="tallas">Tallas:</label>
+      <div id="tallas">
+          <% producto.tallas.forEach((talla, index) => { %>
+              <div class="talla">
+                  <input type="text" name="tallas[<%= index %>][talla]" value="<%= talla.talla %>" placeholder="Talla (Ej: 38, M)" required>
+                  <input type="number" name="tallas[<%= index %>][precio]" value="<%= talla.precio %>" placeholder="Precio" required>
+                  <input type="number" name="tallas[<%= index %>][stock]" value="<%= talla.stock %>" placeholder="Stock" required>
+                  <button type="button" onclick="eliminarTalla('<%= index %>')">Eliminar Talla</button>
+              </div>
+          <% }) %>
+      </div>
+      <br>
+      <button type="button" onclick="agregarTalla()">Agregar Talla</button>
+      <br>
+      <label for="categoria">Categoría:</label>
+        <select name="categoria" id="categoria">
+        <option value="zapatillas" <%= producto.categoria === 'zapatillas' ? 'selected' : '' %>>Zapatillas</option>
+        <option value="ropa" <%= producto.categoria === 'ropa' ? 'selected' : '' %>>Ropa</option>
+        <!-- Agrega más categorías si es necesario -->
+        </select>
+        <br><br>
+
+      <label>Imagen Actual:</label><br>
+      <img src="<%= producto.imagen %>" alt="Imagen actual" width="200"><br>
+
+      <label>Cambiar Imagen:</label>
+      <input type="file" name="imagen"><br><br>
+      <br>
+      <button type="submit">Guardar Cambios</button>
+  </form>
+
+
+  <script>
+      function agregarTalla() {
+        const div = document.createElement('div');
+        div.className = 'talla';
+        div.innerHTML = `
+            <input type="text" name="tallas[][talla]" placeholder="Talla (Ej: 38, M)" required>
+            <input type="number" name="tallas[][precio]" placeholder="Precio" required>
+            <input type="number" name="tallas[][stock]" placeholder="Stock" required>
+            <button type="button" onclick="eliminarTalla(this)">Eliminar Talla</button>
+        `;
+        document.getElementById('tallas').appendChild(div);
+    }
+
+    function eliminarTalla(button) {
+        button.parentElement.remove();
+    }
+  </script>
+</body>
+</html>
+
+
+

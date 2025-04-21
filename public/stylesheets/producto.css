@@ -1,0 +1,174 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    color: #111;
+  }
+  
+  .producto-detalle-container {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding: 5rem 3rem 3rem;
+    max-width: 1000px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .producto-imagen img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+  }
+  
+  .producto-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .precio {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .tallas-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .btn-talla {
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    background: #f9f9f9;
+    transition: 0.2s ease;
+  }
+  
+  .btn-talla.seleccionada {
+    background-color: #111;
+    color: white;
+    border-color: #111;
+  }
+  
+  .btn-agregar {
+    background-color: #111;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  .btn-agregar:hover {
+    background-color: #333;
+  }
+  
+  .info-beneficios {
+    display: flex;
+    justify-content: space-around;
+    margin: 4rem auto;
+    padding: 2rem;
+    max-width: 1000px;
+    background: #f6f6f6;
+    border-radius: 12px;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .info-beneficios div {
+    flex: 1 1 200px;
+  }
+  
+  .info-beneficios img {
+    height: 40px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .info-beneficios h4 {
+    margin-bottom: 0.25rem;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .info-beneficios p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .productos-relacionados {
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+  
+  .productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .card-producto-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .card-producto {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    height: 100%;
+  }
+  
+  .card-producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .card-producto img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  
+  .card-producto h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+  
+  .card-producto p {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .info-extra details {
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    background: #fafafa;
+    cursor: pointer;
+  }
+  
+  .info-extra summary {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+  }
+  

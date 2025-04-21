@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos | The Footlaces</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <header>
+    <%- include('headercrud') %>
+  </header>
+
+  <main>
+    <h1>Catálogo de Productos</h1>
+
+    <div class="productos-lista">
+      <% productos.forEach(function(producto) { %>
+        <div class="producto-item">
+          <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>">
+          <h3><%= producto.nombre %></h3>
+          <p><%= producto.descripcion %></p>
+          <a href="/producto/<%= producto._id %>">Ver más</a>
+        </div>
+      <% }); %>
+    </div>
+
+    <!-- Paginación -->
+    <div class="paginacion">
+      <% if (pagina > 1) { %>
+        <a href="?pagina=<%= pagina - 1 %>">Anterior</a>
+      <% } %>
+      <span>Página <%= pagina %> de <%= totalPaginas %></span>
+      <% if (pagina < totalPaginas) { %>
+        <a href="?pagina=<%= pagina + 1 %>">Siguiente</a>
+      <% } %>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 The Footlaces - Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>

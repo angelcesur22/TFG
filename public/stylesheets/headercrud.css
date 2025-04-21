@@ -1,0 +1,70 @@
+/* Estilo global para el header */
+.header-crud {
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    background-color: #bdbdbd;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+    animation: fadeInDown 0.5s ease; /* Animación al aparecer */
+}
+/* Estilo para el logo */
+.header-crud .logo img {
+    width: 150px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.header-crud .logo img:hover {
+    transform: scale(1.1);  /* Aumenta el tamaño del logo al pasar el mouse */
+}
+
+/* Estilo para la barra de navegación */
+.header-crud .navigation {
+    display: flex;
+    gap: 20px;
+}
+
+/* Estilo de los enlaces de navegación */
+.header-crud .nav-link {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efecto de hover en los enlaces */
+.header-crud .nav-link:hover {
+    background-color: #FF3B30;  /* Rojo */
+    color: white;
+    transform: scale(1.05);  /* Agranda el enlace ligeramente */
+}
+
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .header-crud {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .header-crud .navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-crud .nav-link {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+}

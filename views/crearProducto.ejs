@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crear Producto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/crearproducto.css">
+</head>
+<body>
+  <h2>Nuevo producto</h2>
+
+  <% if (error) { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+
+  <form action="/admin/productos/crear" method="POST" enctype="multipart/form-data" onsubmit="return prepararTallas()">
+
+    <label>Tipo:</label>
+    <select name="tipo">
+      <option value="zapatilla">Zapatilla</option>
+      <option value="ropa">Ropa</option>
+    </select><br>
+
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required><br>
+
+    <label>Marca:</label>
+    <input type="text" name="marca"><br>
+
+    <label>Descripción:</label>
+    <textarea name="descripcion"></textarea><br>
+
+    <label>Categoría:</label>
+    <select name="categoria">
+      <option value="zapatillas">Zapatillas</option>
+      <option value="ropa">Ropa</option>
+    </select><br>
+
+    <label>Etiqueta:</label>
+    <select name="etiqueta">
+      <option value="none">Sin etiqueta</option>
+      <option value="new">Nuevo</option>
+      <option value="bestseller">Best Seller</option>
+      <option value="sale">Oferta</option>
+    </select><br><br>
+
+
+    <h3>Tallas:</h3>
+    <div id="tallas">
+      <div class="talla">
+        <input type="text" placeholder="Talla" class="tallaInput" name="tallas[0][talla]">
+        <input type="number" placeholder="Precio" class="precioInput" name="tallas[0][precio]">
+        <input type="number" placeholder="Stock" class="stockInput" name="tallas[0][stock]">
+      </div>
+    </div>
+    <button type="button" onclick="agregarTalla()">+ Añadir talla</button><br>
+
+
+    <br><br>
+    <label>Imagen:</label>
+    <input type="file" name="imagenes" id="imagenes" accept="image/*" multiple>
+
+    
+    <button type="submit">Guardar producto</button>
+</form>
+
+<script>
+    let tallaIndex = 1;
+
+    function agregarTalla() {
+      const div = document.createElement('div');
+      div.className = 'talla';
+      div.innerHTML = `
+        <input type="text" placeholder="Talla" class="tallaInput" name="tallas[${tallaIndex}][talla]">
+        <input type="number" placeholder="Precio" class="precioInput" name="tallas[${tallaIndex}][precio]">
+        <input type="number" placeholder="Stock" class="stockInput" name="tallas[${tallaIndex}][stock]">
+      `;
+      document.getElementById('tallas').appendChild(div);
+      tallaIndex++;
+    }
+
+    function prepararTallas() {
+      // Esta función no es necesaria si estamos enviando las tallas directamente en el formulario como lo hacemos ahora
+      return true;
+    }
+</script>
+
+</body>
+</html>

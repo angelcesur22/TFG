@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos de <%= usuario.nombre %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/listaproductos.css">
+</head>
+<body>
+    <%- include('headercrud') %>
+    <h1>Pedidos realizados por <%= usuario.nombre %></h1>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Número de Pedido</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% pedidos.forEach(pedido => { %>
+                <tr>
+                    <td><%= pedido.numeroPedido %></td>
+                    <td><%= pedido.producto ? pedido.producto.nombre : 'Producto Eliminado' %></td>
+                    <td><%= pedido.cantidad %></td>
+                    <td><%= pedido.estado %></td>
+                    <td><%= new Date(pedido.fecha).toLocaleString() %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+        
+    </table>
+    <br>
+    <button onclick="window.history.back();" class="btn">🔙 Volver</button>
+</body>
+</html>

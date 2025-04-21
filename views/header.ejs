@@ -1,0 +1,46 @@
+<!-- views/partials/header.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Footlaces - Header</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+</head>
+<body>
+    <header class="bg-white shadow-lg p-4 flex justify-between items-center">
+        <!-- Logo -->
+        <div class="flex items-center">
+            <span class="text-2xl font-bold text-gray-800">FootLaces</span>
+        </div>
+
+        <!-- Navegación -->
+        <nav class="space-x-6 flex items-center">
+            <a href="/" class="text-gray-700 hover:text-black">HOME</a>
+            <a href="/sneakers" class="text-gray-700 hover:text-black">SNEAKERS</a>
+            <a href="/clothing" class="text-gray-700 hover:text-black">CLOTHING</a>
+            <a href="/ofertas" class="text-gray-700 hover:text-black">OFERTAS</a>
+            <a href="/wishlist" class="text-gray-700 hover:text-black">LISTA DE DESEOS</a>
+        </nav>
+
+        <!-- Barra de búsqueda -->
+        <div class="flex items-center space-x-4">
+            <input type="text" placeholder="Buscar..." class="border rounded-lg px-3 py-1 focus:outline-none focus:ring-2 ">
+            <button class="bg-blue-500 text-white px-3 py-1 rounded-lg">🔍</button>
+        </div>
+
+        <button onclick="location.href='/carrito'" class="bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300">
+            🛒 Carrito
+        </button>
+        <!-- Autenticación -->
+        <div class="flex items-center space-x-4">
+            <% if (user) { %>
+                <span>Bienvenido, <%= user.nombre %>!</span>
+                <button onclick="location.href='/logout'">Cerrar Sesión</button>
+            <% } else { %>
+                <button onclick="location.href='/login'">Iniciar Sesión</button>
+                <button onclick="location.href='/register'">Registrarse</button>
+            <% } %>
+        </div>
+    </header>
+</body>
+</html>

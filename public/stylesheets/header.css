@@ -1,0 +1,98 @@
+/* Estilos generales */
+body {
+    font-family: 'Poppins', sans-serif;      
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+header .text-2xl {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Navegación */
+nav a {
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #000;
+}
+
+/* Barra de búsqueda */
+input[type="text"] {
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    width: 200px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    font-family: 'Poppins', sans-serif;
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+button.bg-blue-500 {
+    font-family: 'Poppins', sans-serif;
+    background-color: #007bff;
+    color: white;
+}
+
+button.bg-blue-500:hover {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0056b3;
+}
+
+button.bg-red-500 {
+    font-family: 'Poppins', sans-serif;
+    background-color: #dc3545;
+    color: white;
+}
+
+button.bg-red-500:hover {
+    font-family: 'Poppins', sans-serif;
+    background-color: #a71d2a;
+}
+
+/* Espaciado */
+.flex {
+    display: flex;
+}
+
+.space-x-4 > *:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.space-x-6 > *:not(:last-child) {
+    margin-right: 1.5rem;
+}

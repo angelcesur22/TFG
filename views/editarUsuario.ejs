@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Usuario</title>
+</head>
+<body>
+    <h1>Editar Usuario</h1>
+    <!-- Formulario de edición en editarUsuario.ejs -->
+    <form action="/admin/usuarios/editar/<%= usuario._id %>" method="POST">
+
+    <label>Nombre:</label>
+    <input type="text" name="nombre" value="<%= usuario.nombre %>" required><br>
+    <label>Email:</label>
+    <input type="email" name="email" value="<%= usuario.email %>" required><br>
+    <label>Rol:</label>
+    <select name="rol">
+        <option value="cliente" <%= usuario.rol === 'cliente' ? 'selected' : '' %>>Cliente</option>
+        <option value="admin" <%= usuario.rol === 'admin' ? 'selected' : '' %>>Administrador</option>
+    </select><br>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+</body>
+</html>

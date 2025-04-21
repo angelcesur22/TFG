@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registro Usuario</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .error {
+      color: red;
+      background-color: #ffe6e6;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <!-- Botón X arriba -->
+    <div style="text-align: right;">
+      <a href="/" style="text-decoration: none; font-size: 24px; font-weight: bold; color: #000;">&times;</a>
+    </div>
+
+    <div class="logo">
+      <img src="/images/LogoTFL.png" alt="Logo The Footlaces" width="150">
+    </div>
+
+    <h2 style="text-align: center; margin-top: 0;">Registrar usuario</h2>
+
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } %>
+
+    <form method="POST" action="/register">
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="email" name="email" placeholder="Correo" required>
+      <input type="password" name="contraseña" placeholder="Contraseña" required>
+      <input type="password" name="confirmarContraseña" placeholder="Confirmar Contraseña" required>
+      <button type="submit">Registrarse</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.5rem;">
+      <p>¿Ya tienes cuenta?</p>
+      <a href="/login">
+        <button type="button" style="padding: 8px 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          Iniciar Sesión
+        </button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!-- login.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Login Admin</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <style>
+    .error {
+      color: red;
+      background-color: #ffe6e6;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <!-- Botón X arriba -->
+    <div style="text-align: right;">
+      <a href="/" style="text-decoration: none; font-size: 24px; font-weight: bold; color: #000;">&times;</a>
+    </div>
+
+    <div class="logo">
+      <img src="/images/LogoTFL.png" alt="Logo The Footlaces" width="150">
+    </div>
+    
+    <form method="POST" action="/login">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+      
+      <input type="email" name="email" placeholder="Correo" required>
+      <input type="password" name="contraseña" placeholder="Contraseña" required>
+      <button type="submit">Iniciar sesión</button>
+
+      <!-- Registro -->
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <p>¿No tienes cuenta?</p>
+        <a href="/register">
+          <button type="button" style="padding: 8px 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Regístrate
+          </button>
+        </a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

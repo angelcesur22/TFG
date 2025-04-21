@@ -1,0 +1,66 @@
+<!-- index.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footlaces - Inicio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <script src="/javascripts/carrusel.js"></script>
+</head>
+<body>
+  <main>
+  
+    <%- include('header') %>
+    <div class="carrusel">
+      <div class="carrusel-imagenes">
+        <img src="/images/foto1.webp" alt="Foto 1">
+        <img src="/images/foto2.jpg" alt="Foto 2">
+      </div>
+      <button class="flecha izquierda">&#x276E;</button>
+      <button class="flecha derecha">&#x276F;</button>
+    </div>
+
+    <section class="new-in-section">
+      <b><h1 class="titulo-new-in">NEW IN</h1></b>
+      <div class="productos-grid">
+        <% productos.forEach(producto => { %>
+          <a href="/producto/<%= producto._id %>" class="card-producto-link">
+            <div class="card-producto">
+              <span class="etiqueta-tiempo">NUEVO</span>
+              <img src="<%= producto.imagenes[0] %>" alt="<%= producto.nombre %>" class="img-producto">
+              <h3 class="nombre-producto"><%= producto.nombre %></h3>
+              <%
+                let precios = producto.tallas.map(t => t.precio);
+                let precioMinimo = Math.min(...precios);
+              %>
+              <p class="precio-producto">Desde <%= precioMinimo %>€</p>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    </section>
+
+    <section class="new-in-section">
+      <B><h1 class="titulo-new-in">BESTS SELLERS</h1></B>
+      <div class="productos-grid">
+        <% bestSellers.forEach(producto => { %>
+          <a href="/producto/<%= producto._id %>" class="card-producto-link">
+            <div class="card-producto">
+              <span class="etiqueta-tiempo">best seller</span>
+              <span class="etiqueta-vintage">buy now</span>
+              <img src="<%= producto.imagenes[0] %>" alt="<%= producto.nombre %>" class="img-producto">
+              <h3 class="nombre-producto"><%= producto.nombre %></h3>
+              <%
+                let precios = producto.tallas.map(t => t.precio);
+                let precioMinimo = Math.min(...precios);
+              %>
+              <p class="precio-producto">Desde <%= precioMinimo %>€</p>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+</body>

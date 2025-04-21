@@ -1,0 +1,62 @@
+/* Centrar todo el contenido de la página */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #FFFFFF; /* Fondo blanco */
+;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #2F2F2F; /* Gris oscuro para el texto */
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, button, h2 , p  {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #FF3B30; /* Rojo */
+}
+
+.admin-buttons {
+  flex-direction: column; /* Cambiar de fila a columna */
+  gap: 20px; /* Espacio entre los botones */
+  align-items: center;
+  text-align: center;
+}
+
+button {
+  padding: 12px;
+  background-color: #FF3B30; /* Rojo */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 200px; /* Botones de un tamaño estándar */
+  font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+  background-color: #FF1E1E; /* Rojo más oscuro */
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+img {
+  width: 150px; /* Ajusta el tamaño del logo */
+  height: auto;
+}
+
+/* Estilo para dispositivos móviles */
+@media (max-width: 600px) {
+  .admin-buttons {
+      width: 100%;
+  }
+  button {
+      width: 80%;
+  }
+}

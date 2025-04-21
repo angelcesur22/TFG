@@ -1,0 +1,43 @@
+<%- include('header') %>
+<head>
+  <title>FootLaces - Carrito</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/carrito.css">
+</head>
+<main>
+  <h1>Tu carrito</h1>
+  <div class="carrito-container">
+    <% if (mensaje) { %>
+      <div class="mensaje-flash">
+        <%= mensaje %>
+      </div>
+    <% } %>
+    
+    <% if (carrito.length === 0) { %>
+      <p style="text-align:center;">Tu carrito está vacío</p>
+    <% } else { %>
+      <% carrito.forEach(item => { %>
+        <div class="item-carrito">
+          <img src="<%= item.producto.imagen %>" alt="<%= item.producto.nombre %>">
+          <div class="info">
+            <h3><%= item.producto.nombre %></h3>
+            <p>Marca: <%= item.producto.marca %></p>
+            <p>Talla: <%= item.talla %></p>
+            <p>Precio: <%= item.producto.precio %>€</p>
+            <p>Cantidad: <%= item.cantidad %></p>
+          </div>
+          <div class="acciones">
+            <form action="/carrito/eliminar/<%= item._id %>" method="POST">
+              <button type="submit" class="btn-eliminar">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+
+      <div class="carrito-total">
+        <h3>Total: <%= total.toFixed(2) %>€</h3>
+        <a href="/pagar" class="btn-pagar">Pagar ahora</a>
+      </div>
+    <% } %>
+  </div>
+</main>

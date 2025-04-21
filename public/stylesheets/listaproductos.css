@@ -1,0 +1,197 @@
+/* Reset básico para el padding y el margen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Estilo general para el body */
+  body {
+    font-family: 'Poppins', sans-serif; /* Fuente de Google Fonts */
+    background-color: #FFFFFF; /* Fondo blanco */
+    color: #2F2F2F; /* Gris oscuro para el texto */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Estilo para el encabezado */
+  h1 {
+    font-size: 2.5rem;
+    color: #FF3B30; /* Rojo */
+    margin-bottom: 30px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .buttondelete {
+    background-color: #dc3545; /* Rojo */
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    width: 227px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buttondelete:hover {
+    background-color: #c82333; /* Rojo más oscuro */
+  }
+  
+ /* Estilo para el botón de añadir */
+.buttonadd {
+    background-color: #28a745; /* Verde */
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    width: 210px;
+    transition: background-color 0.3s ease;
+  }
+  .buttonadd:hover {
+    background-color: #218838; /* Verde más oscuro */
+  }
+  /* Efecto de hover en los botones */
+ 
+  
+  /* Estilo para los formularios de búsqueda */
+  div {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Estilo para los campos de búsqueda */
+  input[type="text"], input[type="number"], select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    width: 250px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: #00A9FF; /* Azul claro */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Estilo para la tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  table th, table td {
+    padding: 10px;
+    border: 1px solid #DDD;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  table th {
+    background-color: #2F2F2F; /* Gris oscuro para las cabeceras */
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  table td {
+    background-color: #F4F4F9; /* Fondo gris claro para las celdas */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  table tr:hover {
+    background-color: #E0E0E0; /* Hover en las filas */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+
+#paginacion .active {
+  background-color: #FF3B30; /* Rojo resaltado */
+  color: white;
+  cursor: default;
+}
+
+
+#paginacion button {
+  margin: 5px;
+  background-color: #007bff; /* Azul */
+  color: #FFFFFF;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#paginacion button:hover {
+  background-color: #0056b3; /* Azul más oscuro */
+}
+
+#paginacion button:disabled {
+  background-color: #ccc; /* Color de fondo cuando está deshabilitado */
+  cursor: not-allowed;
+}
+
+  
+
+.btn {
+    background-color: #FF4D4D; /* Rojo */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif
+  }
+  
+  .btn:hover {
+    background-color: #e04444; /* Rojo oscuro */
+  }
+
+
+  .success-message {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+  /* Estilo para pantallas móviles */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.8rem;
+    }
+  
+    div {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    button {
+      width: 80%;
+    }
+  
+    input[type="text"], input[type="number"], select {
+      width: 80%;
+    }
+  }
+  

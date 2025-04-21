@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Productos</title>
+    <link rel="stylesheet" href="/stylesheets/listaproductos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Incluir el headercrud.ejs aquí -->
+    <%- include('headercrud') %>
+
+    <h1>Lista de productos</h1>
+    <br>
+    <a href="/admin/productos/crear">
+      <button class="buttonadd">➕ Añadir Producto</button>
+    </a>
+    <br>
+    <br>
+
+    <!-- FORMULARIO DE BÚSQUEDA Y FILTROS -->
+    <div>
+        <input type="text" id="buscar" placeholder="Buscar por nombre o marca" onkeyup="buscarProducto()">
+        <br>
+        <select id="tipo" onchange="buscarProducto()">
+            <option value="">Todos</option>
+            <option value="zapatilla">Zapatilla</option>
+            <option value="ropa">Ropa</option>
+        </select>
+        <br>
+        <input type="number" id="precioMin" placeholder="Precio Mínimo" onkeyup="buscarProducto()">
+        <input type="number" id="precioMax" placeholder="Precio Máximo" onkeyup="buscarProducto()">
+        <br>
+        <input type="number" id="talla" placeholder="Buscar por talla" onkeyup="buscarProducto()">
+
+    </div>
+    <br>
+
+    <!-- Tabla donde se mostrarán los productos -->
+    <div id="tabla-productos"></div>
+    <br>
+
+    <!-- Paginación debajo de la tabla -->
+    <div id="paginacion"></div>
+    <br>
+
+    <button onclick="window.history.back();" class="btn">🔙 Volver</button>
+
+    <script>
+        let paginaActual = 1;
+
+        async function buscarProducto(pagina = 1) {
+            paginaActual = pagina;
+            const termino = document.getElementById('buscar').value;
+            const tipo = document.getElementById('tipo').value;
+            const precioMin = document.getElementById('precioMin').value;
+            const precioMax = document.getElementById('precioMax').value;
+            const talla = document.getElementById('talla').value;
+
+            const response = await fetch(`/admin/productos/api?buscar=${termino}&tipo=${tipo}&precioMin=${precioMin}&precioMax=${precioMax}&talla=${talla}&pagina=${pagina}`);
+
+            const html = await response.text();
+            document.getElementById('tabla-productos').innerHTML = html;
+        }
+
+        async function cambiarPagina(pagina) {
+            buscarProducto(pagina);
+        }
+
+        // Cargar productos al iniciar la página
+        buscarProducto();
+
+        function generarBotonesPaginacion(totalPaginas) {
+    let botones = '';
+
+    for (let i = 1; i <= totalPaginas; i++) {
+        botones += `<button class="${i === paginaActual ? 'active' : ''}" onclick="cambiarPagina(${i})">${i}</button>`;
+    }
+
+    document.getElementById('paginacion').innerHTML = botones;
+}
+
+
+
+    </script>
+  </body>
+</html>

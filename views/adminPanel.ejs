@@ -1,0 +1,23 @@
+<!-- views/adminPanel.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel de Administración</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/adminpanel.css">
+</head>
+<body>
+    <h1>Panel de Administración</h1>
+    <a href="/logout">
+        <button style="background-color: #FF4D4D; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            Cerrar Sesión
+        </button>
+    </a>
+    <br><br>
+    <div class="admin-buttons"> 
+        <a href="/admin/usuarios"><button>Usuarios</button></a>
+        <a href="/admin/pedidos"><button>Pedidos</button></a>
+        <a href="/admin/productos"><button>Productos</button></a>
+    </div>
+</body>
+</html>

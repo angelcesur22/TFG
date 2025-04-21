@@ -1,0 +1,99 @@
+/* Reset básico para el padding y el margen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF; /* Fondo blanco */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #2F2F2F; /* Gris oscuro para el texto */
+    font-family: 'Poppins', sans-serif;
+  }
+  h1, h2, h3, p,button {
+    font-family: 'Poppins', sans-serif;
+}
+  .login-container {
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FF3B30; /* Rojo */
+  }
+  
+  p {
+    color: #FF3B30; /* Rojo para mensajes de error */
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input[type="email"], input[type="password"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  input[type="email"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: #00A9FF; /* Azul claro */
+  }
+  
+  button {
+    padding: 12px;
+    background-color: #FF3B30; /* Rojo */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  button:hover {
+    background-color: #FF1E1E; /* Rojo más oscuro */
+  }
+  .logo {
+    text-align: center;
+    margin-bottom: 20px; /* Espacio entre el logo y el formulario */
+  }
+  
+  img {
+    width: 150px; /* Ajusta el tamaño del logo */
+    height: auto;
+  }
+  admin-button {
+    display: flex;
+    flex-direction: column; /* Cambiar de fila a columna */
+    gap: 20px; /* Espacio entre los botones */
+    align-items: center;
+}
+
+
+
+
+  /* Estilo para dispositivos móviles */
+  @media (max-width: 600px) {
+    .login-container {
+      padding: 20px;
+    }
+  }
+  

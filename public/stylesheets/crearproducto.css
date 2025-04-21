@@ -1,0 +1,126 @@
+/* Reset básico para el padding y el margen */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Estilo general para el body */
+body {
+  font-family: 'Poppins', sans-serif; /* Fuente de Google Fonts */
+  background-color: #FFFFFF; /* Fondo blanco */
+  color: #2F2F2F; /* Gris oscuro para el texto */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilo para el encabezado */
+h2 {
+  font-size: 2.5rem;
+  color: #FF3B30; /* Rojo */
+  margin-bottom: 30px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Estilo para los formularios */
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* Estilo para los campos de entrada */
+input[type="text"], input[type="number"], select, textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+/* Estilo para el botón de guardar producto */
+button[type="submit"] {
+  background-color: #28a745; /* Verde */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838; /* Verde más oscuro */
+}
+
+/* Estilo para el botón de añadir más tallas */
+button[type="button"] {
+  background-color: #007bff; /* Azul */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+}
+
+button[type="button"]:hover {
+  background-color: #0056b3; /* Azul más oscuro */
+}
+
+/* Estilo para los campos de talla */
+#tallas .talla {
+  display: flex;
+  gap: 10px;
+}
+
+#tallas .talla input {
+  width: 30%;
+}
+
+/* Estilo para los archivos */
+input[type="file"] {
+  background-color: #fff;
+}
+
+/* Estilo para mensajes de error */
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Estilo para pantallas móviles */
+@media (max-width: 600px) {
+  h2 {
+    font-size: 2rem;
+  }
+
+  form {
+    padding: 15px;
+    width: 90%;
+  }
+
+  input[type="text"], input[type="number"], select, textarea {
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+  }
+
+  button[type="button"] {
+    font-size: 14px;
+  }
+}

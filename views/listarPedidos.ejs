@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos</title>
+    <link rel="stylesheet" href="/stylesheets/listaproductos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .nav-pedidos a {
+            margin-right: 10px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .nav-pedidos a.active {
+            background-color: #FF3B30;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <%- include('headercrud') %>
+
+    <h1>Gestión de Pedidos</h1>
+
+    <input type="text" id="searchInput" placeholder="Buscar pedidos...">
+    <br>
+    <br>
+
+    <div class="nav-pedidos">
+        <a href="/admin/pedidos" class="<%= estado === 'Todos' ? 'active' : '' %>">Todos</a>
+        <a href="/admin/pedidos/pendiente" class="<%= estado === 'Pendiente' ? 'active' : '' %>">Pendientes</a>
+        <a href="/admin/pedidos/en-proceso" class="<%= estado === 'En proceso' ? 'active' : '' %>">En Proceso</a>
+        <a href="/admin/pedidos/enviado" class="<%= estado === 'Enviado' ? 'active' : '' %>">Enviado</a>
+        <a href="/admin/pedidos/entregado" class="<%= estado === 'Entregado' ? 'active' : '' %>">Entregado</a>
+        <a href="/admin/pedidos/cancelado" class="<%= estado === 'Cancelado' ? 'active' : '' %>">Cancelado</a>
+    </div>
+
+    <!-- Formulario que envía todos los cambios -->
+    <form action="/admin/pedidos/guardar-cambios" method="POST">
+        <table>
+            <thead>
+                <tr>
+                    <th>Número de Pedido</th>
+                    <th>Usuario</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="pedidosTableBody">
+                <% pedidos.forEach(pedido => { %>
+                    <tr>
+                        <td><%= pedido.numeroPedido || 'Sin número de pedido' %></td> 
+                        <td><%= pedido.usuario ? pedido.usuario.nombre : 'Usuario Eliminado' %></td> 
+                        <td><%= pedido.producto ? pedido.producto.nombre : 'Producto Eliminado' %></td>
+                        <td><%= pedido.cantidad || 0 %></td>
+                        <td><%= new Date(pedido.fecha).toLocaleString() || 'Fecha no disponible' %></td>
+                        <td>
+                            <select name="estados[<%= pedido._id %>]">
+                                <option value="Pendiente" <%= pedido.estado === 'Pendiente' ? 'selected' : '' %>>Pendiente</option>
+                                <option value="En proceso" <%= pedido.estado === 'En proceso' ? 'selected' : '' %>>En proceso</option>
+                                <option value="Enviado" <%= pedido.estado === 'Enviado' ? 'selected' : '' %>>Enviado</option>
+                                <option value="Entregado" <%= pedido.estado === 'Entregado' ? 'selected' : '' %>>Entregado</option>
+                                <option value="Cancelado" <%= pedido.estado === 'Cancelado' ? 'selected' : '' %>>Cancelado</option>
+                            </select>
+                        </td>
+                        <td>
+                            <form action="/admin/pedidos/eliminar/<%= pedido._id %>" method="POST" style="display:inline;">
+                                <button type="submit" class="buttondelete">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <button type="submit" class="btn">Guardar cambios</button>
+            <br>
+
+            <button onclick="window.history.back();" class="btn">🔙 Volver</button>
+        </div>
+        
+    </form>
+
+   
+
+    <script>
+       async function buscarPedidos() {
+    const query = document.getElementById('searchInput').value;
+    console.log("Buscando pedidos con query:", query); 
+
+    try {
+        const response = await fetch(`/admin/pedidos/buscar?query=${encodeURIComponent(query)}`);
+        const pedidos = await response.json();
+
+        console.log("Pedidos recibidos del servidor:", pedidos);
+
+        const tbody = document.getElementById('pedidosTableBody');
+        tbody.innerHTML = '';
+
+        if (Array.isArray(pedidos) && pedidos.length > 0) {
+            pedidos.forEach(pedido => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${pedido.numeroPedido || 'Sin número de pedido'}</td>
+                    <td>${pedido.usuario?.nombre || 'Usuario Eliminado'}</td>
+                    <td>${pedido.producto?.nombre || 'Producto Eliminado'}</td>
+                    <td>${pedido.cantidad || 0}</td>
+                    <td>${pedido.estado || 'Sin estado'}</td>
+                    <td>${new Date(pedido.fecha).toLocaleString() || 'Fecha no disponible'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        } else {
+            console.log("No se encontraron pedidos que coincidan con la búsqueda.");
+            tbody.innerHTML = `<tr><td colspan="6">No se encontraron pedidos.</td></tr>`;
+        }
+    } catch (error) {
+        console.error("Error al buscar pedidos:", error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('searchInput').addEventListener('input', buscarPedidos);
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Usuarios</title>
+    <link rel="stylesheet" href="/stylesheets/listaproductos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Incluir el headercrud.ejs aquí -->
+    <%- include('headercrud') %>
+
+    <h1>Usuarios Registrados</h1>
+    <br>
+    <a href="/admin/usuarios/crear">
+      <button class="buttonadd">➕ Añadir Usuario</button>
+    </a>
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Verificado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% usuarios.forEach(usuario => { %>
+                <tr>
+                    <td><%= usuario.nombre %></td>
+                    <td><%= usuario.email %></td>
+                    <td><%= usuario.rol %></td>
+                    <td><%= usuario.verificado ? '✅ Sí' : '❌ No' %></td>
+                    <td>
+                        <a href="/admin/usuarios/editar/<%= usuario._id %>">
+                            <button class="btn">Editar</button>
+                        </a>
+                        <form action="/admin/usuarios/eliminar/<%= usuario._id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="buttondelete">Eliminar</button>
+                        </form>
+                        <a href="/admin/usuarios/<%= usuario._id %>/pedidos">
+                            <button class="btn">Ver Pedidos</button>
+                        </a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>        
+    </table>
+
+    <button onclick="window.history.back();" class="btn">🔙 Volver</button>
+</body>
+</html>

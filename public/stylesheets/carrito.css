@@ -1,0 +1,142 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+h1 {
+  margin: 2rem 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.carrito-container {
+  max-width: 1000px;
+  margin: 0 auto 4rem;
+  padding: 0 1rem;
+}
+
+.item-carrito {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.item-carrito img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #f1f1f1;
+}
+
+.item-carrito .info {
+  flex: 1;
+}
+
+.item-carrito .info h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.2rem;
+}
+
+.item-carrito p {
+  margin: 0.2rem 0;
+}
+.acciones {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.btn-eliminar {
+  padding: 0.5rem 1rem;
+  background-color: #ff4d4d;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: #e63946;
+}
+
+.carrito-total {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.carrito-total h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.btn-finalizar {
+  padding: 0.75rem 1.5rem;
+  background-color: #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.btn-finalizar:hover {
+  background-color: #333;
+}
+
+.btn-pagar {
+  padding: 10px 20px;
+  background-color: #6772e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-pagar:hover {
+  background-color: #5469d4;
+}
+.mensaje-flash {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 15px auto;
+  width: fit-content;
+  font-weight: 600;
+  animation: fadeOut 4s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+
+@media (max-width: 600px) {
+  .item-carrito {
+    flex-direction: column;
+    text-align: center;
+  }
+  .item-carrito img {
+    margin-bottom: 1rem;
+  }
+  .carrito-total {
+    text-align: center;
+  }
+}

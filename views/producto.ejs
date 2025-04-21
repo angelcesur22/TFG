@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title><%= producto.nombre %> | FootLaces</title>
+  <link rel="stylesheet" href="/stylesheets/producto.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main>
+    <%- include('header') %>
+    <br>
+    <br>
+    <div class="producto-detalle-container">
+      <div class="producto-imagen">
+        <img src="<%= producto.imagenes[0] %>" alt="<%= producto.nombre %>">
+      </div>
+
+      <div class="producto-info">
+        <h1><%= producto.nombre %></h1>
+        <p><strong>Marca:</strong> <%= producto.marca %></p>
+        <p><strong>Descripción:</strong> <%= producto.descripcion %></p>
+
+        <h3>Precio desde:</h3>
+        <% 
+          let precios = producto.tallas.map(t => t.precio);
+          let precioMinimo = Math.min(...precios);
+        %>
+        <p class="precio"><%= precioMinimo %>€</p>
+
+        <form id="form-carrito" action="/carrito/agregar" method="POST">
+          <input type="hidden" name="productoId" value="<%= producto._id %>">
+          <input type="hidden" name="talla" id="tallaSeleccionada">
+          <input type="hidden" name="precio" id="precioSeleccionado">
+
+          <p><strong>Tallas disponibles:</strong></p>
+          <div class="tallas-grid">
+            <% producto.tallas.forEach(t => { %>
+              <button type="button" class="btn-talla" data-talla="<%= t.talla %>" data-precio="<%= t.precio %>">
+                <%= t.talla %> - <%= t.precio %>€
+              </button>
+            <% }) %>
+          </div>
+
+          <div id="mensaje-error" style="color: red; margin-top: 10px; display: none;">
+            Por favor selecciona una talla antes de añadir al carrito.
+          </div>
+
+          <br>
+          <button type="submit" class="btn-agregar">Añadir al carrito</button>
+        </form>
+        <br>
+        <br>
+
+        <div class="info-extra">
+          <details>
+            <summary><strong>Descripción</strong></summary>
+            <p><%= producto.descripcion %></p>
+          </details>
+          <details>
+            <summary><strong>Autenticidad</strong></summary>
+            <p>Todos los productos son verificados antes de ser enviados.</p>
+          </details>
+          <details>
+            <summary><strong>Envío y entrega</strong></summary>
+            <p>Entregas rápidas en 2-5 días laborables. Envío gratuito para pedidos superiores a 50€.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <section class="info-beneficios">
+      <div>
+        <img src="/images/2769339.png" alt="envio">
+        <h4>Envíos gratis a España</h4>
+        <p>Envíos gratis a península para pedidos superiores a 50€</p>
+      </div>
+      <div>
+        <img src="/images/502240a8-506e-44b3-84eb-d8e57609ab93_Marketing_Badge_With_Clear_Space.png" alt="klarna">
+        <h4>Pagos a plazos</h4>
+        <p>Posibilidad de pago en 2, 3 o 4 plazos mediante Klarna</p>
+      </div>
+      <div>
+        <img src="/images/174188.png"alt="soporte">
+        <h4>Atención al cliente</h4>
+        <p>Resolvemos todas las dudas que puedas tener</p>
+      </div>
+    </section>
+
+    <section class="productos-relacionados">
+      <h2 style="text-align: center; margin-top: 3rem;">Productos relacionados</h2>
+      <div class="productos-grid">
+        <% relacionados.forEach(prod => { %>
+          <a href="/producto/<%= prod._id %>" class="card-producto-link">
+            <div class="card-producto">
+              <img src="<%= prod.imagenes[0] %>" alt="<%= prod.nombre %>" class="img-producto">
+              <h3><%= prod.nombre %></h3>
+              <p>Desde <%= Math.min(...prod.tallas.map(t => t.precio)) %>€</p>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tallaInput = document.getElementById('tallaSeleccionada');
+    const precioInput = document.getElementById('precioSeleccionado');
+    const tallaButtons = document.querySelectorAll('.btn-talla');
+    const formCarrito = document.getElementById('form-carrito');
+    const mensajeError = document.getElementById('mensaje-error');
+
+    tallaButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tallaButtons.forEach(b => b.classList.remove('seleccionada'));
+        btn.classList.add('seleccionada');
+        tallaInput.value = btn.dataset.talla;
+        precioInput.value = btn.dataset.precio;
+        mensajeError.style.display = 'none';
+      });
+    });
+
+    formCarrito.addEventListener('submit', function (e) {
+      if (!tallaInput.value) {
+        e.preventDefault();
+        mensajeError.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
