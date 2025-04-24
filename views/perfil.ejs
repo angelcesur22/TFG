@@ -1,0 +1,82 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Footlaces | Perfil</title>
+    
+    <link rel="stylesheet" href="/stylesheets/perfil.css"> <!-- este -->
+  </head>
+
+<%- include("header", { user: user }) %>
+
+<div class="perfil-container">
+  <div class="sidebar">
+    <ul>
+      <li><strong>📊 Panel de control</strong></li>
+      <li>📍 Direcciones (<%= numDirecciones || 0 %>)</li>
+      <li>💖 Lista de deseos (0)</li>
+      <li><a href="/logout" class="logout">↩ Cerrar sesión</a></li>
+    </ul>
+  </div>
+
+  <div class="perfil-main">
+    <div class="resumen-cajas">
+      <div class="caja">
+        <h4>Total Comprado</h4>
+        <p><%= totalGastado?.toFixed(2) || "0.00" %>€</p>
+      </div>
+      <div class="caja">
+        <h4>Número de Pedidos</h4>
+        <p><%= numPedidos || 0 %></p>
+      </div>
+      <div class="caja">
+        <h4>Direcciones</h4>
+        <p><%= numDirecciones || 0 %></p>
+      </div>
+    </div>
+    
+    <h2>Detalles de la cuenta</h2>
+    <table>
+      <tr><td><strong>Nombre:</strong></td><td><%= user.nombre %></td></tr>
+      <tr><td><strong>Correo electrónico:</strong></td><td><%= user.email %></td></tr>
+      <tr>
+        <td><strong>Dirección 1:</strong></td>
+        <td>
+          <% if (user.direcciones?.[0]) { %>
+            <%= user.direcciones[0].linea1 %>, <%= user.direcciones[0].ciudad %>, <%= user.direcciones[0].provincia %>, <%= user.direcciones[0].pais %>, <%= user.direcciones[0].codigoPostal %>
+          <% } else { %> Sin registrar <% } %>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Dirección 2:</strong></td>
+        <td>
+          <% if (user.direcciones?.[1]) { %>
+            <%= user.direcciones[1].linea1 %>, <%= user.direcciones[1].ciudad %>, <%= user.direcciones[1].provincia %>, <%= user.direcciones[1].pais %>, <%= user.direcciones[1].codigoPostal %>
+          <% } else { %> Sin registrar <% } %>
+        </td>
+      </tr>
+    </table>
+
+    <h2>Historial de pedidos</h2>
+    <% if (!pedidos || pedidos.length === 0) { %>
+      <p>✅ <a href="/sneakers">Haz tu primer pedido</a> — No has hecho ningún pedido aún.</p>
+    <% } else { %>
+      <% pedidos.forEach(pedido => { %>
+        <div class="pedido-box">
+          <p><strong>Fecha:</strong> <%= new Date(pedido.fecha).toLocaleDateString() %></p>
+          <p><strong>Estado:</strong> <%= pedido.estado %></p>
+          <p><strong>Total:</strong> <%= pedido.total?.toFixed(2) || "0.00" %>€</p>
+
+          <div class="productos-pedido">
+            <% pedido.productos.forEach(p => { %>
+              <div class="producto-card">
+                <img src="<%= p.producto.imagenes?.[0] || '/images/default.jpg' %>" alt="Producto" width="80" />
+                <p><%= p.producto.nombre %></p>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</div>
+
+

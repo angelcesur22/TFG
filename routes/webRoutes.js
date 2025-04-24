@@ -9,6 +9,12 @@ const pedidoController = require('../controllers/pedidoController');
 const { verificarSesion } = require('../middleware/authMiddleware');
 const carritoController = require('../controllers/carritoController');
 const stripeController = require('../controllers/stripe');
+const productoController = require('../controllers/productoController');
+const userController = require('../controllers/userController');
+
+
+
+
 
 
 
@@ -18,23 +24,26 @@ const generarNumeroPedido = () => {
     const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     return `PED-${timestamp}-${randomNum}`;
 };
+router.get('/sneakers', productoController.filtrarSneakers);
+router.get('/buscar', productoController.buscarProductosLive);
+
 
 // Página principal - Mostrar productos y usuario autenticado
 router.get('/', async (req, res) => {
   try {
-    const nuevosProductos = await Producto.find().sort({ fechaCreacion: -1 }).limit(5);
+    const nuevosProductos = await Producto.find().sort({ fechaCreacion: -1 }).limit(8);
+    const bestSellers = await Producto.find({ etiqueta: 'bestseller' }).limit(8);
+    const productosEnOferta = await Producto.find({ precioAnterior: { $gt: 0 } }).limit(8);
 
-      const bestSellers = await Producto.find({ etiqueta: 'bestseller' }).limit(5);
-      const user = req.session.user || null;
-
-      res.render('index', {
-          productos: nuevosProductos,
-          bestSellers,
-          user
-      });
+    res.render('index', {
+      productos: nuevosProductos,
+      bestSellers,
+      ofertas: productosEnOferta,
+      user: req.session.user || null
+    });
   } catch (error) {
-      console.error('Error al obtener productos:', error);
-      res.status(500).send('Error al obtener productos.');
+    console.error('Error al obtener productos:', error);
+    res.status(500).send('Error al obtener productos.');
   }
 });
 router.get('/producto/:id', async (req, res) => {
@@ -134,5 +143,7 @@ router.get('/pedido/confirmado', (req, res) => {
     mensaje: '✅ ¡Gracias por tu compra! Revisa tu correo para más detalles.'
   });
 });
+router.get('/perfil', verificarSesion, userController.verPerfil);
+router.post('/perfil/editar', verificarSesion, userController.actualizarPerfil);
 
 module.exports = router;

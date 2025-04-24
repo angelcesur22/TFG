@@ -64,8 +64,16 @@
                     <tr>
                         <td><%= pedido.numeroPedido || 'Sin número de pedido' %></td> 
                         <td><%= pedido.usuario ? pedido.usuario.nombre : 'Usuario Eliminado' %></td> 
-                        <td><%= pedido.producto ? pedido.producto.nombre : 'Producto Eliminado' %></td>
-                        <td><%= pedido.cantidad || 0 %></td>
+                        <td>
+                            <% pedido.productos.forEach(p => { %>
+                              <div><%= p.producto ? p.producto.nombre : 'Producto Eliminado' %></div>
+                            <% }) %>
+                          </td>
+                          <td>
+                            <% pedido.productos.forEach(p => { %>
+                              <div><%= p.cantidad %></div>
+                            <% }) %>
+                          </td>
                         <td><%= new Date(pedido.fecha).toLocaleString() || 'Fecha no disponible' %></td>
                         <td>
                             <select name="estados[<%= pedido._id %>]">

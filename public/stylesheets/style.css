@@ -43,7 +43,7 @@
     flex-direction: column;
   }
   
-  input[type="email"], input[type="password"] {
+  input[type="email"], input[type="password"], input[type="text"] {
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #CCC;
@@ -51,7 +51,7 @@
     font-size: 16px;
   }
   
-  input[type="email"]:focus, input[type="password"]:focus {
+  input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, {
     outline: none;
     border-color: #00A9FF; /* Azul claro */
   }

@@ -26,7 +26,21 @@ const productoSchema = new mongoose.Schema({
   fechaCreacion: {
     type: Date,
     default: Date.now
+  },
+  rebaja: {
+    type: Boolean,
+    default: false
+  },
+  precioAnterior: {
+    type: Number,
+    default: 0
+  },
+  fechaCreacion: {
+    type: Date,
+    default: Date.now
   }
+  
+  
   
 });
 

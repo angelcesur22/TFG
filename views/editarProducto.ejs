@@ -28,6 +28,13 @@
           <% }) %>
       </div>
       <br>
+        <label for="rebaja">¿Producto en rebaja?</label>
+        <input type="checkbox" id="rebaja" name="rebaja" <%= producto.rebaja ? 'checked' : '' %>>
+        <br><br>
+      <br>
+      <label for="precioAnterior">Precio anterior:</label>
+    <input type="number" name="precioAnterior" id="precioAnterior" step="0.01" value="<%= producto.precioAnterior || '' %>">
+        <br><br>
       <button type="button" onclick="agregarTalla()">Agregar Talla</button>
       <br>
       <label for="categoria">Categoría:</label>
@@ -45,6 +52,8 @@
       <input type="file" name="imagen"><br><br>
       <br>
       <button type="submit">Guardar Cambios</button>
+      <button type="button" onclick="window.location.href='/admin/productos'">Cancelar</button>
+
   </form>
 
 

@@ -15,7 +15,14 @@ const userSchema = new mongoose.Schema({
       precio: Number,
       cantidad: { type: Number, default: 1 }
     }
-  ]
+  ],
+  direcciones: [{
+    tipo: String,
+    calle: String,
+    ciudad: String,
+    codigoPostal: String,
+    pais: String
+  }]
 });
 
 module.exports = mongoose.model('User', userSchema);

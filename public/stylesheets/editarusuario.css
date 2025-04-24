@@ -1,0 +1,99 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Estilo general */
+  body {
+    background-color: #FFFFFF;
+    color: #2F2F2F;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    color: #FF3B30;
+    margin-bottom: 30px;
+  }
+  
+  /* Formulario centrado con fondo */
+  form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  /* Labels */
+  label {
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+  }
+  
+  /* Inputs y selects */
+  input[type="text"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    margin-top: 8px;
+  }
+  
+  /* Botón de guardar */
+  button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.8rem;
+    }
+  
+    form {
+      padding: 15px;
+      width: 90%;
+    }
+  }button[type="button"] {
+    background-color: #dc3545; /* Rojo */
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #c82333; /* Rojo más oscuro */
+  }
+  
+  

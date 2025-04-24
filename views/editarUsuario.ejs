@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>Editar Usuario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/editarusuario.css">
+
 </head>
 <body>
     <h1>Editar Usuario</h1>
@@ -17,7 +20,15 @@
         <option value="cliente" <%= usuario.rol === 'cliente' ? 'selected' : '' %>>Cliente</option>
         <option value="admin" <%= usuario.rol === 'admin' ? 'selected' : '' %>>Administrador</option>
     </select><br>
+    <label>Verificado:</label>
+    <select name="verificado">
+        <option value="true" <%= usuario.verificado ? 'selected' : '' %>>Sí</option>
+        <option value="false" <%= !usuario.verificado ? 'selected' : '' %>>No</option>
+    </select><br>
+
     <button type="submit">Guardar cambios</button>
+    <button type="button" onclick="window.location.href='/admin/usuarios'">Cancelar</button>
+
 </form>
 
 </body>

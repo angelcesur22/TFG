@@ -3,6 +3,7 @@ const Producto = require('../models/Producto');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
+
 // Configura Cloudinary correctamente
 cloudinary.config({
     cloud_name: 'TU_CLOUD_NAME',
@@ -83,14 +84,21 @@ const editarProducto = async (req, res) => {
             producto.imagen = nuevaImagen;
         }
 
-        // Guardamos los cambios en el producto
+        producto.rebaja = rebaja === 'on';
+        if (producto.rebaja) {
+          producto.precioAnterior = precioAnterior;
+        } else {
+          producto.precioAnterior = 0;
+        }
+    
         await producto.save();
-        res.redirect('/admin/productos?mensaje=editado'); // Redirige a la lista de productos
-    } catch (err) {
+        res.redirect('/admin/productos?mensaje=editado');
+      } catch (err) {
         console.error('Error al editar producto:', err);
-        res.redirect('/admin/productos?mensaje=error'); // En caso de error, redirige con mensaje de error
-    }
-};
+        res.redirect('/admin/productos?mensaje=error');
+      }
+    };
+    
 
 
 const buscarProductos = async (req, res) => {
@@ -146,5 +154,102 @@ const buscarProductos = async (req, res) => {
   }
 };
 
+const filtrarSneakers = async (req, res) => {
+  try {
+    const { talla, min, max, marca, etiqueta, orden, search } = req.query;
+    const filtro = { categoria: "zapatillas" };
+
+
+    if (talla && talla !== "") {
+      filtro["tallas.talla"] = talla;
+    }
+
+    if (min) {
+      filtro["tallas.precio"] = {
+        ...(filtro["tallas.precio"] || {}),
+        $gte: Number(min),
+      };
+    }
+
+    if (max) {
+      filtro["tallas.precio"] = {
+        ...(filtro["tallas.precio"] || {}),
+        $lte: Number(max),
+      };
+    }
+
+    if (marca && marca.trim() !== "") {
+      filtro.marca = new RegExp(marca.trim(), "i");
+    }
+
+    if (etiqueta && etiqueta !== "") {
+      filtro.etiqueta = etiqueta;
+    }
+
+    let ordenamiento = {};
+    if (orden === "asc") ordenamiento["tallas.precio"] = 1;
+    if (orden === "desc") ordenamiento["tallas.precio"] = -1;
+
+    const productos = await Producto.find(filtro).sort(ordenamiento);
+
+    res.render("sneakers", {
+      productos,
+      talla,
+      min,
+      max,
+      marca,
+      etiqueta,
+      orden,
+      search,
+      user: req.user || null
+    });
+    
+  } catch (error) {
+    console.error("Error al filtrar sneakers:", error);
+    res.status(500).send("Error del servidor");
+  }
+};
+
+
+const buscarProductosLive = async (req, res) => {
+    try {
+        const { query } = req.query;
+        if (!query) return res.json([]);
+
+        const productos = await Producto.find({
+            nombre: { $regex: query, $options: "i" }
+        }).limit(10).select("nombre _id");
+
+        res.json(productos);
+    } catch (error) {
+        console.error("Error en búsqueda en vivo:", error);
+        res.status(500).json([]);
+    }
+};
+const mostrarInicio = async (req, res) => {
+  try {
+    const nuevos = await Producto.find().sort({ fechaCreacion: -1 }).limit(8);
+    const masVendidos = await Producto.find({ etiqueta: 'bestseller' }).limit(8);
+    const productosEnOferta = await Producto.find({ precioAnterior: { $gt: 0 } }).limit(8);
+
+    res.render('index', {
+      productos: nuevos,
+      bestSellers: masVendidos,
+      ofertas: productosEnOferta,
+      user: req.user || null
+    });
+  } catch (error) {
+    console.error('Error al mostrar inicio:', error);
+    res.status(500).send('Error al cargar la página principal');
+  }
+};
+
+  module.exports = {
+    crearProducto,
+    editarProducto,
+    buscarProductos,
+    filtrarSneakers,
+    buscarProductosLive,
+    mostrarInicio
+  };
   
-module.exports = { crearProducto, editarProducto, buscarProductos };

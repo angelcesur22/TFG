@@ -12,9 +12,9 @@ const transporter = require('../config/mailConfig');
 exports.listarPedidos = async (req, res) => {
     try {
         const pedidos = await Pedido.find()
-            .populate('usuario')
-            .populate('producto')
-            .sort({ numeroPedido: -1 }); // Ordenar para que los pedidos más recientes aparezcan primero
+  .populate('usuario')
+  .populate('productos.producto') // ✅ así es correcto
+  .sort({ numeroPedido: -1 }); // Ordenar para que los pedidos más recientes aparezcan primero
         
         res.render('listarPedidos', { pedidos, estado: 'Todos' });
     } catch (error) {
@@ -138,7 +138,8 @@ exports.guardarCambios = async (req, res) => {
 exports.listarPedidosPorEstado = async (req, res) => {
     try {
         const estado = req.params.estado.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); // Formatea correctamente el estado
-        const pedidos = await Pedido.find({ estado }).populate('usuario').populate('producto');
+        const pedidos = await Pedido.find({ estado }).populate('usuario').populate('productos.producto');
+
         
         res.render('listarPedidos', { pedidos, estado }); 
     } catch (error) {
@@ -149,7 +150,7 @@ exports.listarPedidosPorEstado = async (req, res) => {
 
 exports.listarTodosLosPedidos = async (req, res) => {
     try {
-        const pedidos = await Pedido.find().populate('usuario').populate('producto');
+        const pedidos = await Pedido.find().populate('usuario').populate('productos.producto');
         
         res.render('listarPedidos', { pedidos, estado: 'Todos' }); 
     } catch (error) {
@@ -264,7 +265,8 @@ exports.buscarPedidos = async (req, res) => {
 
         const productos = await Producto.find({ nombre: regex });
         const productoIds = productos.map(producto => producto._id);
-
+                
+        
         let pedidos = await Pedido.find({
             $or: [
                 { numeroPedido: regex },
@@ -274,7 +276,7 @@ exports.buscarPedidos = async (req, res) => {
             ]
         })
         .populate('usuario')
-        .populate('producto');
+        .populate('productos.producto')
 
         console.log("Pedidos encontrados (filtrados):", pedidos);
 

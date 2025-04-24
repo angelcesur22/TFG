@@ -1,0 +1,231 @@
+/* General */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #333;
+}
+
+.sneakers-wrapper {
+  padding: 30px 40px;
+}
+
+/* Buscador */
+.search-bar {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.search-bar input[type="text"] {
+  padding: 10px;
+  width: 300px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+.search-bar button {
+  padding: 10px 15px;
+  background-color: #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Layout */
+.sneakers-grid {
+  display: flex;
+  gap: 40px;
+}
+
+/* Filtros */
+.filters {
+  width: 250px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  height: fit-content;
+}
+
+.filters h2 {
+  margin-bottom: 20px;
+}
+
+.filters label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.filters button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reset-filters {
+  display: inline-block;
+  margin-top: 10px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* Productos */
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  flex: 1;
+}
+
+.card {
+  text-decoration: none;
+  color: inherit;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.card p.precio {
+  font-weight: bold;
+  color: #111;
+}
+
+.card .tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sneakers-grid {
+    flex-direction: column;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .search-bar input[type="text"] {
+    width: 80%;
+  }
+}
+
+/* Contenedor principal con sidebar a la izquierda */
+.content-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* Sidebar de filtros */
+.filters {
+  width: 250px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.filters h2 {
+  margin-bottom: 15px;
+}
+
+.filters label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.filters button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reset-filters {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #555;
+  text-align: center;
+  text-decoration: underline;
+}
+
+/* Ajustes de la grilla de productos */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  flex: 1;
+}
+
+/* Barra superior */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.orden-form select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

@@ -85,6 +85,16 @@
   font-weight: bold;
   color: #555;
 }
+.etiqueta-tiempo {
+  background-color: crimson;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 
 .etiqueta-vintage {
   top: 30px;
@@ -111,3 +121,56 @@
   color: inherit;
   display: block;
 }
+.nombre-producto {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0 5px;
+  height: 40px; /* ajusta a 2 líneas aprox */
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* número de líneas */
+  -webkit-box-orient: vertical;
+}
+
+
+.etiqueta-tiempo.oferta {
+  background-color: #ff3860;
+  color: white;
+}
+
+.precio-original {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 8px;
+}
+
+.precio-oferta {
+  font-weight: bold;
+  color: #e63946;
+}
+.productos-carrusel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.productos-grid.deslizante {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+.flecha {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 10px;
+  z-index: 1;
+}
+

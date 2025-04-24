@@ -1,0 +1,75 @@
+.perfil-container {
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .sidebar {
+    width: 200px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    padding: 0.5rem 0;
+  }
+  
+  .sidebar .logout {
+    color: red;
+  }
+  
+  .perfil-main {
+    flex-grow: 1;
+  }
+  
+  .resumen-cajas {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .resumen-cajas .caja {
+    background: #f7f7f7;
+    padding: 1rem;
+    border-radius: 10px;
+    flex: 1;
+    text-align: center;
+  }
+  
+  .pedido-box {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+  }
+  
+  .productos-pedido {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .producto-card {
+    border: 1px solid #eee;
+    padding: 0.5rem;
+    border-radius: 6px;
+    text-align: center;
+    width: 100px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  td {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+  }
+  

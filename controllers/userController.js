@@ -24,16 +24,23 @@ const mostrarEditarUsuario = async (req, res) => {
 
 // Función para editar usuario
 const editarUsuario = async (req, res) => {
-    const { nombre, email, rol } = req.body;
-  
-    try {
-      const usuario = await User.findByIdAndUpdate(req.params.id, { nombre, email, rol });
-      res.redirect('/admin/usuarios'); // Redirige al listado de usuarios
-    } catch (error) {
+  const { nombre, email, rol, verificado } = req.body; // 👈 añade "verificado" aquí
+
+  try {
+      const usuario = await User.findByIdAndUpdate(req.params.id, {
+          nombre,
+          email,
+          rol,
+          verificado: verificado === 'true' // 👈 convierte a booleano
+      });
+
+      res.redirect('/admin/usuarios');
+  } catch (error) {
       console.error('Error al editar usuario:', error);
       res.status(500).send('Error al editar el usuario');
-    }
-  };
+  }
+};
+
 
 // Función para eliminar usuario
 const eliminarUsuario = async (req, res) => {
@@ -90,9 +97,55 @@ const verPedidosDeUsuario = async (req, res) => {
     }
 };
 
+const verPerfil = async (req, res) => {
+    try {
+      const user = await User.findById(req.user._id)
+        .populate({
+          path: 'pedidos',
+          populate: {
+            path: 'productos.producto'
+          }
+        });
+  
+        const pedidos = await Pedido.find({ usuario: req.user._id }).populate('productos.producto');
 
+        const totalGastado = pedidos.reduce((acum, pedido) => acum + (pedido.total || 0), 0);
+        const numPedidos = pedidos.length;
+        const numDirecciones = req.user.direcciones?.length || 0;
+        
+  
+        res.render('perfil', {
+            user: req.user,        // ✅ 'user' es más estándar
+            pedidos,
+            totalGastado,
+            numPedidos,
+            numDirecciones
+          });
+          
+    } catch (error) {
+      console.error('[❌ ERROR PERFIL]:', error);
+      res.status(500).send('Error al cargar perfil');
+    }
+  };
+  
+  
+  
+
+  
+const actualizarPerfil = async (req, res) => {
+    try {
+      const { nombre, email } = req.body;
+      await User.findByIdAndUpdate(req.user._id, { nombre, email });
+      res.redirect('/perfil');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al actualizar el perfil');
+    }
+  };
 exports.editarUsuario = editarUsuario;
 exports.eliminarUsuario = eliminarUsuario;
 exports.mostrarEditarUsuario = mostrarEditarUsuario;
 exports.listarUsuarios = listarUsuarios;
 exports.verPedidosDeUsuario = verPedidosDeUsuario;
+exports.verPerfil = verPerfil;
+exports.actualizarPerfil=actualizarPerfil;
