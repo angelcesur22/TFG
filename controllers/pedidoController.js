@@ -12,7 +12,7 @@ const transporter = require('../config/mailConfig');
 exports.listarPedidos = async (req, res) => {
   try {
     const pedidos = await Pedido.find().populate('usuario').sort({ fecha: -1 }); // ✅ SIN populate productos
-    res.render('listarPedidos', { pedidos }); // ✅ correcto
+    res.render('listarPedidos', { pedidos, estado: 'Todos' }); 
   } catch (error) {
     console.error('Error al listar pedidos:', error);
     res.status(500).send('Error al listar pedidos');
