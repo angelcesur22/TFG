@@ -33,8 +33,8 @@ exports.checkout = async (req, res) => {
       payment_method_types: ['card'],
       line_items,
       mode: 'payment',
-      success_url: 'http://localhost:3000/pedido/confirmado',
-      cancel_url: 'http://localhost:3000/carrito?status=cancel',
+      success_url: `${baseUrl}/pedido/confirmado`,
+      cancel_url: `${baseUrl}/carrito?status=cancel`,
       customer_email: req.session.user.email // 🔥 Este es el cambio clave
     });
 
