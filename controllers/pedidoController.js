@@ -10,17 +10,13 @@ const transporter = require('../config/mailConfig');
 
 
 exports.listarPedidos = async (req, res) => {
-    try {
-        const pedidos = await Pedido.find()
-  .populate('usuario')
-  .populate('productos.producto') // ✅ así es correcto
-  .sort({ numeroPedido: -1 }); // Ordenar para que los pedidos más recientes aparezcan primero
-        
-        res.render('listarPedidos', { pedidos, estado: 'Todos' });
-    } catch (error) {
-        console.error('Error al listar pedidos:', error);
-        res.status(500).send('Error al listar pedidos.');
-    }
+  try {
+    const pedidos = await Pedido.find().populate('usuario').sort({ fecha: -1 }); // ✅ SIN populate productos
+    res.render('admin/listarPedidos', { pedidos });
+  } catch (error) {
+    console.error('Error al listar pedidos:', error);
+    res.status(500).send('Error al listar pedidos');
+  }
 };
 
 
