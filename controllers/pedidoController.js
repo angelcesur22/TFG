@@ -150,7 +150,7 @@ exports.listarPedidosPorEstado = async (req, res) => {
 
 exports.listarTodosLosPedidos = async (req, res) => {
     try {
-        const pedidos = await Pedido.find().populate('usuario').populate('productos.producto');
+        const pedidos = await Pedido.find().populate('usuario');
         
         res.render('listarPedidos', { pedidos, estado: 'Todos' }); 
     } catch (error) {
