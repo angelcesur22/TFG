@@ -80,7 +80,10 @@ exports.registerUser = async (req, res) => {
 
       await newUser.save();
 
-      const url = `http://localhost:3000/verify?token=${token}`;
+      const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+      const url = `${baseUrl}/verify?token=${token}`;
+      
+
 
       console.log("✅ Intentando enviar correo a:", email); // Log para confirmar que se intenta enviar el correo
 
