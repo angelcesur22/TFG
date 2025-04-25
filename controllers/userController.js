@@ -107,7 +107,7 @@ const verPerfil = async (req, res) => {
           }
         });
   
-        const pedidos = await Pedido.find({ usuario: req.user._id }).populate('productos.producto');
+        const pedidos = await Pedido.find({ usuario: req.user._id });
 
         const totalGastado = pedidos.reduce((acum, pedido) => acum + (pedido.total || 0), 0);
         const numPedidos = pedidos.length;
