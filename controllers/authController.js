@@ -99,7 +99,7 @@ exports.registerUser = async (req, res) => {
               return res.render('register', { error: 'Error al enviar el correo de verificación.' });
           }
           console.log("✅ Correo enviado exitosamente:", info.response);
-          res.send('Registro exitoso. Por favor revisa tu correo para verificar la cuenta.');
+          res.render('verificaCorreo', { email: user.email });
       });
 
   } catch (error) {
@@ -129,7 +129,7 @@ exports.verifyUser = async (req, res) => {
       user.verificacionToken = null; // Eliminar el token tras verificar al usuario
       await user.save();
 
-      res.send('¡Cuenta verificada con éxito! Ahora puedes iniciar sesión.');
+      res.render('verificadoExitoso', { nombre: user.nombre });
   } catch (error) {
       console.error('❌ Error al verificar la cuenta:', error);
       res.send('Ocurrió un error al verificar la cuenta.');
