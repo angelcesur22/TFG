@@ -66,7 +66,7 @@
                         <td><%= pedido.usuario ? pedido.usuario.nombre : 'Usuario Eliminado' %></td> 
                         <td>
                             <% pedido.productos.forEach(p => { %>
-                              <div><%= p.producto ? p.producto.nombre : 'Producto Eliminado' %></div>
+                              <div><%= p.producto.nombre %> (Talla: <%= p.talla %>)</div>
                             <% }) %>
                           </td>
                           <td>

@@ -61,15 +61,19 @@
     <% } else { %>
       <% pedidos.forEach(pedido => { %>
         <div class="pedido-box">
-          <p><strong>Fecha:</strong> <%= new Date(pedido.fecha).toLocaleDateString() %></p>
+          <p><strong>Fecha:</strong> <%= pedido.fecha %></p>
           <p><strong>Estado:</strong> <%= pedido.estado %></p>
           <p><strong>Total:</strong> <%= pedido.total?.toFixed(2) || "0.00" %>€</p>
 
-          <div class="productos-pedido">
+
+          <<div class="productos-pedido">
             <% pedido.productos.forEach(p => { %>
               <div class="producto-card">
-                <img src="<%= p.producto.imagenes?.[0] || '/images/default.jpg' %>" alt="Producto" width="80" />
+                <img src="/images/default.jpg" alt="Producto" width="80" />
                 <p><%= p.producto.nombre %></p>
+                <p>Talla: <%= p.talla %></p>
+                <p>Cantidad: <%= p.cantidad %></p>
+                <p>Precio: <%= p.precio %>€</p>
               </div>
             <% }) %>
           </div>
