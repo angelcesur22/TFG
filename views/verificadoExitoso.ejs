@@ -31,7 +31,10 @@
   </style>
 </head>
 <body>
-    <%- include("header", { user: user }) %>
+    <% if (typeof user !== 'undefined') { %>
+        <%- include("header", { user }) %>
+      <% } %>
+      
   <div class="mensaje">
     <img src="/images/LogoTFL.png" alt="Logo" width="100">
     <h2>¡Cuenta verificada con éxito!</h2>
