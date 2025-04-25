@@ -50,6 +50,7 @@ app.use('/admin', adminRoutes);
 app.use('/admin/productos', productoRoutes);
 app.use('/users', userRoutes);
 
+app.use('/webhook', webhookRoutes);
 app.use((req, res, next) => {
   const error = new Error('Página no encontrada');
   error.status = 404;
@@ -75,9 +76,9 @@ async function inicializarContador() {
 }
 
 
-
-
 inicializarContador();
-app.use('/webhook', webhookRoutes);
+
+
+
 
 module.exports = app;
