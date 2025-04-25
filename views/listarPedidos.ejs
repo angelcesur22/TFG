@@ -74,7 +74,7 @@
                               <div><%= p.cantidad %></div>
                             <% }) %>
                           </td>
-                        <td><%= new Date(pedido.fecha).toLocaleString() || 'Fecha no disponible' %></td>
+                          <td><%= new Date(pedido.fecha).toLocaleString('es-ES', { timeZone: 'Europe/Madrid' }) %></td>
                         <td>
                             <select name="estados[<%= pedido._id %>]">
                                 <option value="Pendiente" <%= pedido.estado === 'Pendiente' ? 'selected' : '' %>>Pendiente</option>
@@ -146,3 +146,4 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 </body>
 </html>
+
