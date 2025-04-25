@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuenta verificada</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 4rem;
+      background-color: #e9fbe9;
+    }
+    .mensaje {
+      max-width: 500px;
+      margin: auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+    <%- include("header", { user: user }) %>
+  <div class="mensaje">
+    <img src="/images/LogoTFL.png" alt="Logo" width="100">
+    <h2>¡Cuenta verificada con éxito!</h2>
+    <p>Bienvenido/a <strong><%= nombre %></strong>. Ya podés iniciar sesión con tu cuenta.</p>
+    <a href="/login">Iniciar Sesión</a>
+  </div>
+</body>
+</html>

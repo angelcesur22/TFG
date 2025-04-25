@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Verifica tu correo</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 4rem;
+      background-color: #f8f9fa;
+    }
+    .mensaje {
+      max-width: 500px;
+      margin: auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+    <%- include("header", { user: user }) %>
+  <div class="mensaje">
+    <img src="/images/LogoTFL.png" alt="Logo" width="100">
+    <h2>¡Gracias por registrarte!</h2>
+    <p>Hemos enviado un correo de verificación a <strong><%= email %></strong>.</p>
+    <p>Por favor, revisá tu bandeja de entrada y hacé clic en el enlace para activar tu cuenta.</p>
+  </div>
+</body>
+</html>
