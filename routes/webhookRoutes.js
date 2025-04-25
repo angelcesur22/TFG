@@ -1,3 +1,4 @@
+// routes/webhookRoutes.js
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -5,7 +6,7 @@ const bodyParser = require('body-parser');
 const User = require('../models/User');
 const Pedido = require('../models/Pedido');
 const Producto = require('../models/Producto');
-const nodemailer = require('nodemailer');
+const transporter = require('../config/mailConfig');
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -13,7 +14,7 @@ router.post('/stripe', bodyParser.raw({ type: 'application/json' }), async (req,
   const sig = req.headers['stripe-signature'];
   let event;
 
-  console.log('📩 Webhook recibido:', sig); // Log para asegurar que llega el webhook
+  console.log('📩 Webhook recibido:', sig);
 
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
@@ -34,36 +35,48 @@ router.post('/stripe', bodyParser.raw({ type: 'application/json' }), async (req,
         return res.sendStatus(200);
       }
 
-      let resumenPedido = '';
-      const pedidosGuardados = [];
+      const productosPedido = user.carrito.map(item => ({
+        producto: {
+          _id: item.producto._id,
+          nombre: item.producto.nombre,
+          marca: item.producto.marca
+        },
+        cantidad: item.cantidad,
+        talla: item.talla,
+        precio: item.producto.tallas.find(t => t.talla === item.talla)?.precio || item.producto.precio || 0
+      }));
 
-      for (const item of user.carrito) {
-        const pedido = new Pedido({
-          numeroPedido: generarNumeroPedido(),
-          usuario: user._id,
-          producto: item.producto._id,
-          cantidad: item.cantidad,
-          fecha: new Date(),
-          estado: 'Pendiente' // ✅ AÑADIDO para que el pedido tenga estado
-        });
+      const fechaFormateada = new Date().toLocaleString('es-ES', {
+        timeZone: 'Europe/Madrid',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
 
-        await pedido.save();
-        pedidosGuardados.push(pedido);
+      const pedido = new Pedido({
+        numeroPedido: generarNumeroPedido(),
+        usuario: user._id,
+        productos: productosPedido,
+        total: productosPedido.reduce((sum, p) => sum + p.precio * p.cantidad, 0),
+        fecha: fechaFormateada,
+        estado: 'Pendiente'
+      });
 
-        resumenPedido += `
-        - ${item.producto.nombre}
-        Talla: ${item.talla}
-        Cantidad: ${item.cantidad}
-        Precio: ${item.producto.precio}€
-        -------------------------\n`;
-      }
+      await pedido.save();
 
       user.carrito = [];
       await user.save();
 
+      let resumenPedido = productosPedido.map(p => (
+        `- ${p.producto.nombre}\n  Talla: ${p.talla}\n  Cantidad: ${p.cantidad}\n  Precio: ${p.precio}€\n-------------------------`
+      )).join('\n');
+
       await enviarCorreoConfirmacion(user.email, resumenPedido);
 
-      console.log(`✔️ Pedidos guardados y correo enviado a ${user.email}`);
+      console.log(`✔️ Pedido guardado y correo enviado a ${user.email}`);
       return res.status(200).send('Pedido procesado');
     } catch (error) {
       console.error('Error procesando pedido:', error.message);
@@ -81,14 +94,6 @@ function generarNumeroPedido() {
 }
 
 async function enviarCorreoConfirmacion(email, contenido) {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.CORREO_USER,
-      pass: process.env.CORREO_PASS
-    }
-  });
-
   const mailOptions = {
     from: `"FootLaces" <${process.env.CORREO_USER}>`,
     to: email,
