@@ -36,7 +36,15 @@ app.use(express.static('public'));
 
 // Middleware
 app.use(logger('dev'));
-app.use(express.json());
+// ⚠️ Solo usar express.json() si NO es webhook
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook/stripe') {
+    next(); // saltamos el bodyParser para esta ruta
+  } else {
+    express.json()(req, res, next);
+  }
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
