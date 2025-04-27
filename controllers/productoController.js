@@ -49,7 +49,7 @@ const crearProducto = async (req, res) => {
 
 const editarProducto = async (req, res) => {
     const { id } = req.params;
-    const { nombre, marca, tipo, descripcion, categoria, tallas } = req.body;
+    const { nombre, marca, tipo, descripcion, categoria, tallas, rebaja, precioAnterior } = req.body;
     let nuevaImagen = null;
 
     if (req.file) {
@@ -252,4 +252,3 @@ const mostrarInicio = async (req, res) => {
     buscarProductosLive,
     mostrarInicio
   };
-  
