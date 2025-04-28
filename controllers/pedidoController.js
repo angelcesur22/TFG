@@ -197,10 +197,23 @@ exports.crearPedido = async (req, res) => {
 
         const nuevoPedido = new Pedido({
             usuario: usuario._id,
-            producto: producto._id,
-            cantidad: parseInt(cantidad),
-            estado: 'Pendiente'
-        });
+            productos: [{
+                producto: {
+                    _id: producto._id,
+                    nombre: producto.nombre,
+                    marca: producto.marca,
+                    imagenes: producto.imagenes
+                  },
+                  
+              cantidad: parseInt(cantidad),
+              talla: "Sin especificar",
+              precio: producto.precio
+            }],
+            total: producto.precio * cantidad,
+            estado: 'Pendiente',
+            fecha: new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })
+          });
+          
 
         await nuevoPedido.save();
 
@@ -284,4 +297,3 @@ exports.buscarPedidos = async (req, res) => {
         res.status(500).json({ error: 'Error al buscar pedidos.' });
     }
 };
-
