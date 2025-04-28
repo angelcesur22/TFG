@@ -96,3 +96,7 @@ button.bg-red-500:hover {
 .space-x-6 > *:not(:last-child) {
     margin-right: 1.5rem;
 }
+button {
+    text-decoration: none !important;
+  }
+  
