@@ -8,7 +8,8 @@ const PedidoSchema = new mongoose.Schema({
       producto: {
         _id: mongoose.Schema.Types.ObjectId,
         nombre: String,
-        marca: String
+        marca: String,
+        imagenes: [String] // ✅ añadimos esto
       },
       cantidad: Number,
       talla: String,
@@ -17,7 +18,7 @@ const PedidoSchema = new mongoose.Schema({
   ],
   total: Number,
   estado: { type: String, default: "Pendiente" },
-  fecha: { type: String } // fecha ya formateada como string legible
+  fecha: { type: String }
 });
 
 module.exports = mongoose.model('Pedido', PedidoSchema);
