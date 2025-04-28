@@ -33,17 +33,19 @@ document.addEventListener("DOMContentLoaded", () => {
             let imagen = "/images/default.jpg";
 
             if (Array.isArray(producto.imagenes) && producto.imagenes.length > 0) {
-              imagen = producto.imagenes[0];
-            } else if (typeof producto.imagenes === "string" && producto.imagenes.startsWith("http")) {
-              imagen = producto.imagenes;
+              imagen = producto.imagenes[0]; // ✅ porque es un string
+
+            } else {
+              imagen = '/images/no-image.png'; // imagen por defecto
             }
+            
 
             // Obtener precio mínimo
             let precioMinimo = "Sin precio";
             if (Array.isArray(producto.tallas) && producto.tallas.length > 0) {
               const precios = producto.tallas
-                .filter(t => typeof t.precio === "number")
-                .map(t => t.precio);
+              .filter(t => !isNaN(parseFloat(t.precio)))
+              .map(t => parseFloat(t.precio));
               if (precios.length > 0) {
                 precioMinimo = `Desde ${Math.min(...precios)}€`;
               }
@@ -77,3 +79,4 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.classList.add("hidden");
   });
 });
+
