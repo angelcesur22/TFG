@@ -217,8 +217,9 @@ const buscarProductosLive = async (req, res) => {
         if (!query) return res.json([]);
 
         const productos = await Producto.find({
-            nombre: { $regex: query, $options: "i" }
-        }).limit(10).select("nombre _id");
+          nombre: { $regex: query, $options: "i" }
+        }).limit(10).select("nombre _id imagenes tallas");
+        
 
         res.json(productos);
     } catch (error) {
