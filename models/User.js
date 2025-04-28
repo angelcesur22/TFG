@@ -22,7 +22,9 @@ const userSchema = new mongoose.Schema({
     ciudad: String,
     codigoPostal: String,
     pais: String
-  }]
+  }],
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }]
+
 });
 
 module.exports = mongoose.model('User', userSchema);

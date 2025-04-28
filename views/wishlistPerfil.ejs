@@ -1,0 +1,38 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Footlaces | </title>
+    <link rel="stylesheet" href="/stylesheets/perfil.css"> <!-- este -->
+</head>
+<%- include("header", { user: user }) %>
+
+<div class="perfil-container">
+  <div class="sidebar">
+    <ul>
+      <li><strong>📊 Panel de control</strong></li>
+      <li>📍 Direcciones (<%= user.direcciones?.length || 0 %>)</li>
+      <li><strong>💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)</strong></li>
+      <li><a href="/logout" class="logout">↩ Cerrar sesión</a></li>
+    </ul>
+  </div>
+
+  <div class="perfil-main">
+    <h2>Tu lista de deseos</h2>
+    
+    <% if (!wishlist || wishlist.length === 0) { %>
+      <p>💔 Aún no has añadido productos a tu lista de deseos.</p>
+    <% } else { %>
+        <div class="tarjetas-deseos">
+            <% wishlist.forEach(producto => { %>
+              <div class="tarjeta-producto">
+                <a href="/producto/<%= producto._id %>" class="card-producto-link">
+                  <img src="<%= producto.imagenes[0] %>" alt="<%= producto.nombre %>">
+                  <h3><%= producto.nombre %></h3>
+                  <p>Desde <%= Math.min(...producto.tallas.map(t => t.precio)) %>€</p>
+                </a>
+              </div>
+            <% }) %>
+          </div>
+          
+    <% } %>
+  </div>
+</div>

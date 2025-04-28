@@ -28,6 +28,24 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+app.use(async (req, res, next) => {
+  const User = require('./models/User');
+
+  if (req.session?.user?._id) {
+    try {
+      req.user = await User.findById(req.session.user._id).populate('wishlist');
+    } catch (err) {
+      console.error('❌ Error al cargar el usuario desde la sesión:', err);
+      req.user = null;
+    }
+  } else {
+    req.user = null;
+  }
+
+  next();
+});
+
+
 
 // Configuración de vistas
 app.set('views', path.join(__dirname, 'views'));
@@ -44,6 +62,7 @@ app.use((req, res, next) => {
     express.json()(req, res, next);
   }
 });
+app.use('/', require('./routes/wishlistRoutes'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

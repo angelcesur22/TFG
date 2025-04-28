@@ -1,7 +1,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Footlaces | Perfil</title>
-    
     <link rel="stylesheet" href="/stylesheets/perfil.css"> <!-- este -->
   </head>
 
@@ -12,7 +11,7 @@
     <ul>
       <li><strong>📊 Panel de control</strong></li>
       <li>📍 Direcciones (<%= numDirecciones || 0 %>)</li>
-      <li>💖 Lista de deseos (0)</li>
+      <li><a href="/perfil/wishlist">💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)</a></li>
       <li><a href="/logout" class="logout">↩ Cerrar sesión</a></li>
     </ul>
   </div>

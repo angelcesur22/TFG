@@ -5,6 +5,8 @@
   <title><%= producto.nombre %> | FootLaces</title>
   <link rel="stylesheet" href="/stylesheets/producto.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="/javascript/wishlist.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <main>
@@ -17,7 +19,16 @@
       </div>
 
       <div class="producto-info">
-        <h1><%= producto.nombre %></h1>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <h1><%= producto.nombre %></h1>
+          <% if (user) { %>
+            <% const liked = user?.wishlist?.some(p => p.toString() === producto._id.toString()); %>
+            <button class="btn-like" data-id="<%= producto._id %>" style="background: none; border: none; cursor: pointer;">
+              <i class="<%= liked ? 'fas' : 'far' %> fa-heart" style="font-size: 22px; color: #d70000;"></i>
+            </button>
+          <% } %>
+        </div>
+        
         <p><strong>Marca:</strong> <%= producto.marca %></p>
         <p><strong>Descripción:</strong> <%= producto.descripcion %></p>
 
