@@ -32,17 +32,16 @@
             🛒 Carrito
         </button>
 
-        <a href="perfil"><!-- Autenticación -->
         <div class="flex items-center space-x-4">
             <% if (user) { %>
-                <span>Bienvenido, <%= user.nombre %>!</span>
+                <a href="/perfil" class="text-gray-700 hover:text-black">Bienvenido, <%= user.nombre %>!</a>
                 <button onclick="location.href='/logout'">Cerrar Sesión</button>
             <% } else { %>
                 <button onclick="location.href='/login'">Iniciar Sesión</button>
                 <button onclick="location.href='/register'">Registrarse</button>
             <% } %>
         </div>
-        </a>
+        
     </header>
 
     <!-- Modal de búsqueda FUERA del header -->
@@ -54,3 +53,4 @@
     </div>
 </body>
 </html>
+
