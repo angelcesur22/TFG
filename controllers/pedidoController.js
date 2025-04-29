@@ -114,31 +114,75 @@ exports.actualizarEstado = async (req, res) => {
 exports.guardarCambios = async (req, res) => {
     try {
         const estados = req.body.estados;
+        const nodemailer = require('nodemailer');
 
-        console.log('📌 Cambios recibidos:', estados);
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        transporter.verify((error, success) => {
+            if (error) console.error('❌ Error al verificar Nodemailer:', error);
+        });
 
         for (let pedidoId in estados) {
             const nuevoEstado = estados[pedidoId];
-            await Pedido.findByIdAndUpdate(pedidoId, { estado: nuevoEstado });
+
+            const pedido = await Pedido.findById(pedidoId).populate('usuario');
+
+            if (!pedido) continue;
+
+            // 🔍 Solo actualiza y notifica si el estado ha cambiado
+            if (pedido.estado !== nuevoEstado) {
+                pedido.estado = nuevoEstado;
+                await pedido.save();
+
+                const usuario = pedido.usuario;
+
+                if (!usuario || !usuario.email) continue;
+
+                const mailOptions = {
+                    from: process.env.EMAIL_USER,
+                    to: usuario.email,
+                    subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
+                    html: `
+                        <h1>¡Hola ${usuario.nombre}!</h1>
+                        <p>Tu pedido <strong>${pedido.numeroPedido}</strong> ha cambiado a estado: <strong>${nuevoEstado}</strong>.</p>
+                        <h3>Resumen del pedido:</h3>
+                        <ul>
+                            ${pedido.productos.map(p => `
+                                <li>${p.producto.nombre} - Talla ${p.talla} - Cantidad ${p.cantidad}</li>
+                            `).join('')}
+                        </ul>
+                        <br>
+                        <p>Gracias por confiar en nosotros 💙</p>
+                    `
+                };
+
+                await transporter.sendMail(mailOptions);
+            }
         }
 
-        console.log('✅ Cambios guardados correctamente.');
+        console.log('✅ Solo se enviaron correos para pedidos con estado modificado.');
         res.redirect('/admin/pedidos');
     } catch (error) {
-        console.error('❌ Error al guardar cambios:', error);
+        console.error('❌ Error al guardar cambios y enviar correos:', error);
         res.render('error', { message: 'Ocurrió un error al guardar los cambios.', error });
     }
 };
 
 
+
+
 exports.listarPedidosPorEstado = async (req, res) => {
     try {
-        const estado = req.params.estado.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '); // Formatea correctamente el estado
-        const pedidos = await Pedido.find({ estado }).populate('usuario').populate('producto');
-
-
-        
-        res.render('listarPedidos', { pedidos, estado }); 
+        const estado = req.params.estado.replace(/-/g, ' ');
+        const estadoFormateado = estado.charAt(0).toUpperCase() + estado.slice(1);
+        const pedidos = await Pedido.find({ estado: estadoFormateado }).populate('usuario');
+        res.render('listarPedidos', { pedidos, estado: estadoFormateado }); 
     } catch (error) {
         console.error('Error al listar pedidos por estado:', error);
         res.status(500).send('Error al listar pedidos.');
