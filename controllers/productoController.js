@@ -245,11 +245,42 @@ const mostrarInicio = async (req, res) => {
   }
 };
 
-  module.exports = {
-    crearProducto,
-    editarProducto,
-    buscarProductos,
-    filtrarSneakers,
-    buscarProductosLive,
-    mostrarInicio
-  };
+const verRopa = async (req, res) => {
+  try {
+    const { talla, min, max, marca, etiqueta, orden, search } = req.query;
+
+    const filtro = { tipo: 'ropa' };
+
+    if (talla) filtro['tallas.talla'] = talla;
+    if (marca) filtro.marca = new RegExp(marca, 'i');
+    if (etiqueta) filtro.etiqueta = etiqueta;
+    if (min || max) filtro['tallas.precio'] = {};
+    if (min) filtro['tallas.precio'].$gte = parseFloat(min);
+    if (max) filtro['tallas.precio'].$lte = parseFloat(max);
+    if (search) filtro.nombre = new RegExp(search, 'i');
+
+    let productos = await Producto.find(filtro);
+
+    if (orden === 'asc') {
+      productos.sort((a, b) => Math.min(...a.tallas.map(t => t.precio)) - Math.min(...b.tallas.map(t => t.precio)));
+    } else if (orden === 'desc') {
+      productos.sort((a, b) => Math.min(...b.tallas.map(t => t.precio)) - Math.min(...a.tallas.map(t => t.precio)));
+    }
+
+    res.render('clothing', { productos, talla, min, max, marca, etiqueta, orden, search, user: req.user });
+  } catch (error) {
+    console.error('Error al mostrar ropa:', error);
+    res.status(500).send('Error al cargar la ropa');
+  }
+};
+
+// ✅ luego exportas la función
+module.exports = {
+  crearProducto,
+  editarProducto,
+  buscarProductos,
+  filtrarSneakers,
+  buscarProductosLive,
+  mostrarInicio,
+  verRopa // ahora sí existe y está definida
+};  
