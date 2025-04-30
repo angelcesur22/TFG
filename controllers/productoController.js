@@ -4,6 +4,7 @@ const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
 
+
 // Configura Cloudinary correctamente
 cloudinary.config({
     cloud_name: 'TU_CLOUD_NAME',
@@ -273,6 +274,45 @@ const verRopa = async (req, res) => {
     res.status(500).send('Error al cargar la ropa');
   }
 };
+const verOfertas = async (req, res) => {
+  try {
+    const { talla, min, max, marca, etiqueta, orden, search } = req.query;
+
+    const filtro = { precioAnterior: { $gt: 0 } };
+
+
+    if (talla) filtro['tallas.talla'] = talla;
+    if (marca) filtro.marca = new RegExp(marca, 'i');
+    if (etiqueta) filtro.etiqueta = etiqueta;
+    if (min || max) filtro['tallas.precio'] = {};
+    if (min) filtro['tallas.precio'].$gte = parseFloat(min);
+    if (max) filtro['tallas.precio'].$lte = parseFloat(max);
+    if (search) filtro.nombre = new RegExp(search, 'i');
+
+    let productos = await Producto.find(filtro);
+
+    if (orden === 'asc') {
+      productos.sort((a, b) => Math.min(...a.tallas.map(t => t.precio)) - Math.min(...b.tallas.map(t => t.precio)));
+    } else if (orden === 'desc') {
+      productos.sort((a, b) => Math.min(...b.tallas.map(t => t.precio)) - Math.min(...a.tallas.map(t => t.precio)));
+    }
+
+    res.render('ofertas', {
+      productos,
+      talla,
+      min,
+      max,
+      marca,
+      etiqueta,
+      orden,
+      search,
+      user: req.user || null
+    });
+  } catch (error) {
+    console.error('Error al obtener productos en oferta:', error);
+    res.status(500).send('Error al cargar productos en oferta.');
+  }
+};
 
 // ✅ luego exportas la función
 module.exports = {
@@ -282,5 +322,6 @@ module.exports = {
   filtrarSneakers,
   buscarProductosLive,
   mostrarInicio,
-  verRopa // ahora sí existe y está definida
+  verRopa,
+  verOfertas 
 };  
