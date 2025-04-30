@@ -187,5 +187,25 @@
 .btn-like i:hover {
   color: red;
 }
+.ver-todas-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-ver-todas {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver-todas:hover {
+  background-color: #333;
+}
+
+
 
 
