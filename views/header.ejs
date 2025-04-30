@@ -14,6 +14,8 @@
         <div class="flex items-center">
             <span class="text-2xl font-bold text-gray-800">FootLaces</span>
         </div>
+        <button class="hamburguesa fixed-toggle" onclick="toggleMenu()">☰</button>
+        <div class="menu-completo">
 
         <!-- Navegación -->
         <nav class="space-x-6 flex items-center">
@@ -41,6 +43,7 @@
                 <button onclick="location.href='/register'">Registrarse</button>
             <% } %>
         </div>
+    </div>
         
     </header>
 
@@ -51,6 +54,15 @@
             <div id="resultados-busqueda" class="resultados-grid"></div>
         </div>
     </div>
+
+    <script>
+        function toggleMenu() {
+          document.querySelector(".menu-completo").classList.toggle("mostrar");
+        }
+        </script>
+      
+      
 </body>
 </html>
+
 
