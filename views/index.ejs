@@ -28,7 +28,7 @@
     <section class="new-in-section">
       <b><h1 class="titulo-new-in">NEW IN</h1></b>
       <div class="productos-grid">
-        <% productos.forEach(producto => { %>
+        <% productos.slice(0, 5).forEach(producto => { %>
           <a href="/producto/<%= producto._id %>" class="card-producto-link">
             <div class="card-producto">
               <span class="etiqueta-tiempo">NUEVO</span>
@@ -54,7 +54,7 @@
     <section class="new-in-section">
       <B><h1 class="titulo-new-in">BESTS SELLERS</h1></B>
       <div class="productos-grid">
-        <% bestSellers.forEach(producto => { %>
+        <% bestSellers.slice(0, 5).forEach(producto => { %>
           <a href="/producto/<%= producto._id %>" class="card-producto-link">
             <div class="card-producto">
               <span class="etiqueta-tiempo">best seller</span>
@@ -82,7 +82,7 @@
     <section class="new-in-section">
       <b><h1 class="titulo-new-in">OFERTAS</h1></b>
       <div class="productos-grid">
-        <% ofertas.forEach(producto => { %>
+        <% ofertas.slice(0, 5).forEach(producto => { %>
           <a href="/producto/<%= producto._id %>" class="card-producto-link">
             <div class="card-producto">
               <span class="etiqueta-tiempo oferta">Oferta</span>
