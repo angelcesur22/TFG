@@ -10,6 +10,8 @@ const productoController = require('../controllers/productoController');
 
 
 
+router.get('/ofertas', productoController.verOfertas);
+
 
 router.get('/crear', (req, res) => {
   res.render('crearProducto', { error: null });
@@ -97,3 +99,4 @@ router.get('/api', async (req, res) => {
 
 
 module.exports = router;
+
