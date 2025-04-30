@@ -229,3 +229,37 @@ body {
   border-radius: 6px;
   border: 1px solid #ccc;
 }
+.card-oferta {
+  position: relative;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.etiqueta-oferta {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #f43f5e;
+  color: white;
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  border-radius: 5px;
+}
+
+.precio-original {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.precio-oferta {
+  color: #f43f5e;
+  font-weight: bold;
+}
+.precio-original {
+  text-decoration: line-through;
+  color: grey;
+  margin-right: 5px;
+}
