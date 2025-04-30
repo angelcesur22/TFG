@@ -3,6 +3,9 @@ const router = express.Router();
 const { crearProducto, editarProducto, buscarProductos } = require('../controllers/productoController'); 
 const Producto = require('../models/Producto');
 const upload = require('../config/upload');
+const productoController = require('../controllers/productoController');
+
+
 
 
 
@@ -46,6 +49,7 @@ router.get('/editar/:id', async (req, res) => {
     res.status(500).send('Error al cargar producto');
   }
 });
+router.get('/clothing', productoController.verRopa);
 
 // Ruta para editar producto
 router.post('/editar/:id', upload.single('imagen'), editarProducto);
@@ -90,5 +94,6 @@ router.get('/api', async (req, res) => {
     res.status(500).send('Error al cargar productos');
   }
 });
+
 
 module.exports = router;
