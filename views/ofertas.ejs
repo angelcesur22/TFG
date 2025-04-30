@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos en Oferta - FootLaces</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/sneaker.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="/javascript/wishlist.js"></script>
+</head>
+<body>
+<%- include('header') %>
+
+<main class="sneakers-wrapper">
+  <div class="top-bar">
+    <p><%= productos.length %> productos en oferta</p>
+    <form method="GET" action="/ofertas" class="orden-form">
+      <input type="hidden" name="search" value="<%= search || '' %>">
+      <input type="hidden" name="talla" value="<%= talla || '' %>">
+      <input type="hidden" name="min" value="<%= min || '' %>">
+      <input type="hidden" name="max" value="<%= max || '' %>">
+      <input type="hidden" name="marca" value="<%= marca || '' %>">
+      <select name="orden" onchange="this.form.submit()">
+        <option value="">Ordenar</option>
+        <option value="asc" <%= orden === 'asc' ? 'selected' : '' %>>Precio: Menor a mayor</option>
+        <option value="desc" <%= orden === 'desc' ? 'selected' : '' %>>Precio: Mayor a menor</option>
+      </select>
+    </form>
+  </div>
+
+  <div class="content-layout">
+    <aside class="filters">
+      <form method="GET" action="/ofertas">
+        <h2>Filtrar por</h2>
+
+        <label>Talla:</label>
+        <select name="talla">
+          <option value="">Todas</option>
+          <% ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', 'XS', 'S', 'M', 'L', 'XL', 'XXL'].forEach(t => { %>
+            <option value="<%= t %>" <%= talla == t ? 'selected' : '' %>><%= t %></option>
+          <% }) %>
+        </select>
+
+        <label>Precio mínimo:</label>
+        <input type="number" name="min" placeholder="Min €" value="<%= min || '' %>">
+
+        <label>Precio máximo:</label>
+        <input type="number" name="max" placeholder="Max €" value="<%= max || '' %>">
+
+        <label>Marca:</label>
+        <input type="text" name="marca" placeholder="Ej: Nike, Adidas" value="<%= marca || '' %>">
+
+        <button type="submit">Aplicar filtros</button>
+        <a href="/ofertas" class="reset-filters">Limpiar filtros</a>
+      </form>
+    </aside>
+
+    <section class="productos-grid">
+      <% if (productos.length === 0) { %>
+        <p>No se encontraron productos con esos filtros.</p>
+      <% } else { %>
+        <% productos.forEach(p => { %>
+          <a href="/producto/<%= p._id %>" class="card-producto-link">
+            <div class="card-producto">
+              <% if (user) { %>
+                <% const liked = user?.wishlist?.some(w => w.toString() === p._id.toString()); %>
+                <button class="btn-like" data-id="<%= p._id %>">
+                  <i class="<%= liked ? 'fas' : 'far' %> fa-heart"></i>
+                </button>
+              <% } %>
+              <span class="etiqueta-tiempo">Oferta</span>
+              <img src="<%= p.imagenes[0] %>" alt="<%= p.nombre %>" class="img-producto">
+              <h3 class="nombre-producto"><%= p.nombre %></h3>
+              <%
+                let precios = p.tallas.map(t => t.precio);
+                let precioMinimo = Math.min(...precios);
+              %>
+              <p class="precio-producto">Desde <%= precioMinimo %>€</p>
+            </div>
+          </a>
+        <% }) %>
+      <% } %>
+    </section>
+  </div>
+</main>
+
+</body>
+</html>
