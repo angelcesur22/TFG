@@ -63,7 +63,6 @@ app.use((req, res, next) => {
   }
 });
 app.use('/', require('./routes/wishlistRoutes'));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -105,6 +104,9 @@ async function inicializarContador() {
 
 inicializarContador();
 
+app.get('/', (req, res) => {
+  res.redirect('/inicio'); // O la ruta principal de productos o portada
+});
 
 
 
