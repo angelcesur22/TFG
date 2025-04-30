@@ -11,6 +11,9 @@ const carritoController = require('../controllers/carritoController');
 const stripeController = require('../controllers/stripe');
 const productoController = require('../controllers/productoController');
 const userController = require('../controllers/userController');
+const { verRopa } = require('../controllers/productoController');
+
+router.get('/clothing', verRopa);
 
 
 
@@ -147,3 +150,4 @@ router.get('/perfil', verificarSesion, userController.verPerfil);
 router.post('/perfil/editar', verificarSesion, userController.actualizarPerfil);
 
 module.exports = router;
+
