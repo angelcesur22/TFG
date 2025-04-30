@@ -100,3 +100,128 @@ button {
     text-decoration: none !important;
   }
   
+
+/* Hamburguesa oculta en escritorio */
+.hamburguesa {
+    display: none;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto; /* 👈 Esto lo empuja hacia la derecha */
+    z-index: 1001; /* Por encima del menú */
+  }
+  
+  
+  /* Estilos para versión móvil */
+  @media (max-width: 768px) {
+    .hamburguesa {
+      display: block;
+    }
+  
+    nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    nav.mostrar {
+      display: flex;
+    }
+  }
+
+
+  
+  .menu-completo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Solo en móvil, cambia a diseño vertical */
+  @media (max-width: 768px) {
+    .menu-completo {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+        margin-top: 0.5rem;
+        background-color: white;
+        padding: 0.5rem 0.5rem;
+        text-align: center;
+      }
+      
+  
+    .menu-completo.mostrar {
+      display: flex;
+    }
+  
+    .menu-completo nav a {
+        padding: 6px 0;
+        border-bottom: 1px solid #eee;
+        width: 100%;
+        max-width: 280px;
+        font-size: 0.95rem;
+      }
+      
+      .menu-completo input[type="text"] {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.4rem;
+        font-size: 0.9rem;
+      }
+      
+      .menu-completo button {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.95rem;
+      }
+      
+      .menu-completo .flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+      }
+    }
+  
+/* Corrige posición del botón hamburguesa en móvil */
+@media (max-width: 768px) {
+    .fixed-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1001;
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+    }
+  }
+  
+
+  
+  @media (max-width: 768px) {
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+    }
+  
+    header .flex.items-center {
+      width: 100%;
+    }
+  
+    body {
+      padding-top: 120px;
+    }
+  }
+  
+
+  
