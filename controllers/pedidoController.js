@@ -40,76 +40,72 @@ exports.eliminarPedido = async (req, res) => {
 
 exports.actualizarEstado = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { estado } = req.body;
-
-        const pedido = await Pedido.findById(id).populate('usuario');
-
-        if (!pedido) {
-            console.error('❌ Pedido no encontrado.');
-            return res.status(404).send('Pedido no encontrado.');
-        }
-
-        pedido.estado = estado;
-        await pedido.save();
-
-        console.log(`✅ Pedido actualizado a estado: ${estado}`);
-
-        const usuario = pedido.usuario;
-
-        if (!usuario || !usuario.email) {
-            console.error('❌ El usuario no tiene un correo registrado o no existe.');
-            return res.status(400).send('El usuario no tiene un correo registrado.');
-        }
-
-        console.log('📧 Usuario encontrado: ', usuario.email);
-
-        // 🔥 Vamos a probar Nodemailer directamente aquí:
-        const nodemailer = require('nodemailer');
-
-        const transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
+      const { id } = req.params;
+      const { estado } = req.body;
+  
+      const pedido = await Pedido.findById(id).populate('usuario');
+  
+      if (!pedido) {
+        console.error('❌ Pedido no encontrado.');
+        return res.status(404).send('Pedido no encontrado.');
+      }
+  
+      pedido.estado = estado;
+      await pedido.save();
+  
+      const usuario = pedido.usuario;
+  
+      if (!usuario || !usuario.email) {
+        console.error('❌ El usuario no tiene un correo registrado o no existe.');
+        return res.status(400).send('El usuario no tiene un correo registrado.');
+      }
+  
+      console.log('🧪 Estado recibido:', estado);
+      if (estado.trim().toLowerCase() === 'pendiente de devolución'.toLowerCase()) {
+        await transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to: usuario.email,
+          subject: '📦 Instrucciones para devolver tu pedido',
+          html: `
+            <p>Hola ${usuario.nombre},</p>
+            <p>Tu solicitud de devolución ha sido aprobada.</p>
+            <p>Por favor, sigue estos pasos para completar la devolución:</p>
+            <ol>
+              <li>Empaqueta el producto correctamente.</li>
+              <li>Incluye una copia con el número de pedido: <strong>${pedido.numeroPedido}</strong>.</li>
+              <li>Envíalo mediante el transportista de tu elección.</li>
+            </ol>
+            <p>Una vez enviado, confirma la devolución haciendo clic en este enlace:</p>
+            <a href="http://localhost:3000/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
+            <p>Si tienes dudas, contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
+          `
         });
-
-        transporter.verify((error, success) => {
-            if (error) {
-                console.error('❌ Error al verificar Nodemailer:', error);
-            } else {
-                console.log('✅ Servidor de correo listo para enviar correos.');
-            }
-        });
-
+      
+        // Importante: salimos para que no mande el correo genérico también
+        return res.redirect('/admin/pedidos');
+      } else {
+        // EMAIL GENERAL para cualquier otro estado
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: usuario.email,
-            subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
-            text: `Hola ${usuario.nombre}, tu pedido ${pedido.numeroPedido} se encuentra ahora mismo en estado: ${estado}.`,
-            html: `<h1>¡Hola ${usuario.nombre}!</h1>
-                   <p>Tu pedido <strong>${pedido.numeroPedido}</strong> se encuentra ahora mismo en estado: <strong>${estado}</strong>.</p>
-                   <br>
-                   <p>¡Gracias por confiar en nosotros!</p>`
+          from: process.env.EMAIL_USER,
+          to: usuario.email,
+          subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
+          html: `<h1>¡Hola ${usuario.nombre}!</h1>
+                 <p>Tu pedido <strong>${pedido.numeroPedido}</strong> se encuentra ahora mismo en estado: <strong>${estado}</strong>.</p>
+                 <br>
+                 <p>¡Gracias por confiar en nosotros!</p>`
         };
-
-        console.log('📧 Intentando enviar el correo a: ', usuario.email);
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error('❌ Error al enviar el correo:', error);
-            } else {
-                console.log('✅ Correo enviado con éxito:', info.response);
-            }
-        });
-
-        res.redirect('/admin/pedidos');
+  
+        await transporter.sendMail(mailOptions);
+      }
+  
+      console.log(`✅ Estado actualizado a: ${estado} y correo enviado a ${usuario.email}`);
+      res.redirect('/admin/pedidos');
     } catch (error) {
-        console.error('Error al actualizar el estado del pedido:', error);
-        res.status(500).send('Error al actualizar el estado del pedido.');
+      console.error('Error al actualizar el estado del pedido:', error);
+      res.status(500).send('Error al actualizar el estado del pedido.');
     }
-};
+  };
+  
 
 exports.guardarCambios = async (req, res) => {
     try {

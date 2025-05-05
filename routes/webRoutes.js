@@ -165,6 +165,31 @@ router.get('/pedido/confirmado', (req, res) => {
 router.get('/perfil', verificarSesion, userController.verPerfil);
 router.post('/perfil/editar', verificarSesion, userController.actualizarPerfil);
 
+router.get('/confirmar-devolucion/:id', async (req, res) => {
+  const { id } = req.params;
+  res.render('confirmarDevolucion', { pedidoId: id });
+});
+
+// POST: Procesar confirmación
+router.post('/confirmar-devolucion/:id', async (req, res) => {
+  const { id } = req.params;
+  const { email } = req.body;
+
+  try {
+    const pedido = await Pedido.findById(id).populate('usuario');
+    if (pedido.usuario.correo === email && pedido.estado === 'Pendiente de devolución') {
+      pedido.estado = 'Devuelto';
+      await pedido.save();
+      return res.send('✔️ Devolución confirmada correctamente. ¡Gracias!');
+    } else {
+      return res.status(400).send('❌ Correo incorrecto o estado inválido.');
+    }
+  } catch (err) {
+    console.error('Error al confirmar devolución:', err);
+    res.status(500).send('Error del servidor.');
+  }
+});
+
 module.exports = router;
 
 

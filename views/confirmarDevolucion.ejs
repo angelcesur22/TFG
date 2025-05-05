@@ -1,0 +1,16 @@
+<!-- views/confirmarDevolucion.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmar Devolución</title>
+</head>
+<body>
+  <h1>Confirmar Devolución</h1>
+  <form action="/confirmar-devolucion/<%= pedidoId %>" method="POST">
+    <label for="email">Introduce tu correo electrónico:</label>
+    <input type="email" name="email" id="email" required>
+    <button type="submit">Confirmar entrega</button>
+  </form>
+</body>
+</html>
