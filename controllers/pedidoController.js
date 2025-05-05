@@ -75,10 +75,10 @@ exports.actualizarEstado = async (req, res) => {
               <li>Incluye una copia con el número de pedido: <strong>${pedido.numeroPedido}</strong>.</li>
               <li>Envíalo mediante el transportista de tu elección.</li>
             </ol>
-            <a href="http://localhost:3000/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
+            <a href="${process.env.BASE_URL}/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
             <p>Si tienes dudas, contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
           `
-        });
+        }); 
       } else {
         // EMAIL GENERAL para cualquier otro estado
         const mailOptions = {
@@ -147,7 +147,7 @@ exports.actualizarEstado = async (req, res) => {
                               <li>Incluye una copia con el número de pedido: <strong>${pedido.numeroPedido}</strong>.</li>
                               <li>Envíalo mediante el transportista de tu elección.</li>
                             </ol>
-                            <a href="http://localhost:3000/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
+                            <a href="${process.env.BASE_URL}/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
                             <p>Si tienes dudas, contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
                         `
                     });
