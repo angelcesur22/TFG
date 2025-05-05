@@ -16,5 +16,8 @@ router.get('/pedidos/:estado', isAdmin, pedidoController.listarPedidosPorEstado)
 router.get('/pedidos/buscar',isAdmin, pedidoController.buscarPedidos);
 router.post('/pedidos/eliminar/:id', isAdmin, pedidoController.eliminarPedido);
 router.post('/pedidos/guardar-cambios', isAdmin, pedidoController.guardarCambios);
+router.get('/admin/devoluciones', adminController.verDevoluciones);
+router.post('/admin/devoluciones/aceptar/:id', adminController.aceptarDevolucion);
+router.post('/admin/devoluciones/denegar/:id', adminController.denegarDevolucion);
 
 module.exports = router;

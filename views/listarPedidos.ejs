@@ -43,6 +43,8 @@
         <a href="/admin/pedidos/enviado" class="<%= estado === 'Enviado' ? 'active' : '' %>">Enviado</a>
         <a href="/admin/pedidos/entregado" class="<%= estado === 'Entregado' ? 'active' : '' %>">Entregado</a>
         <a href="/admin/pedidos/cancelado" class="<%= estado === 'Cancelado' ? 'active' : '' %>">Cancelado</a>
+        <a href="/admin/pedidos/devoluciones" class="<%= estado === 'Devoluciones' ? 'active' : '' %>">Devoluciones</a>
+
     </div>
 
     <!-- Formulario que envía todos los cambios -->
@@ -82,7 +84,13 @@
                                 <option value="Enviado" <%= pedido.estado === 'Enviado' ? 'selected' : '' %>>Enviado</option>
                                 <option value="Entregado" <%= pedido.estado === 'Entregado' ? 'selected' : '' %>>Entregado</option>
                                 <option value="Cancelado" <%= pedido.estado === 'Cancelado' ? 'selected' : '' %>>Cancelado</option>
-                            </select>
+                                <option value="Solicitud de devolución" <%= pedido.estado === 'Solicitud de devolución' ? 'selected' : '' %>>Solicitud de devolución</option>
+                                <option value="Devolución aceptada" <%= pedido.estado === 'Devolución aceptada' ? 'selected' : '' %>>Devolución aceptada</option>
+                                <option value="Devolución denegada" <%= pedido.estado === 'Devolución denegada' ? 'selected' : '' %>>Devolución denegada</option>
+                                <option value="Pendiente de devolución" <%= pedido.estado === 'Pendiente de devolución' ? 'selected' : '' %>>Pendiente de devolución</option>
+                                <option value="Devuelto" <%= pedido.estado === 'Devuelto' ? 'selected' : '' %>>Devuelto</option>
+                              </select>
+                              
                         </td>
                         <td>
                             <form action="/admin/pedidos/eliminar/<%= pedido._id %>" method="POST" style="display:inline;">

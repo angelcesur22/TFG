@@ -107,7 +107,9 @@ const verPerfil = async (req, res) => {
           }
         });
   
-        const pedidos = await Pedido.find({ usuario: req.user._id });
+        const pedidos = await Pedido.find({ usuario: req.user._id })
+        .sort({ fecha: -1 });
+
 
         const totalGastado = pedidos.reduce((acum, pedido) => acum + (pedido.total || 0), 0);
         const numPedidos = pedidos.length;
@@ -115,12 +117,15 @@ const verPerfil = async (req, res) => {
         
   
         res.render('perfil', {
-            user: req.user,        // ✅ 'user' es más estándar
-            pedidos,
-            totalGastado,
-            numPedidos,
-            numDirecciones
-          });
+          user: req.user,
+          pedidos,
+          totalGastado,
+          numPedidos,
+          numDirecciones,
+          success: req.query.success,
+          error: req.query.error
+        });
+        
           
     } catch (error) {
       console.error('[❌ ERROR PERFIL]:', error);

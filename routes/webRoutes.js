@@ -13,10 +13,19 @@ const productoController = require('../controllers/productoController');
 const userController = require('../controllers/userController');
 const { verRopa } = require('../controllers/productoController');
 const { verOfertas } = require('../controllers/productoController');
+const { devolverPedido } = require('../controllers/pedidoController');
+const adminController = require('../controllers/adminController');
+
+router.post('/devolver-pedido/:id', devolverPedido);
+
 router.get('/clothing', verRopa);
 
 
 router.get('/ofertas', verOfertas);
+
+router.get('/admin/devoluciones', adminController.verDevoluciones);
+router.post('/admin/devoluciones/aceptar/:id', adminController.aceptarDevolucion);
+router.post('/admin/devoluciones/denegar/:id', adminController.denegarDevolucion);
 
 
 
@@ -143,6 +152,9 @@ router.post('/carrito/eliminar/:id', verificarSesion, carritoController.eliminar
 
 
 router.get('/pagar', verificarSesion, stripeController.checkout);
+
+router.post('/cancelar-pedido/:id', pedidoController.cancelarPedido);
+
 
 router.get('/pedido/confirmado', (req, res) => {
   res.render('confirmacion', {

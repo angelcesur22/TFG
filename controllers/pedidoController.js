@@ -179,15 +179,36 @@ exports.guardarCambios = async (req, res) => {
 
 exports.listarPedidosPorEstado = async (req, res) => {
     try {
-        const estado = req.params.estado.replace(/-/g, ' ');
-        const estadoFormateado = estado.charAt(0).toUpperCase() + estado.slice(1);
-        const pedidos = await Pedido.find({ estado: estadoFormateado }).populate('usuario');
-        res.render('listarPedidos', { pedidos, estado: estadoFormateado }); 
+        let estadoParam = req.params.estado.replace(/-/g, ' ').toLowerCase();
+        let pedidos = [];
+
+        if (estadoParam === 'devoluciones') {
+            pedidos = await Pedido.find({
+                estado: {
+                    $in: [
+                        'Solicitud de devolución',
+                        'Pendiente de devolución',
+                        'Devolución aceptada',
+                        'Devolución denegada',
+                        'Devuelto'
+                    ]
+                }
+            }).populate('usuario');
+            estadoParam = 'Devoluciones';
+        } else {
+            const estadoCapitalizado = estadoParam.split(' ')
+                .map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+            pedidos = await Pedido.find({ estado: estadoCapitalizado }).populate('usuario');
+            estadoParam = estadoCapitalizado;
+        }
+
+        res.render('listarPedidos', { pedidos, estado: estadoParam });
     } catch (error) {
         console.error('Error al listar pedidos por estado:', error);
         res.status(500).send('Error al listar pedidos.');
     }
 };
+
 
 exports.listarTodosLosPedidos = async (req, res) => {
     try {
@@ -341,3 +362,78 @@ exports.buscarPedidos = async (req, res) => {
         res.status(500).json({ error: 'Error al buscar pedidos.' });
     }
 };
+exports.cancelarPedido = async (req, res) => {
+    try {
+      const pedido = await Pedido.findById(req.params.id);
+  
+      if (!pedido) {
+        return res.redirect('/perfil?error=Pedido no encontrado');
+      }
+  
+      // Comparación sin importar mayúsculas/minúsculas
+      const estadoActual = pedido.estado.toLowerCase();
+  
+      if (estadoActual !== 'pendiente' && estadoActual !== 'en proceso') {
+        return res.redirect(`/perfil?error=No se puede cancelar este pedido porque está en estado: ${pedido.estado}`);
+      }
+  
+      // Guardar con C mayúscula
+      pedido.estado = 'Cancelado';
+      await pedido.save();
+  
+      return res.redirect('/perfil?success=Pedido cancelado correctamente');
+    } catch (error) {
+      console.error('[❌ Error al cancelar pedido]', error);
+      return res.redirect('/perfil?error=Error al cancelar el pedido');
+    }
+  };
+  
+
+  exports.devolverPedido = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { motivo, comentario } = req.body;
+  
+      const pedido = await Pedido.findById(id).populate('usuario');
+  
+      if (!pedido) {
+        return res.status(404).send('Pedido no encontrado');
+      }
+  
+      if (pedido.estado !== 'Entregado') {
+        return res.redirect(`/perfil?error=Este pedido no es elegible para devolución.`);
+      }
+  
+      pedido.estado = 'Solicitud de devolución';
+      pedido.devolucion = {
+        motivo,
+        comentario,
+        fechaSolicitud: new Date()
+      };
+  
+      await pedido.save();
+  
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: pedido.usuario.email,
+        subject: '✅ Solicitud de devolución enviada',
+        html: `
+          <h3>Hola ${pedido.usuario.nombre},</h3>
+          <p>Hemos recibido tu solicitud de devolución del pedido <strong>${pedido.numeroPedido}</strong>.</p>
+          <p><strong>Motivo:</strong> ${motivo}</p>
+          <p>En un plazo de 48 horas (días laborables) recibirás un correo con la resolución de la solicitud.</p>
+          <p>Si no lo recibes, por favor contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
+          <br>
+          <p>Gracias por confiar en Footlaces.</p>
+        `
+      });
+  
+      res.redirect('/perfil?success=✅ Solicitud de devolución enviada correctamente');
+    } catch (error) {
+      console.error('[❌ ERROR DEVOLUCIÓN]:', error);
+      res.status(500).send('Error al procesar la devolución');
+    }
+  };
+  
+  
+  

@@ -1,10 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Footlaces | Perfil</title>
-    <link rel="stylesheet" href="/stylesheets/perfil.css"> <!-- este -->
-  </head>
+  <meta charset="UTF-8">
+  <title>Footlaces | Perfil</title>
+  <link rel="stylesheet" href="/stylesheets/perfil.css"> 
+</head>
+<body>
 
 <%- include("header", { user: user }) %>
+
+<% if (typeof success !== 'undefined') { %>
+  <div class="alerta-exito"><%= success %></div>
+<% } %>
+<% if (typeof error !== 'undefined') { %>
+  <div class="alerta-error"><%= error %></div>
+<% } %>
+
+<% if (success) { %>
+  <div class="alerta-exito"><%= success %></div>
+<% } %>
+<% if (error) { %>
+  <div class="alerta-error"><%= error %></div>
+<% } %>
+
 
 <div class="perfil-container">
   <div class="sidebar">
@@ -62,12 +80,16 @@
     <div class="pedido-box">
       <p><strong>Fecha:</strong> <%= pedido.fecha %></p>
       <p><strong>Estado:</strong> <%= pedido.estado %></p>
+      <% if (pedido.estado === 'Devolución denegada' && pedido.devolucion?.comentarioAdmin) { %>
+        <p style="color: #dc3545;"><strong>Motivo del rechazo:</strong> <%= pedido.devolucion.comentarioAdmin %></p>
+      <% } %>
+      
       <p><strong>Total:</strong> <%= pedido.total?.toFixed(2) || "0.00" %>€</p>
 
       <div class="productos-pedido">
         <% pedido.productos.forEach(p => { %>
           <div class="producto-card">
-            <img src="<%= p.producto.imagenes[0]?.url || '/images/default.jpg' %>" alt="Imagen de <%= p.producto.nombre %>" width="100">
+            <img src="<%= p.producto.imagenes?.[0] || '/images/default.jpg' %>" alt="Imagen de <%= p.producto.nombre %>" width="100">
             <p><%= p.producto.nombre %></p>
             <p>Talla: <%= p.talla %></p>
             <p>Cantidad: <%= p.cantidad %></p>
@@ -75,9 +97,63 @@
           </div>
         <% }); %>
       </div>
+      <br>
+      
+      <div class="acciones-pedido">
+        <form action="/cancelar-pedido/<%= pedido._id %>" method="POST">
+          <button type="submit" class="btn-cancelar">Cancelar pedido</button>
+        </form>
+      </div>
+      <br>
+
+      <% if (pedido.estado === 'Entregado') { %>
+        <button class="btn-devolver" onclick="abrirModal('<%= pedido._id %>')">Solicitar devolución</button>
+      
+        <!-- Modal -->
+        <div id="modal-<%= pedido._id %>" class="modal-devolucion hidden">
+          <div class="modal-contenido">
+            <h3>Motivo de la devolución</h3>
+            <br>
+            <form action="/devolver-pedido/<%= pedido._id %>" method="POST" onsubmit="return mostrarConfirmacion()">
+              <label for="motivo">Selecciona un motivo:</label>
+              <select name="motivo" required>
+                <option value="Producto defectuoso">Producto defectuoso</option>
+                <option value="No era lo que esperaba">No era lo que esperaba</option>
+                <option value="Error en el pedido">Error en el pedido</option>
+                <option value="Otro">Otro</option>
+              </select>
+              <br>
+      
+              <label for="comentario">Comentario adicional:</label>
+              <br>
+              <textarea name="comentario" rows="15" cols="50"></textarea>
+              <br>
+      
+              <div class="modal-botones">
+                <button type="submit" class="btn-enviar">Enviar</button>
+                <button type="button" onclick="cerrarModal('<%= pedido._id %>')">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      <% } %>
+      
+      
     </div>
   <% }) %>
 <% } %>
 
   </div>
 </div>
+</body>
+</html>
+<script>
+  function abrirModal(id) {
+    document.getElementById('modal-' + id).classList.remove('hidden');
+  }
+
+  function cerrarModal(id) {
+    document.getElementById('modal-' + id).classList.add('hidden');
+  }
+</script>
+

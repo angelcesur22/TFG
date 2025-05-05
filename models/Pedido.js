@@ -9,7 +9,7 @@ const PedidoSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
         nombre: String,
         marca: String,
-        imagenes: [String] // ✅ añadimos esto
+        imagenes: [String]
       },
       cantidad: Number,
       talla: String,
@@ -17,8 +17,35 @@ const PedidoSchema = new mongoose.Schema({
     }
   ],
   total: Number,
-  estado: { type: String, default: "Pendiente" },
-  fecha: { type: String }
+  estado: {
+    type: String,
+    enum: [
+      'Pendiente',
+      'En proceso',
+      'Enviado',
+      'Entregado',
+      'Cancelado',
+      'Solicitud de devolución',
+      'Pendiente de devolución',
+      'Devolución aceptada',
+      'Devolución denegada',
+      'Devuelto'
+    ],
+    default: 'Pendiente'
+  },
+  fecha: { type: String },
+
+  // ➕ Campo para registrar devolución
+  devolucion: {
+    motivo: String,
+    comentario: String,
+    comentarioAdmin: String,
+    fechaSolicitud: {
+      type: Date,
+      default: Date.now
+    }
+  }
 });
 
 module.exports = mongoose.model('Pedido', PedidoSchema);
+
