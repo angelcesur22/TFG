@@ -262,16 +262,25 @@ exports.crearPedido = async (req, res) => {
     // Buscar la talla en el array de tallas
    // Buscar el índice de la talla seleccionada
    const tallaIndex = producto.tallas.findIndex(t => t.talla === talla);
-
+   console.log('🔍 Talla recibida del formulario:', talla);
+   console.log('🧱 Tallas disponibles en producto:', producto.tallas);
+   
    if (tallaIndex === -1 || producto.tallas[tallaIndex].stock < cantidad) {
+     console.log('❌ Talla no encontrada o stock insuficiente');
      return res.status(400).send('Stock insuficiente para la talla seleccionada.');
    }
    
-   const tallaSeleccionada = producto.tallas[tallaIndex]; // ✅ ESTO FALTABA
+   const tallaSeleccionada = producto.tallas[tallaIndex];
+   console.log('✅ Talla seleccionada:', tallaSeleccionada.talla);
+   console.log('📦 Stock antes:', tallaSeleccionada.stock);
+   
+   // Restar
    tallaSeleccionada.stock -= cantidad;
+   console.log('📉 Nuevo stock:', tallaSeleccionada.stock);
    
    producto.markModified('tallas');
    await producto.save();
+   console.log('✅ Producto guardado con nuevo stock');
    
    
 
