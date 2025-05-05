@@ -260,15 +260,17 @@ exports.crearPedido = async (req, res) => {
     }
 
     // Buscar la talla en el array de tallas
-    const tallaSeleccionada = producto.tallas.find(t => t.talla === talla);
+   // Buscar el índice de la talla seleccionada
+    const tallaIndex = producto.tallas.findIndex(t => t.talla === talla);
 
-    if (!tallaSeleccionada || tallaSeleccionada.stock < cantidad) {
+    if (tallaIndex === -1 || producto.tallas[tallaIndex].stock < cantidad) {
       return res.status(400).send('Stock insuficiente para la talla seleccionada.');
     }
 
-    // Restar el stock
-    tallaSeleccionada.stock -= cantidad;
-    producto.markModified('tallas');
+    // Restar el stock directamente
+    producto.tallas[tallaIndex].stock -= cantidad;
+
+    producto.markModified('tallas'); // asegúrate de que Mongoose lo reconozca
     await producto.save();
 
     const nuevoPedido = new Pedido({
