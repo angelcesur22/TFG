@@ -61,7 +61,8 @@ exports.actualizarEstado = async (req, res) => {
       }
   
       console.log('🧪 Estado recibido:', estado);
-      if (estado.trim().toLowerCase() === 'pendiente de devolución'.toLowerCase()) {
+      if (estado.trim().toLowerCase() === 'pendiente de devolución')
+{
         await transporter.sendMail({
           from: process.env.EMAIL_USER,
           to: usuario.email,
@@ -69,20 +70,15 @@ exports.actualizarEstado = async (req, res) => {
           html: `
             <p>Hola ${usuario.nombre},</p>
             <p>Tu solicitud de devolución ha sido aprobada.</p>
-            <p>Por favor, sigue estos pasos para completar la devolución:</p>
             <ol>
               <li>Empaqueta el producto correctamente.</li>
               <li>Incluye una copia con el número de pedido: <strong>${pedido.numeroPedido}</strong>.</li>
               <li>Envíalo mediante el transportista de tu elección.</li>
             </ol>
-            <p>Una vez enviado, confirma la devolución haciendo clic en este enlace:</p>
             <a href="http://localhost:3000/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
             <p>Si tienes dudas, contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
           `
         });
-      
-        // Importante: salimos para que no mande el correo genérico también
-        return res.redirect('/admin/pedidos');
       } else {
         // EMAIL GENERAL para cualquier otro estado
         const mailOptions = {
@@ -107,7 +103,7 @@ exports.actualizarEstado = async (req, res) => {
   };
   
 
-exports.guardarCambios = async (req, res) => {
+  exports.guardarCambios = async (req, res) => {
     try {
         const estados = req.body.estados;
         const nodemailer = require('nodemailer');
@@ -131,34 +127,50 @@ exports.guardarCambios = async (req, res) => {
 
             if (!pedido) continue;
 
-            // 🔍 Solo actualiza y notifica si el estado ha cambiado
             if (pedido.estado !== nuevoEstado) {
                 pedido.estado = nuevoEstado;
                 await pedido.save();
 
                 const usuario = pedido.usuario;
-
                 if (!usuario || !usuario.email) continue;
 
-                const mailOptions = {
-                    from: process.env.EMAIL_USER,
-                    to: usuario.email,
-                    subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
-                    html: `
-                        <h1>¡Hola ${usuario.nombre}!</h1>
-                        <p>Tu pedido <strong>${pedido.numeroPedido}</strong> ha cambiado a estado: <strong>${nuevoEstado}</strong>.</p>
-                        <h3>Resumen del pedido:</h3>
-                        <ul>
-                            ${pedido.productos.map(p => `
-                                <li>${p.producto.nombre} - Talla ${p.talla} - Cantidad ${p.cantidad}</li>
-                            `).join('')}
-                        </ul>
-                        <br>
-                        <p>Gracias por confiar en nosotros 💙</p>
-                    `
-                };
-
-                await transporter.sendMail(mailOptions);
+                if (nuevoEstado.trim().toLowerCase() === 'pendiente de devolución') {
+                    await transporter.sendMail({
+                        from: process.env.EMAIL_USER,
+                        to: usuario.email,
+                        subject: '📦 Instrucciones para devolver tu pedido',
+                        html: `
+                            <p>Hola ${usuario.nombre},</p>
+                            <p>Tu solicitud de devolución ha sido aprobada.</p>
+                            <ol>
+                              <li>Empaqueta el producto correctamente.</li>
+                              <li>Incluye una copia con el número de pedido: <strong>${pedido.numeroPedido}</strong>.</li>
+                              <li>Envíalo mediante el transportista de tu elección.</li>
+                            </ol>
+                            <a href="http://localhost:3000/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
+                            <p>Si tienes dudas, contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
+                        `
+                    });
+                } else {
+                    const mailOptions = {
+                        from: process.env.EMAIL_USER,
+                        to: usuario.email,
+                        subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
+                        html: `
+                            <h1>¡Hola ${usuario.nombre}!</h1>
+                            <p>Tu pedido <strong>${pedido.numeroPedido}</strong> ha cambiado a estado: <strong>${nuevoEstado}</strong>.</p>
+                            <h3>Resumen del pedido:</h3>
+                            <ul>
+                                ${pedido.productos.map(p => `
+                                    <li>${p.producto.nombre} - Talla ${p.talla} - Cantidad ${p.cantidad}</li>
+                                `).join('')}
+                            </ul>
+                            <br>
+                            <p>Gracias por confiar en nosotros 💙</p>
+                        `
+                    };
+                    await transporter.sendMail(mailOptions);
+                }
             }
         }
 
@@ -430,6 +442,46 @@ exports.cancelarPedido = async (req, res) => {
       res.status(500).send('Error al procesar la devolución');
     }
   };
+  exports.confirmarDevolucion = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { email } = req.body;
+  
+      const pedido = await Pedido.findById(id).populate('usuario');
+  
+      if (!pedido) {
+        return res.status(404).send('Pedido no encontrado');
+      }
+  
+      if (pedido.usuario.email !== email) {
+        return res.status(400).send('El correo no coincide con el del pedido');
+      }
+  
+      pedido.estado = 'Devuelto';
+      await pedido.save();
+  
+      // ✉️ Enviar correo de confirmación
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: pedido.usuario.email,
+        subject: `📦 Confirmación de devolución para el pedido ${pedido.numeroPedido}`,
+        html: `
+          <h3>Hola ${pedido.usuario.nombre},</h3>
+          <p>Hemos recibido tu confirmación de devolución del pedido <strong>${pedido.numeroPedido}</strong>.</p>
+          <p>En breve revisaremos el paquete y gestionaremos el reembolso si corresponde.</p>
+          <br>
+          <p>Gracias por tu confianza,</p>
+          <p>Equipo Footlaces</p>
+        `
+      });
+  
+      res.send('✅ Devolución confirmada correctamente. Revisa tu correo para más detalles.');
+    } catch (error) {
+      console.error('❌ Error al confirmar devolución:', error);
+      res.status(500).send('Error al confirmar la devolución');
+    }
+  };
+  
   
   
   

@@ -1,16 +1,25 @@
-<!-- views/confirmarDevolucion.ejs -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Confirmar Devolución</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/index.css">
 </head>
 <body>
-  <h1>Confirmar Devolución</h1>
-  <form action="/confirmar-devolucion/<%= pedidoId %>" method="POST">
-    <label for="email">Introduce tu correo electrónico:</label>
-    <input type="email" name="email" id="email" required>
-    <button type="submit">Confirmar entrega</button>
-  </form>
+  <%- include('header') %>
+
+  <main class="contenedor-confirmacion">
+    <section class="formulario-devolucion">
+      <h1 class="titulo-seccion">Confirmar Devolución</h1>
+      <p>Por favor, introduce tu correo electrónico para confirmar que has devuelto el producto.</p>
+      <form action="/confirmar-devolucion/<%= pedidoId %>" method="POST" class="form-devolucion">
+        <label for="email">Correo electrónico</label>
+        <input type="email" name="email" id="email" required class="input-formulario">
+        <button type="submit" class="btn-principal">Confirmar entrega</button>
+      </form>
+    </section>
+  </main>
+
 </body>
 </html>

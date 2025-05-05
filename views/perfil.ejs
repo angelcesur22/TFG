@@ -9,13 +9,6 @@
 
 <%- include("header", { user: user }) %>
 
-<% if (typeof success !== 'undefined') { %>
-  <div class="alerta-exito"><%= success %></div>
-<% } %>
-<% if (typeof error !== 'undefined') { %>
-  <div class="alerta-error"><%= error %></div>
-<% } %>
-
 <% if (success) { %>
   <div class="alerta-exito"><%= success %></div>
 <% } %>
