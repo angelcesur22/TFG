@@ -245,50 +245,51 @@ const generarNumeroPedido = async () => {
 };
 
 exports.crearPedido = async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
+  const { productoId, cantidad, talla } = req.body;
+
+  try {
+    const producto = await Producto.findById(productoId);
+    const usuario = await User.findById(req.session.user.id);
+
+    if (!usuario || !producto) {
+      return res.status(404).send('Usuario o producto no encontrado.');
     }
 
-    const { productoId, cantidad } = req.body;
+    // Buscar la talla en el array de tallas
+    const tallaSeleccionada = producto.tallas.find(t => t.talla === talla);
 
-    try {
-        const producto = await Producto.findById(productoId);
-        const usuario = await User.findById(req.session.user.id);
+    if (!tallaSeleccionada || tallaSeleccionada.stock < cantidad) {
+      return res.status(400).send('Stock insuficiente para la talla seleccionada.');
+    }
 
-        if (!usuario) {
-            console.error('❌ Usuario no encontrado. Asegúrate de que req.session.user.id está presente.');
-            return res.status(404).send('Usuario no encontrado.');
-        }
+    // Restar el stock
+    tallaSeleccionada.stock -= cantidad;
+    producto.markModified('tallas');
+    await producto.save();
 
-        console.log('✅ Usuario encontrado: ', usuario);
-        console.log('📧 Correo del usuario: ', usuario.email || 'No se encontró un email asignado.');
+    const nuevoPedido = new Pedido({
+      usuario: usuario._id,
+      productos: [{
+        producto: {
+          _id: producto._id,
+          nombre: producto.nombre,
+          marca: producto.marca,
+          imagenes: producto.imagenes
+        },
+        cantidad: parseInt(cantidad),
+        talla: talla,
+        precio: tallaSeleccionada.precio
+      }],
+      total: tallaSeleccionada.precio * cantidad,
+      estado: 'Pendiente',
+      fecha: new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })
+    });
 
-        if (!producto) {
-            console.error('❌ Producto no encontrado.');
-            return res.status(404).send('Producto no encontrado.');
-        }
-
-        const nuevoPedido = new Pedido({
-            usuario: usuario._id,
-            productos: [{
-                producto: {
-                    _id: producto._id,
-                    nombre: producto.nombre,
-                    marca: producto.marca,
-                    imagenes: producto.imagenes
-                  },
-                  
-              cantidad: parseInt(cantidad),
-              talla: "Sin especificar",
-              precio: producto.precio
-            }],
-            total: producto.precio * cantidad,
-            estado: 'Pendiente',
-            fecha: new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })
-          });
-          
-
-        await nuevoPedido.save();
+    await nuevoPedido.save();
 
         console.log('✅ Pedido creado con éxito.');
 

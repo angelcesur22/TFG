@@ -15,6 +15,8 @@ const { verRopa } = require('../controllers/productoController');
 const { verOfertas } = require('../controllers/productoController');
 const { devolverPedido } = require('../controllers/pedidoController');
 const adminController = require('../controllers/adminController');
+const User = require('../models/User');
+
 
 router.post('/devolver-pedido/:id', devolverPedido);
 
@@ -175,6 +177,15 @@ router.get('/confirmar-devolucion/:id', async (req, res) => {
 });
 
 router.post('/confirmar-devolucion/:id', pedidoController.confirmarDevolucion);
+router.get('/wishlist', verificarSesion, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.user._id).populate('wishlist');
+    res.render('wishlist', { productos: user.wishlist, user: req.session.user });
+  } catch (error) {
+    console.error('Error al cargar wishlist:', error);
+    res.status(500).send('Error al cargar la lista de deseos');
+  }
+});
 
 module.exports = router;
 

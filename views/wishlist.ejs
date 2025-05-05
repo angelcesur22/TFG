@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Deseos - FootLaces</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/sneaker.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="/javascript/wishlist.js"></script>
+</head>
+<body>
+<%- include('header') %>
+
+<main class="sneakers-wrapper">
+  <h1 class="titulo-seccion">Lista de Deseos</h1>
+
+  <section class="productos-grid">
+    <% if (productos.length === 0) { %>
+      <p>No tienes productos en tu lista de deseos.</p>
+    <% } else { %>
+      <% productos.forEach(p => { %>
+        <a href="/producto/<%= p._id %>" class="card-producto-link">
+          <div class="card-producto">
+            <% const liked = user?.wishlist?.some(w => w.toString() === p._id.toString()); %>
+            <button class="btn-like" data-id="<%= p._id %>">
+              <i class="<%= liked ? 'fas' : 'far' %> fa-heart"></i>
+            </button>
+            <% if (p.etiqueta && p.etiqueta !== 'none') { %>
+              <span class="etiqueta-tiempo"><%= p.etiqueta.toUpperCase() %></span>
+            <% } %>
+            <img src="<%= p.imagenes[0] %>" alt="<%= p.nombre %>" class="img-producto">
+            <h3 class="nombre-producto"><%= p.nombre %></h3>
+            <%
+              let precios = p.tallas.map(t => t.precio);
+              let precioMinimo = Math.min(...precios);
+            %>
+            <p class="precio-producto">Desde <%= precioMinimo %>€</p>
+          </div>
+        </a>
+      <% }) %>
+    <% } %>
+  </section>
+</main>
+
+</body>
+</html>
