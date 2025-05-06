@@ -23,7 +23,8 @@ exports.checkout = async (req, res) => {
           product_data: {
             name: `${producto.nombre} - Talla ${talla}`
           },
-          unit_amount: precio
+          unit_amount: Math.round(precio * 100)
+
         },
         quantity: item.cantidad
       };

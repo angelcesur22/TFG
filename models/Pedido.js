@@ -9,7 +9,7 @@ const PedidoSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
         nombre: String,
         marca: String,
-        imagenes: [String]
+        foto: String
       },
       cantidad: Number,
       talla: String,

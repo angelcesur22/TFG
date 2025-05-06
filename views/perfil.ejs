@@ -71,6 +71,7 @@
 <% } else { %>
   <% pedidos.forEach(pedido => { %>
     <div class="pedido-box">
+      <p><strong>Número de pedido:</strong> <%= pedido.numeroPedido %></p>
       <p><strong>Fecha:</strong> <%= pedido.fecha %></p>
       <p><strong>Estado:</strong> <%= pedido.estado %></p>
       <% if (pedido.estado === 'Devolución denegada' && pedido.devolucion?.comentarioAdmin) { %>
@@ -82,7 +83,7 @@
       <div class="productos-pedido">
         <% pedido.productos.forEach(p => { %>
           <div class="producto-card">
-            <img src="<%= p.producto.imagenes?.[0] %>" alt="<%= p.producto.nombre %>" width="100">
+            <img src="<%= p.producto.foto %>" alt="<%= p.producto.nombre %>" style="max-width: 100px; height: auto; border-radius: 8px;">
             <p><%= p.producto.nombre %></p>
             <p>Talla: <%= p.talla %></p>
             <p>Cantidad: <%= p.cantidad %></p>
