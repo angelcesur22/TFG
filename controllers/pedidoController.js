@@ -258,8 +258,10 @@ exports.crearPedido = async (req, res) => {
     if (!usuario || !producto) {
       return res.status(404).send('Usuario o producto no encontrado.');
     }
-
-    // Buscar la talla en el array de tallas
+    if (!producto.imagenes || !producto.imagenes.length) {
+      console.warn('⚠️ Producto sin imagen al intentar crear pedido:', producto.nombre);
+      return res.status(400).send('Este producto no tiene imagen asignada.');
+    }
    // Buscar el índice de la talla seleccionada
    const tallaIndex = producto.tallas.findIndex(t => t.talla === talla);
    console.log('🔍 Talla recibida del formulario:', talla);
@@ -282,7 +284,8 @@ exports.crearPedido = async (req, res) => {
    await producto.save();
    console.log('✅ Producto guardado con nuevo stock');
    
-    console.log('🖼 Imágenes del producto:', producto.imagenes);
+   console.log('🖼 Imágenes del producto:', producto.imagenes);
+
 
     const nuevoPedido = new Pedido({
       usuario: usuario._id,
@@ -291,8 +294,9 @@ exports.crearPedido = async (req, res) => {
           _id: producto._id,
           nombre: producto.nombre,
           marca: producto.marca,
-          imagenes: producto.imagenes
+          foto: producto.imagenes[0]
         },
+        
         cantidad: parseInt(cantidad),
         talla: talla,
         precio: tallaSeleccionada.precio
@@ -495,7 +499,3 @@ exports.cancelarPedido = async (req, res) => {
       res.status(500).send('Error al confirmar la devolución');
     }
   };
-  
-  
-  
-  

@@ -15,7 +15,7 @@ exports.checkout = async (req, res) => {
     const line_items = user.carrito.map(item => {
       const producto = item.producto;
       const talla = item.talla;
-      const precio = 50; // 0,50€ en céntimos
+      const precio = item.precio; // 0,50€ en céntimos
 
       return {
         price_data: {

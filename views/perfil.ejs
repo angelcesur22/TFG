@@ -82,7 +82,7 @@
       <div class="productos-pedido">
         <% pedido.productos.forEach(p => { %>
           <div class="producto-card">
-            <img src="<%= p.producto.imagenes?.[0] || '/images/default.jpg' %>" alt="Imagen de <%= p.producto.nombre %>" width="100">
+            <img src="<%= p.producto.foto || '/images/default.jpg' %>">
             <p><%= p.producto.nombre %></p>
             <p>Talla: <%= p.talla %></p>
             <p>Cantidad: <%= p.cantidad %></p>
