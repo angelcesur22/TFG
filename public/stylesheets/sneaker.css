@@ -332,25 +332,39 @@ body {
 /* Centrar la caja de filtros */
 .filters {
   margin: 0 auto;
-  width: 90%;
+  width: 24%;
 }
 
 /* Centrar el contenedor grid */
 .productos-grid {
   justify-content: center;
 }
-
-/* Asegurar que la tarjeta no sea demasiado ancha ni demasiado estrecha */
-.card-producto {
-  max-width: 280px;
-  width: 100%;
-  width: 61%;
 }
+.card-producto {
+    width: 200px;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 12px;
+    position: relative;
+    background-color: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+}
+/* Asegurar que la tarjeta no sea demasiado ancha ni demasiado estrecha */
+
 @media (max-width: 768px) {
   .menu-completo nav a, .menu-completo input[type="text"], .menu-completo button {
       width: 100%;
       max-width: 280px;
       text-align: center;
       margin: 0 auto;
+  }
+  .card-producto {
+    max-width: 280px;
+    width: 100%;
+    width: 61%;
+  }
+  .filters {
+    margin: 0 auto;
+    width: 90%;
   }
 }
