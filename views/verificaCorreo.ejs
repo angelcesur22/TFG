@@ -22,11 +22,13 @@
   </style>
 </head>
 <body>
+  <%- include('partials/header') %>
   <div class="mensaje">
     <img src="/images/LogoTFL.png" alt="Logo" width="100">
     <h2>¡Gracias por registrarte!</h2>
     <p>Hemos enviado un correo de verificación a <strong><%= email %></strong>.</p>
     <p>Por favor, revisá tu bandeja de entrada y hacé clic en el enlace para activar tu cuenta.</p>
   </div>
+  <%- include('partials/footer') %>
 </body>
 </html>
