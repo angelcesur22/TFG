@@ -139,4 +139,7 @@ h1 {
   .carrito-total {
     text-align: center;
   }
+  .btn-eliminar {
+    margin-top: -122px;
+  }
 }

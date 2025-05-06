@@ -263,3 +263,94 @@ body {
   color: grey;
   margin-right: 5px;
 }
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .orden-form {
+    width: 100%;
+  }
+
+  .orden-form select {
+    width: 100%;
+  }
+
+  .content-layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .filters {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+  }
+
+  .productos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    justify-items: center;
+  }
+
+  .card-producto {
+    padding: 10px;
+  }
+
+  .card-producto h3 {
+    font-size: 14px;
+  }
+
+  .card-producto .precio-producto {
+    font-size: 13px;
+  }
+
+  .btn-like {
+    font-size: 18px;
+    top: 8px;
+    right: 8px;
+  }
+}
+/* Centrar contador */
+.top-bar p {
+  text-align: center;
+  width: 100%;
+  font-weight: 600;
+}
+
+/* Centrar el texto del contador */
+.top-bar p {
+  text-align: center;
+  width: 100%;
+  font-weight: 600;
+}
+
+/* Centrar la caja de filtros */
+.filters {
+  margin: 0 auto;
+  width: 90%;
+}
+
+/* Centrar el contenedor grid */
+.productos-grid {
+  justify-content: center;
+}
+
+/* Asegurar que la tarjeta no sea demasiado ancha ni demasiado estrecha */
+.card-producto {
+  max-width: 280px;
+  width: 100%;
+  width: 61%;
+}
+@media (max-width: 768px) {
+  .menu-completo nav a, .menu-completo input[type="text"], .menu-completo button {
+      width: 100%;
+      max-width: 280px;
+      text-align: center;
+      margin: 0 auto;
+  }
+}

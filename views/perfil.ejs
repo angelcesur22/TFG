@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Footlaces | Perfil</title>
   <link rel="stylesheet" href="/stylesheets/perfil.css"> 
+  <link rel="stylesheet" href="/stylesheets/header.css">
 </head>
 <body>
 
-<%- include("header", { user: user }) %>
+<%- include('partials/header', { user: user }) %>
 
 <% if (success) { %>
   <div class="alerta-exito"><%= success %></div>

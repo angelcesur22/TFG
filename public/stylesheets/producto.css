@@ -176,3 +176,21 @@ body {
     transition: 0.2s ease;
   }
   
+  @media (max-width: 768px) {
+    .producto-detalle-container {
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      gap: 2rem;
+    }
+  
+    .producto-imagen img {
+      max-width: 100%;
+      height: auto;
+    }
+  
+    .producto-info {
+      width: 100%;
+    }
+  }
+  

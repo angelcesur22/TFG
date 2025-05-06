@@ -184,4 +184,23 @@
     padding: 6px 12px;
     border-radius: 4px;
   }
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+  
+    .perfil-container {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  
+    .perfil-main {
+      width: 100%;
+    }
+  
+    .resumen-cajas {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
   

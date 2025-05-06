@@ -207,5 +207,10 @@
 }
 
 
-
+@media (max-width: 600px) {
+  .card-producto {
+  margin-left: 59px;
+  margin-right: 59px;
+  } 
+}
 
