@@ -282,7 +282,7 @@ exports.crearPedido = async (req, res) => {
    await producto.save();
    console.log('✅ Producto guardado con nuevo stock');
    
-   
+    console.log('🖼 Imágenes del producto:', producto.imagenes);
 
     const nuevoPedido = new Pedido({
       usuario: usuario._id,
