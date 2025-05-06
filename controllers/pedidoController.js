@@ -305,6 +305,7 @@ exports.crearPedido = async (req, res) => {
       estado: 'Pendiente',
       fecha: new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' })
     });
+    console.log('🖼 Imagen que se guardará en el pedido:', producto.imagenes[0]);
 
     await nuevoPedido.save();
 

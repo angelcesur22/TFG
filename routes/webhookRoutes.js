@@ -39,12 +39,14 @@ router.post('/stripe', bodyParser.raw({ type: 'application/json' }), async (req,
         producto: {
           _id: item.producto._id,
           nombre: item.producto.nombre,
-          marca: item.producto.marca
+          marca: item.producto.marca,
+          foto: item.producto.imagenes?.[0] || '/images/default.jpg' // ✅ Añadir imagen
         },
         cantidad: item.cantidad,
         talla: item.talla,
         precio: item.producto.tallas.find(t => t.talla === item.talla)?.precio || item.producto.precio || 0
       }));
+      
 
       const fechaFormateada = new Date().toLocaleString('es-ES', {
         timeZone: 'Europe/Madrid',
