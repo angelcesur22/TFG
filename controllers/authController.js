@@ -88,7 +88,7 @@ exports.resetPassword = async (req, res) => {
     try {
         const usuario = await User.findOne({ resetToken: token, resetTokenExp: { $gt: Date.now() } });
 
-        if (!usuario) return res.render('reset-password', { error: 'Token inválido o expirado' });
+        if (!usuario) return res.status(400).json({ success: false, error: 'Token inválido o expirado' });
 
         usuario.contraseña = await bcrypt.hash(nuevaContraseña, 10);
         usuario.resetToken = undefined;
@@ -96,11 +96,11 @@ exports.resetPassword = async (req, res) => {
 
         await usuario.save();
 
-        res.render('login', { message: 'Contraseña restablecida correctamente' });
+        res.json({ success: true, message: 'Contraseña restablecida correctamente' });
 
     } catch (error) {
         console.error('Error en resetPassword:', error);
-        res.status(500).render('reset-password', { error: 'Error al restablecer la contraseña' });
+        res.status(500).json({ success: false, error: 'Error al restablecer la contraseña' });
     }
 };
 
