@@ -55,6 +55,14 @@ app.use(express.static('public'));
 app.get('/pcookies', (req, res) => {
   res.render('pcookies', { user: req.user || null });
 });
+
+app.get('/aviso-legal', (req, res) => {
+  res.render('aviso-legal', { user: req.user || null });
+});
+
+app.get('/politica-de-privacidad', (req, res) => {
+  res.render('politica-de-privacidad', { user: req.user || null });
+});
 // Middleware
 app.use(logger('dev'));
 // ⚠️ Solo usar express.json() si NO es webhook

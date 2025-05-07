@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso Legal - Proyecto Educativo</title>
+    <style>
+    
+    .legal-container {
+    max-width: 800px; /* Ancho máximo para mejor lectura */
+    width: 90%;
+    margin: 2rem auto; /* Centrado */
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Sidebar de navegación lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #333;
+    color: #ffffff;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebar h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.sidebar a:hover {
+    color: #3B82F6;
+}
+
+.legal-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.legal-content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.legal-content h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: #333;
+}
+
+.legal-content p {
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+    </style>
+</head>
+<%- include('partials/header') %>
+
+<body>
+
+
+<div class="legal-container">
+    <h1>Aviso Legal</h1>
+    <p>El presente aviso legal regula el uso del sitio web del proyecto educativo (en adelante, "el sitio web"). Al acceder y utilizar este sitio web, el usuario acepta los términos y condiciones establecidos en este aviso legal.</p>
+
+    <h2>1. Identificación del Responsable</h2>
+    <p>Responsable: Proyecto Educativo<br>
+    Dirección: Calle Ejemplo, 123, Ciudad, País<br>
+    Teléfono: +34 123 456 789<br>
+    Correo Electrónico: contacto@proyectoeducativo.com</p>
+
+    <h2>2. Objeto del Sitio Web</h2>
+    <p>El sitio web tiene como objetivo proporcionar recursos educativos de forma gratuita, dirigidos a estudiantes, docentes y otros usuarios interesados. Este proyecto es de carácter educativo y no tiene fines comerciales.</p>
+
+    <h2>3. Condiciones de Uso</h2>
+    <p>El usuario se compromete a utilizar el sitio web de manera adecuada, respetando la legislación vigente y evitando cualquier acción que pueda causar daños a terceros o al propio sitio web.</p>
+
+    <h2>4. Exención de Responsabilidad por Contenido</h2>
+    <p>El contenido del sitio web se ofrece con fines educativos. No garantizamos la exactitud o actualidad de los contenidos y no nos hacemos responsables de los daños que puedan derivarse del uso de dicha información.</p>
+
+    <h2>5. Propiedad Intelectual e Industrial</h2>
+    <p>Todo el contenido del sitio web (textos, imágenes, gráficos, logotipos, vídeos) es propiedad del proyecto educativo o de terceros que han autorizado su uso. El uso de estos materiales se realiza exclusivamente con fines educativos y sin ánimo de lucro.</p>
+
+    <h2>6. Protección de Datos Personales</h2>
+    <p>El sitio web cumple con la normativa de protección de datos personales, conforme al Reglamento General de Protección de Datos (RGPD). Los datos personales recopilados serán tratados conforme a lo dispuesto en nuestra <a href="/politica-de-privacidad">Política de Privacidad</a>.</p>
+
+    <h2>7. Uso de Imágenes y Recursos Audiovisuales</h2>
+    <p>Las imágenes y recursos audiovisuales utilizados en el sitio web son utilizados con fines educativos. En caso de que alguna imagen o recurso tenga derechos de autor, se utilizará bajo los principios de uso legítimo (fair use) para la educación. Si eres titular de derechos y consideras que se ha infringido tu propiedad intelectual, por favor contáctanos para su eliminación.</p>
+
+    <h2>8. Enlaces Externos</h2>
+    <p>El sitio web puede contener enlaces a sitios web de terceros. No nos hacemos responsables del contenido ni de las políticas de privacidad de dichos sitios.</p>
+
+    <h2>9. Legislación Aplicable y Jurisdicción</h2>
+    <p>Este aviso legal se rige por la legislación vigente en España. Cualquier controversia se someterá a los juzgados y tribunales de la ciudad del responsable del sitio web.</p>
+
+    <a href="/" class="btn-back">Volver al inicio</a>
+</div>
+
+
+
+</body>
+<%- include('partials/footer') %>
+</html>
