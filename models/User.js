@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema({
   verificado: { type: Boolean, default: false },
   verificacionToken: String,
   rol: { type: String, default: 'usuario' },
+  resetToken: String, // ✅ Campo para el token de restablecimiento
+  resetTokenExp: Date, // ✅ Fecha de expiración del token
   pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pedido' }],
   carrito: [
     {
