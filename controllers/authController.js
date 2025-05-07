@@ -64,7 +64,7 @@ exports.forgotPassword = async (req, res) => {
         usuario.resetTokenExp = Date.now() + 3600000; // 1 hora
         await usuario.save();
 
-        const resetUrl = `${process.env.BASE_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
+        const resetUrl = `https://www.footlaces.es/reset-password?token=${token}`;
 
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
@@ -83,8 +83,7 @@ exports.forgotPassword = async (req, res) => {
 
 // 🔒 Restablecer contraseña
 exports.resetPassword = async (req, res) => {
-    const { token } = req.query;
-    const { nuevaContraseña } = req.body;
+    const { token, nuevaContraseña } = req.body;
 
     try {
         const usuario = await User.findOne({ resetToken: token, resetTokenExp: { $gt: Date.now() } });

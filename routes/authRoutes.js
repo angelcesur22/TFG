@@ -19,7 +19,12 @@ router.get('/logout', (req, res) => {
 router.get('/forgot-password', (req, res) => res.render('forgot-password', { error: null }));
 router.post('/forgot-password', authController.forgotPassword);
 
-router.get('/reset-password', (req, res) => res.render('reset-password', { error: null }));
+router.get('/reset-password', (req, res) => {
+  const { token } = req.query;
+  if (!token) return res.render('reset-password', { error: 'Token inválido o expirado' });
+  res.render('reset-password', { error: null, token });
+});
+
 router.post('/reset-password', authController.resetPassword);
 
 
