@@ -52,6 +52,7 @@ exports.login = async (req, res) => {
         res.render('login', { error: 'Ocurrió un error al iniciar sesión' });
     }
 };
+// 🔒 Enviar correo de recuperación de contraseña
 exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
 
@@ -63,6 +64,8 @@ exports.forgotPassword = async (req, res) => {
         usuario.resetToken = token;
         usuario.resetTokenExp = Date.now() + 3600000; // 1 hora
         await usuario.save();
+
+        console.log(`✅ Token generado y guardado: ${token}`);
 
         const resetUrl = `https://www.footlaces.es/reset-password?token=${token}`;
 
@@ -85,10 +88,17 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
     const { token, nuevaContraseña } = req.body;
 
+    console.log(`✅ Token recibido en el formulario: ${token}`);
+
     try {
         const usuario = await User.findOne({ resetToken: token, resetTokenExp: { $gt: Date.now() } });
 
-        if (!usuario) return res.status(400).json({ success: false, error: 'Token inválido o expirado' });
+        if (!usuario) {
+            console.error('❌ Usuario no encontrado o token expirado.');
+            return res.status(400).json({ success: false, error: 'Token inválido o expirado' });
+        }
+
+        console.log(`✅ Usuario encontrado: ${usuario.email}`);
 
         usuario.contraseña = await bcrypt.hash(nuevaContraseña, 10);
         usuario.resetToken = undefined;
