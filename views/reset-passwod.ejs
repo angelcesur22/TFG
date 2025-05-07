@@ -1,0 +1,49 @@
+<!-- reset-password.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Restablecer Contraseña</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="/javascript/theme.js"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <img src="/images/LogoTFL.png" alt="Logo The Footlaces" width="150">
+    </div>
+
+    <h2>Restablecer Contraseña</h2>
+
+    <form method="POST" action="/reset-password">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+
+      <input type="password" name="nuevaContraseña" placeholder="Nueva contraseña" required>
+      <input type="password" name="confirmarContraseña" placeholder="Confirmar contraseña" required>
+
+      <button type="submit">Cambiar contraseña</button>
+    </form>
+  </div>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const nuevaContraseña = form.nuevaContraseña.value;
+      const confirmarContraseña = form.confirmarContraseña.value;
+
+      if (nuevaContraseña !== confirmarContraseña) {
+        alert("Las contraseñas no coinciden");
+        return;
+      }
+
+      form.submit();
+    });
+  </script>
+</body>
+</html>

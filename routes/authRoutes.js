@@ -16,6 +16,8 @@ router.get('/logout', (req, res) => {
     res.redirect('/login');
   });
 });
+router.get('/forgot-password', (req, res) => res.render('forgot-password', { error: null }));
+router.post('/forgot-password', authController.forgotPassword);
 
 // ✅ Usar funciones del controlador en lugar de código directos
 router.post('/register', authController.registerUser);

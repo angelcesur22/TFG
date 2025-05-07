@@ -63,6 +63,9 @@ app.get('/aviso-legal', (req, res) => {
 app.get('/politica-de-privacidad', (req, res) => {
   res.render('politica-de-privacidad', { user: req.user || null });
 });
+
+
+
 // Middleware
 app.use(logger('dev'));
 // ⚠️ Solo usar express.json() si NO es webhook

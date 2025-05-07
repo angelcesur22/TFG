@@ -52,6 +52,58 @@ exports.login = async (req, res) => {
         res.render('login', { error: 'Ocurrió un error al iniciar sesión' });
     }
 };
+exports.forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const usuario = await User.findOne({ email });
+        if (!usuario) return res.render('forgot-password', { error: 'Correo no registrado' });
+
+        const token = crypto.randomBytes(32).toString('hex');
+        usuario.resetToken = token;
+        usuario.resetTokenExp = Date.now() + 3600000; // 1 hora
+        await usuario.save();
+
+        const resetUrl = `${process.env.BASE_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Restablecimiento de contraseña',
+            html: `<p>Haz clic en el enlace para restablecer tu contraseña:</p><a href="${resetUrl}">Restablecer contraseña</a>`
+        });
+
+        res.json({ message: `Se ha enviado un correo a: ${email}` });
+
+    } catch (error) {
+        console.error('Error en forgotPassword:', error);
+        res.status(500).render('forgot-password', { error: 'Error al enviar el correo de recuperación' });
+    }
+};
+
+// 🔒 Restablecer contraseña
+exports.resetPassword = async (req, res) => {
+    const { token } = req.query;
+    const { nuevaContraseña } = req.body;
+
+    try {
+        const usuario = await User.findOne({ resetToken: token, resetTokenExp: { $gt: Date.now() } });
+
+        if (!usuario) return res.render('reset-password', { error: 'Token inválido o expirado' });
+
+        usuario.contraseña = await bcrypt.hash(nuevaContraseña, 10);
+        usuario.resetToken = undefined;
+        usuario.resetTokenExp = undefined;
+
+        await usuario.save();
+
+        res.render('login', { message: 'Contraseña restablecida correctamente' });
+
+    } catch (error) {
+        console.error('Error en resetPassword:', error);
+        res.status(500).render('reset-password', { error: 'Error al restablecer la contraseña' });
+    }
+};
 
 exports.registerUser = async (req, res) => {
   const { nombre, email, contraseña, confirmarContraseña } = req.body;
