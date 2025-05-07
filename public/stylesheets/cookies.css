@@ -1,0 +1,83 @@
+.cookie-container {
+    max-width: 800px;
+    margin: auto;
+    background: var(--card-bg, #ffffff);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: background 0.3s, color 0.3s;
+}
+
+h2 {
+    text-align: center;
+    color: var(--text-color, #333);
+}
+
+.accordion {
+    margin-top: 1rem;
+}
+
+.accordion-item {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.accordion-header {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    text-align: left;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-header::after {
+    content: "+";
+    font-size: 18px;
+}
+
+.accordion-header.active::after {
+    content: "-";
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: var(--card-bg, #f9f9f9);
+    color: var(--text-color, #333);
+    padding: 0 12px;
+}
+
+.accordion-content ul {
+    padding: 12px;
+    list-style-type: none;
+    margin: 0;
+}
+
+/* MODO OSCURO */
+:root[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --card-bg: #1e1e1e;
+}
+
+:root[data-theme="dark"] .cookie-container {
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+:root[data-theme="dark"] .accordion-header {
+    background-color: #333;
+}
+
+:root[data-theme="dark"] .accordion-content {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+}

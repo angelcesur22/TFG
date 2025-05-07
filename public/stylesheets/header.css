@@ -300,5 +300,92 @@ button {
     }
   }
     
-
+  body {
+    background-color: #ffffff;
+    color: #111111;
+    transition: background 0.3s, color 0.3s;
+  }
   
+  header, footer {
+    background-color: #f0f0f0;
+    color: #111;
+  }
+  
+  /* Elementos específicos */
+  .texto-header {
+    color: #333;
+  }
+  
+  header a {
+    color: #111;
+  }
+  
+  header a:hover {
+    color: #007bff;
+  }
+  
+  /* MODO OSCURO */
+  :root[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --header-footer-bg: #1e1e1e;
+    --link-color: #bbbbbb;
+    --link-hover: #ffffff;
+    --card-bg: #1f1f1f;
+    --border-color: #333;
+    --input-bg: #2a2a2a;
+    --input-border: #444;
+  }
+  
+  /* Aplicando el modo oscuro */
+  :root[data-theme="dark"] body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  :root[data-theme="dark"] header, 
+  :root[data-theme="dark"] footer {
+    background-color: var(--header-footer-bg);
+    color: var(--text-color);
+  }
+  
+  :root[data-theme="dark"] header a {
+    color: var(--link-color);
+  }
+  
+  :root[data-theme="dark"] header a:hover {
+    color: var(--link-hover);
+  }
+  
+  :root[data-theme="dark"] .texto-header {
+    color: var(--text-color);
+  }
+  
+  /* Tarjetas y otros elementos */
+  :root[data-theme="dark"] .card-producto {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+  }
+  
+  :root[data-theme="dark"] .card-producto h3,
+  :root[data-theme="dark"] .card-producto p {
+    color: var(--text-color);
+  }
+  
+  :root[data-theme="dark"] input,
+  :root[data-theme="dark"] textarea,
+  :root[data-theme="dark"] select {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+  }
+  
+  :root[data-theme="dark"] .btn {
+    background-color: #444;
+    color: #fff;
+    border: 1px solid var(--input-border);
+  }
+  
+  :root[data-theme="dark"] .btn:hover {
+    background-color: #555;
+  }

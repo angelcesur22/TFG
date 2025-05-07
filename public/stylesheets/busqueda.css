@@ -1,122 +1,157 @@
 /* Input de búsqueda */
 .input-busqueda {
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    width: 250px;
-    outline: none;
-  }
-  
-  /* Modal de búsqueda */
-  .modal-busqueda {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-  
-  .modal-busqueda.hidden {
-    display: none;
-  }
-  
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 250px;
+  outline: none;
+  background-color: #fff;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Modo oscuro para el input */
+:root[data-theme="dark"] .input-busqueda {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+/* Modal de búsqueda (claro) */
+.modal-busqueda {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-busqueda.hidden {
+  display: none;
+}
+
+/* Contenido del modal (modo claro) */
+.modal-contenido {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 1000px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Modo oscuro para el modal */
+:root[data-theme="dark"] .modal-contenido {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+#cerrar-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #888;
+}
+
+#cerrar-modal:hover {
+  color: #111;
+}
+
+/* Resultados dentro del modal */
+#modal-busqueda .resultados-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.modal-producto-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, background 0.3s;
+  text-align: center;
+  position: relative;
+}
+
+/* Modo oscuro para productos del modal */
+:root[data-theme="dark"] .modal-producto-card {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+.modal-producto-card:hover {
+  transform: translateY(-5px);
+}
+
+.modal-producto-card img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Títulos y texto en modo oscuro */
+.modal-producto-card .nombre-producto {
+  margin: 10px 0 5px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: inherit;
+}
+
+.modal-producto-card .precio-producto {
+  font-weight: bold;
+  color: #111;
+}
+
+:root[data-theme="dark"] .modal-producto-card .precio-producto {
+  color: #f0f0f0;
+}
+
+/* Etiqueta de nuevo en modo oscuro */
+.modal-producto-card .etiqueta-tiempo {
+  background-color: crimson;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+/* Responsive (mantiene el diseño móvil) */
+@media (max-width: 600px) {
   .modal-contenido {
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 1000px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-  }
-  
-  #cerrar-modal {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #888;
-  }
-  
-  #cerrar-modal:hover {
-    color: black;
-  }
-  
-  /* SOLO para resultados dentro del modal */
-  #modal-busqueda .resultados-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
-  .modal-producto-card {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease;
-    text-align: center;
-    position: relative;
-  }
-  
-  .modal-producto-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .modal-producto-card img {
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-  }
-  
-  .modal-producto-card .nombre-producto {
-    margin: 10px 0 5px;
-    font-size: 16px;
-    font-weight: 600;
-    height: 40px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  
-  .modal-producto-card .precio-producto {
-    font-weight: bold;
-    color: #111;
-  }
-  
-  .modal-producto-card .etiqueta-tiempo {
-    background-color: crimson;
-    color: white;
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  }
-  
-  @media (max-width: 600px) {
-    .modal-contenido {
       padding: 15px;
-    }
-    .input-busqueda {
+  }
+  .input-busqueda {
       width: 100%;
-    }
   }
-  .hidden {
-    display: none !important;
-  }
-  .img-producto {
-    width: 100%;
-    height: 160px;
-    object-fit: contain;
-    border-radius: 0.5rem;
-  }
-      
+}
+
+.hidden {
+  display: none !important;
+}
+
+.img-producto {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 0.5rem;
+}

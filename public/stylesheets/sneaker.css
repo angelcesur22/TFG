@@ -41,6 +41,7 @@ body {
 }
 
 /* Filtros */
+/* Filtros - Modo claro (por defecto) */
 .filters {
   width: 250px;
   background-color: #f8f8f8;
@@ -52,12 +53,14 @@ body {
 
 .filters h2 {
   margin-bottom: 20px;
+  color: #333;
 }
 
 .filters label {
   display: block;
   margin-top: 12px;
   font-weight: 600;
+  color: #333;
 }
 
 .filters input,
@@ -67,6 +70,8 @@ body {
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 6px;
+  background-color: #fff;
+  color: #333;
 }
 
 .filters button {
@@ -78,6 +83,11 @@ body {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background 0.3s;
+}
+
+.filters button:hover {
+  background-color: #333;
 }
 
 .reset-filters {
@@ -88,6 +98,46 @@ body {
   font-size: 14px;
   text-decoration: none;
 }
+
+/* MODO OSCURO */
+:root[data-theme="dark"] .filters {
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: #f0f0f0;
+}
+
+:root[data-theme="dark"] .filters h2 {
+  color: #f0f0f0;
+}
+
+:root[data-theme="dark"] .filters label {
+  color: #f0f0f0;
+}
+
+:root[data-theme="dark"] .filters input,
+:root[data-theme="dark"] .filters select {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+
+:root[data-theme="dark"] .filters input::placeholder {
+  color: #aaa;
+}
+
+:root[data-theme="dark"] .filters button {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+:root[data-theme="dark"] .filters button:hover {
+  background-color: #444;
+}
+
+:root[data-theme="dark"] .reset-filters {
+  color: #bbb;
+}
+
 
 /* Productos */
 .product-cards {
@@ -198,6 +248,8 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
+
+
 
 .reset-filters {
   display: block;

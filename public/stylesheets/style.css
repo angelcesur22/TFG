@@ -1,99 +1,155 @@
 /* Reset básico para el padding y el margen */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #FFFFFF; /* Fondo blanco */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #2F2F2F; /* Gris oscuro para el texto */
-    font-family: 'Poppins', sans-serif;
-  }
-  h1, h2, h3, p,button {
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #FFFFFF; /* Fondo blanco */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #2F2F2F;
+  transition: background 0.3s, color 0.3s;
+}
+
+h1, h2, h3, p, button {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Contenedor de login y registro */
+.login-container {
+  background-color: #FFFFFF;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Título en rojo */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #FF3B30;
+}
+
+/* Mensajes de error */
+.error {
+  color: #FF3B30;
+  background-color: #ffe6e6;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="email"], 
+input[type="password"], 
+input[type="text"] {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #00A9FF;
+}
+
+/* Botones */
+button {
+  padding: 12px;
+  background-color: #FF3B30;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #FF1E1E;
+}
+
+/* Logo */
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo img {
+  width: 150px;
+  height: auto;
+}
+
+/* Estilo para dispositivos móviles */
+@media (max-width: 600px) {
   .login-container {
-    background-color: #FFFFFF;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+      padding: 20px;
   }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #FF3B30; /* Rojo */
-  }
-  
-  p {
-    color: #FF3B30; /* Rojo para mensajes de error */
-    text-align: center;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input[type="email"], input[type="password"], input[type="text"] {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, {
-    outline: none;
-    border-color: #00A9FF; /* Azul claro */
-  }
-  
-  button {
-    padding: 12px;
-    background-color: #FF3B30; /* Rojo */
-    color: #FFFFFF;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  button:hover {
-    background-color: #FF1E1E; /* Rojo más oscuro */
-  }
-  .logo {
-    text-align: center;
-    margin-bottom: 20px; /* Espacio entre el logo y el formulario */
-  }
-  
-  img {
-    width: 150px; /* Ajusta el tamaño del logo */
-    height: auto;
-  }
-  admin-button {
-    display: flex;
-    flex-direction: column; /* Cambiar de fila a columna */
-    gap: 20px; /* Espacio entre los botones */
-    align-items: center;
 }
 
+/* MODO OSCURO */
+:root[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f0f0f0;
+  --input-bg: #1e1e1e;
+  --input-border: #444;
+  --error-bg: #5a1a1a;
+  --btn-bg: #ff3b30;
+  --btn-hover: #d32f2f;
+}
 
+/* Aplicando el modo oscuro */
+:root[data-theme="dark"] body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
 
+:root[data-theme="dark"] .login-container {
+  background-color: #1e1e1e;
+  color: var(--text-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
 
-  /* Estilo para dispositivos móviles */
-  @media (max-width: 600px) {
-    .login-container {
-      padding: 20px;
-    }
-  }
-  
+:root[data-theme="dark"] input[type="email"],
+:root[data-theme="dark"] input[type="password"],
+:root[data-theme="dark"] input[type="text"] {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  border: 1px solid var(--input-border);
+}
+
+:root[data-theme="dark"] input::placeholder {
+  color: #aaa;
+}
+
+:root[data-theme="dark"] .error {
+  background-color: var(--error-bg);
+  color: #ffb3b3;
+}
+
+:root[data-theme="dark"] button {
+  background-color: var(--btn-bg);
+}
+
+:root[data-theme="dark"] button:hover {
+  background-color: var(--btn-hover);
+}

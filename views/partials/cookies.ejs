@@ -23,12 +23,13 @@
     <button class="save-settings">Guardar preferencias</button>
 </div>
 <style>
+/* Modal de Cookies - Modo claro (por defecto) */
 .cookie-card {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    max-width: 500px; /* Ancho aumentado */
-    width: 90%; /* Ancho relativo para pantallas pequeñas */
+    max-width: 500px;
+    width: 90%;
     padding: 1.5rem;
     background-color: #ffffff;
     border-radius: 12px;
@@ -39,6 +40,7 @@
     visibility: hidden;
     display: none;
     z-index: 1000;
+    color: #1F2937;
 }
 
 .cookie-card.show {
@@ -48,10 +50,11 @@
     display: block;
 }
 
+/* Título y descripción */
 .cookie-card .title {
     font-weight: 600;
-    color: #1F2937;
     font-size: 1.25rem;
+    color: #1F2937;
 }
 
 .cookie-card .description {
@@ -67,6 +70,7 @@
     font-weight: 500;
 }
 
+/* Botones del modal de cookies */
 .cookie-card .actions {
     display: flex;
     justify-content: flex-end;
@@ -81,36 +85,22 @@
     cursor: pointer;
     font-size: 0.875rem;
     transition: background-color 0.2s;
+    color: #ffffff;
 }
 
 .cookie-card .actions #acceptAllCookies {
     background-color: #4CAF50;
-    color: #ffffff;
-}
-
-.cookie-card .actions #acceptAllCookies:hover {
-    background-color: #45A049;
 }
 
 .cookie-card .actions #rejectAllCookies {
     background-color: #F44336;
-    color: #ffffff;
-}
-
-.cookie-card .actions #rejectAllCookies:hover {
-    background-color: #E53935;
 }
 
 .cookie-card .actions #manageCookies {
     background-color: #FF9800;
-    color: #ffffff;
 }
 
-.cookie-card .actions #manageCookies:hover {
-    background-color: #FB8C00;
-}
-
-/* Configuración de la sección de preferencias */
+/* Modal de Configuración */
 .cookie-settings {
     position: fixed;
     bottom: 20px;
@@ -136,8 +126,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
-    color: #4B5563;
     font-size: 0.95rem;
+    color: #4B5563;
 }
 
 .cookie-settings input[type="checkbox"] {
@@ -157,8 +147,72 @@
     width: 100%;
 }
 
-.cookie-settings .save-settings:hover {
-    background-color: #45A049;
+/* MODO OSCURO */
+:root[data-theme="dark"] .cookie-card {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    border: 1px solid #444;
+}
+
+:root[data-theme="dark"] .cookie-card .title {
+    color: #f0f0f0;
+}
+
+:root[data-theme="dark"] .cookie-card .description {
+    color: #bbb;
+}
+
+:root[data-theme="dark"] .cookie-card .description a {
+    color: #4a90e2;
+}
+
+:root[data-theme="dark"] .cookie-card .actions button {
+    color: #ffffff;
+}
+
+:root[data-theme="dark"] .cookie-card .actions #acceptAllCookies {
+    background-color: #2e7d32;
+}
+
+:root[data-theme="dark"] .cookie-card .actions #rejectAllCookies {
+    background-color: #d32f2f;
+}
+
+:root[data-theme="dark"] .cookie-card .actions #manageCookies {
+    background-color: #e65100;
+}
+
+/* Modal de Configuración (modo oscuro) */
+:root[data-theme="dark"] .cookie-settings {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    border: 1px solid #444;
+}
+
+:root[data-theme="dark"] .cookie-settings h3 {
+    color: #f0f0f0;
+}
+
+:root[data-theme="dark"] .cookie-settings label {
+    color: #bbb;
+}
+
+:root[data-theme="dark"] .cookie-settings .save-settings {
+    background-color: #2e7d32;
+}
+
+@media (max-width: 768px) {
+  #cookieConsent.cookie-card.show {
+    width: 82%; /* Ajusta el ancho al 90% del ancho de la pantalla */
+    font-size: 14px; /* Reduce el tamaño de la fuente */
+    padding: 16px; /* Ajusta el padding *//
+    left: 10px; /* Desplaza hacia la izquierda */
+  }
+
+  #cookieConsent.cookie-card.show button {
+    font-size: 14px; /* Ajusta el tamaño de los botones */
+    padding: 8px 12px; /* Ajusta el tamaño de los botones */
+  }
 }
 
 </style>

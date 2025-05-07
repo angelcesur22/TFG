@@ -4,39 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Cookies</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f9f9f9; color: #333; padding: 2rem; }
-        .cookie-container { max-width: 800px; margin: auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        h2 { text-align: center; }
-        ul { list-style-type: none; padding: 0; }
-        li { margin-bottom: 1rem; }
-        .btn { display: inline-block; padding: 0.5rem 1rem; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 4px; margin-top: 1rem; }
-    </style>
+    <link rel="stylesheet" href="/stylesheets/cookies.css">
 </head>
 <body>
     <%- include('partials/header') %>
-    <br>
-    <br>
+    <br><br>
     
     <div class="cookie-container">
         <h2>Política de Cookies</h2>
         <p>En Footlaces utilizamos cookies para mejorar tu experiencia de navegación. Aquí tienes una lista de las cookies que usamos:</p>
-        <ul>
-            <li><strong>_conv_r, _conv_v:</strong> Cookies de conversión y seguimiento de Cloudinary.</li>
-            <li><strong>_cs_c, _cs_id:</strong> Identificación de usuario en Cloudinary.</li>
-            <li><strong>_ga, _ga_NKMQJY2D2H:</strong> Google Analytics para análisis del tráfico.</li>
-            <li><strong>_gcl_au:</strong> Cookie de seguimiento publicitario de Google.</li>
-            <li><strong>_hp2_id:</strong> Heap Analytics para análisis de usuario.</li>
-            <li><strong>_mkto_trk:</strong> Marketo para seguimiento de marketing.</li>
-            <li><strong>connect.sid:</strong> Sesión del usuario en Footlaces.</li>
-            <li><strong>intercom-device-id, intercom-id:</strong> Soporte en vivo de Intercom.</li>
-            <li><strong>OptanonConsent, OptanonAlertBoxClosed:</strong> Preferencias de consentimiento de cookies.</li>
-            <li><strong>__stripe_mid, __stripe_sid:</strong> Cookies de Stripe para gestionar pagos y prevenir fraudes.</li>
-            <li><strong>pay_sid, link.auth_session_client_secret:</strong> Cookies de autenticación de Stripe.</li>
-        </ul>
-        <p>Estas cookies son esenciales para el funcionamiento del sitio y para mejorar tu experiencia. Puedes gestionar tus preferencias en cualquier momento.</p>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">Cookies de Análisis</button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><strong>_ga, _ga_NKMQJY2D2H:</strong> Google Analytics para análisis del tráfico.</li>
+                        <li><strong>_hp2_id:</strong> Heap Analytics para análisis de usuario.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Cookies de Publicidad</button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><strong>_gcl_au:</strong> Cookie de seguimiento publicitario de Google.</li>
+                        <li><strong>_mkto_trk:</strong> Marketo para seguimiento de marketing.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Cookies de Funcionalidad</button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><strong>connect.sid:</strong> Sesión del usuario en Footlaces.</li>
+                        <li><strong>intercom-device-id, intercom-id:</strong> Soporte en vivo de Intercom.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Cookies de Pago</button>
+                <div class="accordion-content">
+                    <ul>
+                        <li><strong>__stripe_mid, __stripe_sid:</strong> Cookies de Stripe para gestionar pagos y prevenir fraudes.</li>
+                        <li><strong>pay_sid, link.auth_session_client_secret:</strong> Cookies de autenticación de Stripe.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <a href="/" class="btn">Volver al inicio</a>
     </div>
+
     <%- include('partials/footer') %>
+    
+    <script src="/javascript/cookies.js"></script>
 </body>
 </html>
