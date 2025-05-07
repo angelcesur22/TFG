@@ -52,6 +52,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+app.get('/pcookies', (req, res) => {
+  res.render('pcookies', { user: req.user || null });
+});
 // Middleware
 app.use(logger('dev'));
 // ⚠️ Solo usar express.json() si NO es webhook
@@ -104,9 +107,6 @@ async function inicializarContador() {
 
 inicializarContador();
 
-app.get('/', (req, res) => {
-  res.redirect('/inicio'); // O la ruta principal de productos o portada
-});
 
 
 
