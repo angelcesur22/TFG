@@ -4,22 +4,44 @@
   <meta charset="UTF-8">
   <title>Cuenta verificada</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="/javascript/theme.js"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <img src="/images/LogoTFL.png" alt="Logo" width="150">
+    </div>
+
+    <div class="mensaje">
+      <h2>¡Cuenta verificada con éxito!</h2>
+      <p>Bienvenido/a <strong><%= nombre %></strong>. Ya puedes iniciar sesión con tu cuenta.</p>
+      <a href="/login" class="btn">Iniciar Sesión</a>
+    </div>
+  </div>
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       text-align: center;
       padding: 4rem;
-      background-color: #e9fbe9;
+      transition: background 0.3s, color 0.3s;
     }
-    .mensaje {
-      max-width: 500px;
-      margin: auto;
+
+    .login-container {
+      background-color: var(--bg-color, #FFFFFF);
       padding: 2rem;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin: auto;
+      transition: background 0.3s, color 0.3s;
     }
-    a {
+
+    .mensaje p {
+      color: var(--text-color, #2F2F2F);
+    }
+
+    .btn {
       display: inline-block;
       margin-top: 20px;
       padding: 10px 20px;
@@ -27,19 +49,17 @@
       color: white;
       border-radius: 5px;
       text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #218838;
+    }
+
+    .logo img {
+      width: 100px;
+      margin-bottom: 20px;
     }
   </style>
-</head>
-<body>
-    <% if (typeof user !== 'undefined') { %>
-        <%- include("header", { user }) %>
-      <% } %>
-      
-  <div class="mensaje">
-    <img src="/images/LogoTFL.png" alt="Logo" width="100">
-    <h2>¡Cuenta verificada con éxito!</h2>
-    <p>Bienvenido/a <strong><%= nombre %></strong>. Ya podés iniciar sesión con tu cuenta.</p>
-    <a href="/login">Iniciar Sesión</a>
-  </div>
 </body>
 </html>
