@@ -2,21 +2,21 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cuenta verificada</title>
+  <title>Verifica tu correo</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/javascript/theme.js"></script>
 </head>
 <body>
   <div class="login-container">
     <div class="logo">
-      <img src="/images/LogoTFL.png" alt="Logo" width="120">
+      <img src="/images/LogoTFL.png" alt="Logo" width="150">
     </div>
 
     <div class="mensaje">
-      <h2>¡Cuenta verificada con éxito!</h2>
-      <p>Bienvenido/a <strong><%= nombre %></strong>. Ya puedes iniciar sesión con tu cuenta.</p>
-      <a href="/login" class="btn">Iniciar Sesión</a>
+      <h2>¡Gracias por registrarte!</h2>
+      <p>Hemos enviado un correo de verificación a <strong><%= email %></strong>.</p>
+      <p>Por favor, revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.</p>
     </div>
   </div>
 
@@ -44,21 +44,6 @@
       font-size: 1rem;
     }
 
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #28a745;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #218838;
-    }
-
     .logo img {
       width: 100px;
       margin-bottom: 20px;
@@ -75,11 +60,6 @@
       }
 
       .mensaje p {
-        font-size: 0.9rem;
-      }
-
-      .btn {
-        padding: 8px 16px;
         font-size: 0.9rem;
       }
     }

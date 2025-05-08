@@ -161,8 +161,8 @@ exports.registerUser = async (req, res) => {
     });
     
     console.log("✅ Correo enviado exitosamente:", email);
-    res.render('verificaCorreo', { email: email });
-    
+    res.render('verificaCorreo', { email: email, nombre: nombre });
+
 
   } catch (error) {
       console.error('❌ Error al registrar usuario o enviar correo:', error); // 🔥 Mostrar cualquier error en la consola
