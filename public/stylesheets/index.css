@@ -142,6 +142,7 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* número de líneas */
+  line-clamp: 2; /* número de líneas */
   -webkit-box-orient: vertical;
 }
 
