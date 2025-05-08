@@ -154,18 +154,15 @@ exports.registerUser = async (req, res) => {
 
       // 🔥 Enviar correo de verificación
       await transporter.sendMail({
-          from: process.env.EMAIL_USER,
-          to: email,
-          subject: 'Verificación de cuenta',
-          html: `<h2>Verificación de cuenta</h2><p>Haz clic en el siguiente enlace para verificar tu cuenta:</p><a href="${url}">Verificar cuenta</a>`
-      }, (error, info) => {
-          if (error) {
-              console.error("❌ Error al enviar el correo:", error); // 🔥 Mostrar el error específico en consola
-              return res.render('register', { error: 'Error al enviar el correo de verificación.' });
-          }
-          console.log("✅ Correo enviado exitosamente:", info.response);
-          res.render('verificaCorreo', { email: user.email });
-      });
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Verificación de cuenta',
+        html: `<h2>Verificación de cuenta</h2><p>Haz clic en el siguiente enlace para verificar tu cuenta:</p><a href="${url}">Verificar cuenta</a>`
+    });
+    
+    console.log("✅ Correo enviado exitosamente:", email);
+    res.render('verificaCorreo', { email: email });
+    
 
   } catch (error) {
       console.error('❌ Error al registrar usuario o enviar correo:', error); // 🔥 Mostrar cualquier error en la consola
