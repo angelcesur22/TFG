@@ -3,31 +3,36 @@
 <footer class="footer">
     <div class="footer-contenido">
       <div class="footer-columna">
-        <h4>Legal</h4>
+        <h4 class="traduccion" data-es="Legal" data-en="Legal">Legal</h4>
         <ul>
-          <li><a href="/pcookies">Cookies</a></li>
-          <li><a href="/aviso-legal">Aviso legal</a></li>
-          <li><a href="/politica-de-privacidad">Política de privacidad</a></li>
-          <li><a href="javascript:void(0);" id="footerManageCookies">Configurar Cookies</a></li>
+          <li><a href="/pcookies" class="traduccion" data-es="Cookies" data-en="Cookies">Cookies</a></li>
+          <li><a href="/aviso-legal" class="traduccion" data-es="Aviso legal" data-en="Legal Notice">Aviso legal</a></li>
+          <li><a href="/politica-de-privacidad" class="traduccion" data-es="Política de privacidad" data-en="Privacy Policy">Política de privacidad</a></li>
+          <li><a href="javascript:void(0);" id="footerManageCookies" class="traduccion" data-es="Configurar Cookies" data-en="Manage Cookies">Configurar Cookies</a></li>
         </ul>
       </div>
       <div class="footer-columna">
-        <h4>Enlaces</h4>
+        <h4 class="traduccion" data-es="Enlaces" data-en="Links">Enlaces</h4>
         <ul>
-          <li><a href="/">Incio</a></li>
-          <li><a href="/sneakers">zapatillas</a></li>
-          <li><a href="/clothing">Ropa</a></li>
-          <li><a href="/ofertas">Ofertas</a></li>
-          <li><a href="/wishlist">Lista de deseos</a></li>
+          <li><a href="/" class="traduccion" data-es="Inicio" data-en="Home">Inicio</a></li>
+          <li><a href="/sneakers" class="traduccion" data-es="Zapatillas" data-en="Sneakers">Zapatillas</a></li>
+          <li><a href="/clothing" class="traduccion" data-es="Ropa" data-en="Clothing">Ropa</a></li>
+          <li><a href="/ofertas" class="traduccion" data-es="Ofertas" data-en="Offers">Ofertas</a></li>
+          <li><a href="/wishlist" class="traduccion" data-es="Lista de deseos" data-en="Wishlist">Lista de deseos</a></li>
         </ul>
       </div>
     </div>
   
     <div class="footer-copyright">
-      <p>&copy; <%= new Date().getFullYear() %> FootLaces. Todos los derechos reservados.</p>
-      <p style="font-size: 12px; color: #777; margin-top: 0.5rem;">
-        Proyecto académico. Esta página no representa una tienda real. Todos los contenidos e imágenes son usados con fines educativos.
-      </p>
+      <p class="traduccion" data-es="&copy; <%= new Date().getFullYear() %> FootLaces. Todos los derechos reservados." 
+        data-en="&copy; <%= new Date().getFullYear() %> FootLaces. All rights reserved.">
+&copy; <%= new Date().getFullYear() %> FootLaces. Todos los derechos reservados.
+</p>
+<p class="traduccion" data-es="Proyecto académico. Esta página no representa una tienda real. Todos los contenidos e imágenes son usados con fines educativos."
+data-en="Academic project. This page does not represent a real store. All contents and images are used for educational purposes."
+style="font-size: 12px; color: #777; margin-top: 0.5rem;">
+Proyecto académico. Esta página no representa una tienda real. Todos los contenidos e imágenes son usados con fines educativos.
+</p>  
     </div>
   </footer>
   <%- include('cookies') %>

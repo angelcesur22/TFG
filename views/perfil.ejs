@@ -23,39 +23,39 @@
 <div class="perfil-container">
   <div class="sidebar">
     <ul>
-      <li><strong>📊 Panel de control</strong></li>
-      <li>📍 Direcciones (<%= numDirecciones || 0 %>)</li>
-      <li><a href="/perfil/wishlist">💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)</a></li>
-      <li><a href="/logout" class="logout">↩ Cerrar sesión</a></li>
+      <li><strong class="traduccion" data-es="📊 Panel de control" data-en="📊 Dashboard">📊 Panel de control</strong></li>
+      <li class="traduccion" data-es="📍 Direcciones (<%= numDirecciones || 0 %>)" data-en="📍 Addresses (<%= numDirecciones || 0 %>)">📍 Direcciones (<%= numDirecciones || 0 %>)</li>
+      <li><a href="/perfil/wishlist" class="traduccion" data-es="💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)" data-en="💖 Wishlist (<%= user.wishlist?.length || 0 %>)">💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)</a></li>
+      <li><a href="/logout" class="logout traduccion" data-es="↩ Cerrar sesión" data-en="↩ Log Out">↩ Cerrar sesión</a></li>
     </ul>
   </div>
 
   <div class="perfil-main">
     <div class="resumen-cajas">
       <div class="caja">
-        <h4>Total Comprado</h4>
+        <h4 class="traduccion" data-es="Total Comprado" data-en="Total Spent">Total Comprado</h4>
         <p><%= totalGastado?.toFixed(2) || "0.00" %>€</p>
       </div>
       <div class="caja">
-        <h4>Número de Pedidos</h4>
+        <h4 class="traduccion" data-es="Número de Pedidos" data-en="Number of Orders">Número de Pedidos</h4>
         <p><%= numPedidos || 0 %></p>
       </div>
       <div class="caja">
-        <h4>Direcciones</h4>
+        <h4 class="traduccion" data-es="Direcciones" data-en="Addresses">Direcciones</h4>
         <p><%= numDirecciones || 0 %></p>
       </div>
     </div>
     
-    <h2>Detalles de la cuenta</h2>
+    <h2 class="traduccion" data-es="Detalles de la cuenta" data-en="Account Details">Detalles de la cuenta</h2>
     <table>
-      <tr><td><strong>Nombre:</strong></td><td><%= user.nombre %></td></tr>
-      <tr><td><strong>Correo electrónico:</strong></td><td><%= user.email %></td></tr>
+      <tr><td><strong class="traduccion" data-es="Nombre:" data-en="Name:">Nombre:</strong></td><td><%= user.nombre %></td></tr>
+      <tr><td><strong class="traduccion" data-es="Correo electrónico:" data-en="Email:">Correo electrónico:</strong></td><td><%= user.email %></td></tr>
       <tr>
-        <td><strong>Dirección 1:</strong></td>
+        <td><strong class="traduccion" data-es="Dirección 1:" data-en="Address 1:">Dirección 1:</strong></td>
         <td>
           <% if (user.direcciones?.[0]) { %>
             <%= user.direcciones[0].linea1 %>, <%= user.direcciones[0].ciudad %>, <%= user.direcciones[0].provincia %>, <%= user.direcciones[0].pais %>, <%= user.direcciones[0].codigoPostal %>
-          <% } else { %> Sin registrar <% } %>
+          <% } else { %> <span class="traduccion" data-es="Sin registrar" data-en="Not registered">Sin registrar</span> <% } %>
         </td>
       </tr>
       <tr>
@@ -68,17 +68,17 @@
       </tr>
     </table>
 
-    <h2>Historial de pedidos</h2>
+    <h2 class="traduccion" data-es="Historial de pedidos" data-en="Order History">Historial de pedidos</h2>
 <% if (!pedidos || pedidos.length === 0) { %>
-  <p>✅ <a href="/sneakers">Haz tu primer pedido</a> — No has hecho ningún pedido aún.</p>
+  <p class="traduccion" data-es="✅ <a href='/sneakers'>Haz tu primer pedido</a> — No has hecho ningún pedido aún." data-en="✅ <a href='/sneakers'>Make your first order</a> — You haven't made any orders yet.">✅ <a href="/sneakers">Haz tu primer pedido</a> — No has hecho ningún pedido aún.</p>
 <% } else { %>
   <% pedidos.forEach(pedido => { %>
     <div class="pedido-box">
-      <p><strong>Número de pedido:</strong> <%= pedido.numeroPedido %></p>
-      <p><strong>Fecha:</strong> <%= pedido.fecha %></p>
-      <p><strong>Estado:</strong> <%= pedido.estado %></p>
+      <p><strong class="traduccion" data-es="Número de pedido:" data-en="Order Number:">Número de pedido:</strong> <%= pedido.numeroPedido %></p>
+      <p><strong class="traduccion" data-es="Fecha:" data-en="Date:">Fecha:</strong> <%= pedido.fecha %></p>
+      <p><strong class="traduccion" data-es="Estado:" data-en="Status:">Estado:</strong> <%= pedido.estado %></p>
       <% if (pedido.estado === 'Devolución denegada' && pedido.devolucion?.comentarioAdmin) { %>
-        <p style="color: #dc3545;"><strong>Motivo del rechazo:</strong> <%= pedido.devolucion.comentarioAdmin %></p>
+        <p><strong class="traduccion" data-es="Total:" data-en="Total:">Total:</strong> <%= pedido.total?.toFixed(2) || "0.00" %>€</p>
       <% } %>
       
       <p><strong>Total:</strong> <%= pedido.total?.toFixed(2) || "0.00" %>€</p>

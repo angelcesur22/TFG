@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <title>Login Admin</title>
+  <title class="traduccion" data-es="Iniciar Sesión" data-en="Login">Iniciar Sesión</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="/javascript/theme.js"></script>
+  <script src="/javascript/idiomas.js" defer></script>
 
   <style>
     .error {
@@ -32,22 +33,22 @@
     
     <form method="POST" action="/login">
       <% if (typeof error !== 'undefined' && error) { %>
-        <div class="error"><%= error %></div>
+        <div class="error traduccion" data-es="<%= error %>" data-en="Login error. Please try again."><%= error %></div>
       <% } %>
       
-      <input type="email" name="email" placeholder="Correo" required>
-      <input type="password" name="contraseña" placeholder="Contraseña" required>
-      <button type="submit">Iniciar sesión</button>
+      <input type="email" name="email" placeholder="Correo" class="traduccion" data-es="Correo" data-en="Email" required>
+      <input type="password" name="contraseña" placeholder="Contraseña" class="traduccion" data-es="Contraseña" data-en="Password" required>
+      <button type="submit" class="traduccion" data-es="Iniciar sesión" data-en="Login">Iniciar sesión</button>
 
       <div style="text-align: center; margin-top: 1.5rem;">
-        <p>¿No tienes cuenta?</p>
+        <p class="traduccion" data-es="¿No tienes cuenta?" data-en="Don't have an account?">¿No tienes cuenta?</p>
         <a href="/register">
-          <button type="button" style="padding: 8px 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 4px; cursor: pointer;">Regístrate</button>
+          <button type="button" class="traduccion" data-es="Regístrate" data-en="Sign Up" style="padding: 8px 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 4px; cursor: pointer;">Regístrate</button>
         </a>
 
         <div style="margin-top: 1rem;">
-          <a href="/forgot-password" style="text-decoration: none; color: #2F2F2F;">¿Olvidaste tu contraseña?</a>
-          <button type="button" onclick="window.location.href='/forgot-password'" style="padding: 8px 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 0.5rem;">Recuperar contraseña</button>
+          <a href="/forgot-password" class="traduccion" data-es="¿Olvidaste tu contraseña?" data-en="Forgot your password?" style="text-decoration: none; color: #2F2F2F;">¿Olvidaste tu contraseña?</a>
+          <button type="button" onclick="window.location.href='/forgot-password'" class="traduccion" data-es="Recuperar contraseña" data-en="Recover Password" style="padding: 8px 16px; background-color: #ff4d4d; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 0.5rem;">Recuperar contraseña</button>
         </div>
       </div>
     </form>

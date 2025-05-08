@@ -15,17 +15,22 @@
 
 <main class="sneakers-wrapper">
   <div class="top-bar">
-    <p><%= productos.length %> productos en oferta</p>
+    <p class="traduccion" data-es="<%= productos.length %> productos en oferta" data-en="<%= productos.length %> products on sale"><%= productos.length %> productos en oferta</p>
+
     <form method="GET" action="/ofertas" class="orden-form">
       <input type="hidden" name="search" value="<%= search || '' %>">
       <input type="hidden" name="talla" value="<%= talla || '' %>">
       <input type="hidden" name="min" value="<%= min || '' %>">
       <input type="hidden" name="max" value="<%= max || '' %>">
       <input type="hidden" name="marca" value="<%= marca || '' %>">
-      <select name="orden" onchange="this.form.submit()">
-        <option value="">Ordenar</option>
-        <option value="asc" <%= orden === 'asc' ? 'selected' : '' %>>Precio: Menor a mayor</option>
-        <option value="desc" <%= orden === 'desc' ? 'selected' : '' %>>Precio: Mayor a menor</option>
+      <select name="orden" onchange="this.form.submit()" class="traduccion">
+        <option value="" data-es="Ordenar" data-en="Sort">Ordenar</option>
+        <option value="asc" <%= orden === 'asc' ? 'selected' : '' %> 
+          data-es="Precio: Menor a mayor" 
+          data-en="Price: Low to High">Precio: Menor a mayor</option>
+          <option value="desc" <%= orden === 'desc' ? 'selected' : '' %> 
+            data-es="Precio: Mayor a menor" 
+            data-en="Price: High to Low">Precio: Mayor a menor</option>
       </select>
     </form>
   </div>
@@ -33,9 +38,9 @@
   <div class="content-layout">
     <aside class="filters">
       <form method="GET" action="/ofertas">
-        <h2>Filtrar por</h2>
+        <h2 class="traduccion" data-es="Filtrar por" data-en="Filter by">Filtrar por</h2>
 
-        <label>Talla:</label>
+        <label class="traduccion" data-es="Talla:" data-en="Size:">Talla:</label>
         <select name="talla">
           <option value="">Todas</option>
           <% ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45', 'XS', 'S', 'M', 'L', 'XL', 'XXL'].forEach(t => { %>
@@ -43,23 +48,26 @@
           <% }) %>
         </select>
 
-        <label>Precio mínimo:</label>
+        <label class="traduccion" data-es="Precio mínimo:" data-en="Minimum price:">Precio mínimo:</label>
         <input type="number" name="min" placeholder="Min €" value="<%= min || '' %>">
 
-        <label>Precio máximo:</label>
+        <label class="traduccion" data-es="Precio máximo:" data-en="Maximum price:">Precio máximo:</label>
         <input type="number" name="max" placeholder="Max €" value="<%= max || '' %>">
 
-        <label>Marca:</label>
+        <label class="traduccion" data-es="Marca:" data-en="Brand:">Marca:</label>
         <input type="text" name="marca" placeholder="Ej: Nike, Adidas" value="<%= marca || '' %>">
 
-        <button type="submit">Aplicar filtros</button>
-        <a href="/ofertas" class="reset-filters">Limpiar filtros</a>
+        <button type="submit" class="traduccion" data-es="Aplicar filtros" data-en="Apply filters">Aplicar filtros</button>
+        <a href="/ofertas" class="reset-filters traduccion" data-es="Limpiar filtros" data-en="Clear filters">Limpiar filtros</a>
       </form>
     </aside>
 
     <section class="productos-grid">
       <% if (productos.length === 0) { %>
-        <p>No se encontraron productos con esos filtros.</p>
+        <p class="traduccion" data-es="No se encontraron productos con esos filtros." data-en="No products found with those filters.">
+          No se encontraron productos con esos filtros.
+        </p>
+        
       <% } else { %>
         <% productos.forEach(p => { %>
           <a href="/producto/<%= p._id %>" class="card-producto-link">
@@ -72,12 +80,12 @@
               <% } %>
               <span class="etiqueta-tiempo">Oferta</span>
               <img src="<%= p.imagenes[0] %>" alt="<%= p.nombre %>" class="img-producto">
-              <h3 class="nombre-producto"><%= p.nombre %></h3>
+              <h3 class="nombre-producto traduccion" data-es="<%= p.nombre %>" data-en="<%= p.nombre %>"><%= p.nombre %></h3>
               <%
                 let precios = p.tallas.map(t => t.precio);
                 let precioMinimo = Math.min(...precios);
               %>
-              <p class="precio-producto">Desde <%= precioMinimo %>€</p>
+              <p class="precio-producto traduccion" data-es="Desde <%= precioMinimo %>€" data-en="From <%= precioMinimo %>€">Desde <%= precioMinimo %>€</p>
             </div>
           </a>
         <% }) %>

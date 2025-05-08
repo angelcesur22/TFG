@@ -21,7 +21,7 @@
 
       <div class="producto-info">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <h1><%= producto.nombre %></h1>
+          <h1 class="traduccion" data-es="<%= producto.nombre %>" data-en="<%= producto.nombre %>"><%= producto.nombre %></h1>
           <% if (user) { %>
             <% const liked = user?.wishlist?.some(p => p.toString() === producto._id.toString()); %>
             <button class="btn-like" data-id="<%= producto._id %>" style="background: none; border: none; cursor: pointer;">
@@ -30,22 +30,22 @@
           <% } %>
         </div>
         
-        <p><strong>Marca:</strong> <%= producto.marca %></p>
-        <p><strong>Descripción:</strong> <%= producto.descripcion %></p>
+        <p class="traduccion" data-es="Marca:<%= producto.marca %>" data-en="Brand:<%= producto.marca %>">Marca:<%= producto.marca %></p>
+        <p><strong class="traduccion" data-es="Descripción:" data-en="Description:">Descripción:</strong> <%= producto.descripcion %></p>
 
-        <h3>Precio desde:</h3>
+        <h3 class="traduccion" data-es="Precio desde:" data-en="Price from:">Precio desde:</h3>
         <% 
           let precios = producto.tallas.map(t => t.precio);
           let precioMinimo = Math.min(...precios);
         %>
-        <p class="precio"><%= precioMinimo %>€</p>
+        <p class="precio traduccion" data-es="<%= precioMinimo %>€" data-en="<%= precioMinimo %>€"><%= precioMinimo %>€</p>
 
         <form id="form-carrito" action="/carrito/agregar" method="POST">
           <input type="hidden" name="productoId" value="<%= producto._id %>">
           <input type="hidden" name="talla" id="tallaSeleccionada">
           <input type="hidden" name="precio" id="precioSeleccionado">
 
-          <p><strong>Tallas disponibles:</strong></p>
+          <p class="traduccion" data-es="Tallas disponibles:" data-en="Available Sizes:">Tallas disponibles:</p>
           <div class="tallas-grid">
             <% producto.tallas.forEach(t => { %>
               <button type="button" class="btn-talla" data-talla="<%= t.talla %>" data-precio="<%= t.precio %>">
@@ -54,29 +54,32 @@
             <% }) %>
           </div>
 
-          <div id="mensaje-error" style="color: red; margin-top: 10px; display: none;">
+          <div id="mensaje-error" class="traduccion" data-es="Por favor selecciona una talla antes de añadir al carrito." data-en="Please select a size before adding to cart." style="color: red; margin-top: 10px; display: none;">
             Por favor selecciona una talla antes de añadir al carrito.
           </div>
+          
 
           <br>
-          <button type="submit" class="btn-agregar">Añadir al carrito</button>
+          <button type="submit" class="btn-agregar traduccion" data-es="Añadir al carrito" data-en="Add to Cart">Añadir al carrito</button>
         </form>
         <br>
         <br>
 
         <div class="info-extra">
           <details>
-            <summary><strong>Descripción</strong></summary>
+            <summary class="traduccion" data-es="Descripción" data-en="Description">Descripción</summary>
             <p><%= producto.descripcion %></p>
           </details>
           <details>
-            <summary><strong>Autenticidad</strong></summary>
-            <p>Todos los productos son verificados antes de ser enviados.</p>
+            <summary class="traduccion" data-es="Autenticidad" data-en="Authenticity">Autenticidad</summary>
+    <p class="traduccion" data-es="Todos los productos son verificados antes de ser enviados." data-en="All products are verified before shipping.">Todos los productos son verificados antes de ser enviados.</p>
           </details>
           <details>
-            <summary><strong>Envío y entrega</strong></summary>
-            <p>Entregas rápidas en 2-5 días laborables. Envío gratuito para pedidos superiores a 50€.</p>
-          </details>
+            <summary class="traduccion" data-es="Envío y entrega" data-en="Shipping and delivery">Envío y entrega</summary>
+            <p class="traduccion" data-es="Entregas rápidas en 2-5 días laborables. Envío gratuito para pedidos superiores a 50€." data-en="Fast deliveries in 2-5 business days. Free shipping for orders over 50€.">
+              Entregas rápidas en 2-5 días laborables. Envío gratuito para pedidos superiores a 50€.
+            </p>
+            </details>
         </div>
       </div>
     </div>
@@ -100,14 +103,14 @@
     </section>
 
     <section class="productos-relacionados">
-      <h2 style="text-align: center; margin-top: 3rem;">Productos relacionados</h2>
+      <h2 class="traduccion" data-es="Productos relacionados" data-en="Related Products">Productos relacionados</h2>
       <div class="productos-grid">
         <% relacionados.forEach(prod => { %>
           <a href="/producto/<%= prod._id %>" class="card-producto-link">
             <div class="card-producto">
               <img src="<%= prod.imagenes[0] %>" alt="<%= prod.nombre %>" class="img-producto">
-              <h3><%= prod.nombre %></h3>
-              <p>Desde <%= Math.min(...prod.tallas.map(t => t.precio)) %>€</p>
+              <h3 class="traduccion" data-es="<%= prod.nombre %>" data-en="<%= prod.nombre %>"><%= prod.nombre %></h3>
+              <p class="traduccion" data-es="Desde <%= Math.min(...prod.tallas.map(t => t.precio)) %>€" data-en="From <%= Math.min(...prod.tallas.map(t => t.precio)) %>€">Desde <%= Math.min(...prod.tallas.map(t => t.precio)) %>€</p>
             </div>
           </a>
         <% }) %>

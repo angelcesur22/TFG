@@ -13,11 +13,12 @@
 <%- include('partials/header') %>
 
 <main class="sneakers-wrapper">
-  <h1 class="titulo-seccion">Lista de Deseos</h1>
+  <h1 class="titulo-seccion traduccion" data-es="Lista de Deseos" data-en="Wishlist">Lista de Deseos</h1>
 
   <section class="productos-grid">
     <% if (productos.length === 0) { %>
-      <p>No tienes productos en tu lista de deseos.</p>
+      <p class="traduccion" data-es="No tienes productos en tu lista de deseos." data-en="You have no products in your wishlist.">No tienes productos en tu lista de deseos.
+      </p>
     <% } else { %>
       <% productos.forEach(p => { %>
         <a href="/producto/<%= p._id %>" class="card-producto-link">
@@ -27,15 +28,15 @@
               <i class="<%= liked ? 'fas' : 'far' %> fa-heart"></i>
             </button>
             <% if (p.etiqueta && p.etiqueta !== 'none') { %>
-              <span class="etiqueta-tiempo"><%= p.etiqueta.toUpperCase() %></span>
+              <span class="etiqueta-tiempo traduccion" data-es="<%= p.etiqueta.toUpperCase() %>" data-en="<%= p.etiqueta.toUpperCase() %>"><%= p.etiqueta.toUpperCase() %></span>
             <% } %>
             <img src="<%= p.imagenes[0] %>" alt="<%= p.nombre %>" class="img-producto">
-            <h3 class="nombre-producto"><%= p.nombre %></h3>
+            <h3 class="nombre-producto traduccion" data-es="<%= p.nombre %>" data-en="<%= p.nombre %>"><%= p.nombre %></h3>
             <%
               let precios = p.tallas.map(t => t.precio);
               let precioMinimo = Math.min(...precios);
             %>
-            <p class="precio-producto">Desde <%= precioMinimo %>€</p>
+            <p class="precio-producto traduccion" data-es="Desde <%= precioMinimo %>€" data-en="From <%= precioMinimo %>€">Desde <%= precioMinimo %>€</p>
           </div>
         </a>
       <% }) %>

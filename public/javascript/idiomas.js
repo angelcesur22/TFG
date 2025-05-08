@@ -25,7 +25,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function aplicarIdioma(idioma) {
         document.querySelectorAll(".traduccion").forEach(el => {
-            el.textContent = el.dataset[idioma];
+            const textoTraducido = el.dataset[idioma];
+            if (textoTraducido) {
+                if (el.tagName.toLowerCase() === "input" || el.tagName.toLowerCase() === "textarea") {
+                    el.placeholder = textoTraducido; // Para inputs y textareas
+                } else {
+                    el.textContent = textoTraducido; // Para otros elementos
+                }
+            }
         });
     }
 
