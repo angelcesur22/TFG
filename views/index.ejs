@@ -31,12 +31,12 @@
     </div>
 
     <section class="new-in-section">
-      <b><h1 class="titulo-new-in">NEW IN</h1></b>
+      <h1 class="titulo-new-in traduccion" data-es="NUEVO" data-en="NEW">NUEVO</h1>
       <div class="productos-grid">
         <% productos.slice(0, 5).forEach(producto => { %>
           <a href="/producto/<%= producto._id %>" class="card-producto-link">
             <div class="card-producto">
-              <span class="etiqueta-tiempo">NUEVO</span>
+              <span class="etiqueta-tiempo traduccion" data-es="NUEVO" data-en="NEW">NUEVO</span>
               <% if (user) { %>
                 <% const liked = user?.wishlist?.some(p => p.toString() === producto._id.toString()); %>
                 <button class="btn-like" data-id="<%= producto._id %>">
@@ -57,14 +57,14 @@
     </section>
 
     <section class="new-in-section">
-      <B><h1 class="titulo-new-in">BESTS SELLERS</h1></B>
+      <h1 class="titulo-new-in traduccion" data-es="MEJORES VENDIDOS" data-en="BEST SELLERS">MEJORES VENDIDOS</h1>
       <div class="productos-grid">
         <% bestSellers.slice(0, 5).forEach(producto => { %>
           <a href="/producto/<%= producto._id %>" class="card-producto-link">
             <div class="card-producto">
-              <span class="etiqueta-tiempo">best seller</span>
+              <span class="etiqueta-tiempo traduccion" data-es="MEJORES VENTAS" data-en="BEST SELLER">best seller</span
               <br>
-              <span class="etiqueta-vintage">buy now</span>
+              <span class="etiqueta-vintage traduccion"data-es="comprar ahora" data-en="by now">Compra Ahora</span>
               <% if (user) { %>
                 <% const liked = user?.wishlist?.some(p => p.toString() === producto._id.toString()); %>
                 <button class="btn-like" data-id="<%= producto._id %>">
@@ -90,7 +90,7 @@
         <% ofertas.slice(0, 5).forEach(producto => { %>
           <a href="/producto/<%= producto._id %>" class="card-producto-link">
             <div class="card-producto">
-              <span class="etiqueta-tiempo oferta">Oferta</span>
+              <span class="etiqueta-tiempo oferta traduccion" data-es="OFERTA" data-en="SALE">OFERTA</span>
               <% if (user) { %>
                 <% const liked = user?.wishlist?.some(p => p.toString() === producto._id.toString()); %>
                 <button class="btn-like" data-id="<%= producto._id %>">
@@ -112,7 +112,7 @@
         <% }) %>
       </div>
       <div class="ver-todas-container">
-        <a href="/ofertas" class="btn-ver-todas">Ver todas las ofertas</a>
+        <a href="/ofertas" class="btn-ver-todas traduccion" data-es="Ver todas las ofertas" data-en="View all offers">Ver todas las ofertas</a>
       </div>
       
     </section>

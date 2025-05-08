@@ -478,3 +478,82 @@ button {
       z-index: 1001;
   }
 }
+.idioma-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.idioma-menu {
+  position: absolute;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 5px 0;
+  top: 35px;
+  left: 0;
+  min-width: 150px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none;
+}
+
+.idioma-menu.show {
+  display: block;
+}
+
+.idioma-opcion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.idioma-opcion:hover {
+  background-color: #f0f0f0;
+}
+.btn-idioma {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-idioma:hover {
+  background-color: #f0f0f0;
+}
+
+/* Modo oscuro - Botón en negro */
+:root[data-theme="dark"] .btn-idioma {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+:root[data-theme="dark"] .btn-idioma:hover {
+  background-color: #444444;
+}
+
+/* Ajuste del icono */
+.btn-idioma img {
+  width: 24px;
+  height: 24px;
+}
+/* Modo oscuro - Menú de idiomas */
+:root[data-theme="dark"] .idioma-menu {
+  background-color: #333333;
+  border: 1px solid #444444;
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .idioma-opcion {
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .idioma-opcion:hover {
+  background-color: #444444;
+}

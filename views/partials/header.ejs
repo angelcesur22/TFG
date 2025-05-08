@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="/stylesheets/header.css">
 <script src="/javascript/busqueda.js" defer></script>
 <script src="/javascript/theme.js" defer></script>
+<script src="/javascript/idiomas.js" defer></script>
 
 
 <header class="bg-white shadow-lg p-4 flex justify-between items-center">
@@ -19,36 +20,55 @@
     <div id="theme-icon" class="cursor-pointer" onclick="toggleTheme()"></div>
     </div>
 
+    <div class="idioma-selector relative">
+      <button id="idioma-toggle" class="btn-idioma">
+        <img id="idioma-actual" src="/images/espana.svg" alt="Idioma" width="24">
+      </button>
+      <div id="idioma-menu" class="idioma-menu">
+        <div class="idioma-opcion" data-idioma="es">
+          <img src="/images/espana.svg" alt="Español" width="24"> Español
+        </div>
+        <div class="idioma-opcion" data-idioma="en">
+          <img src="/images/ingles.svg" alt="English" width="24"> English
+        </div>
+      </div>
+    </div>
+      
+      
+
    
     <button class="hamburguesa fixed-toggle" onclick="toggleMenu()">☰</button>
     <div class="menu-completo">
 
     <!-- Navegación -->
     <nav class="space-x-6 flex items-center">
-        <a href="/" class="text-gray-700 hover:text-black">HOME</a>
-        <a href="/sneakers" class="text-gray-700 hover:text-black">SNEAKERS</a>
-        <a href="/clothing" class="text-gray-700 hover:text-black">CLOTHING</a>
-        <a href="/ofertas" class="text-gray-700 hover:text-black">OFERTAS</a>
-        <a href="/wishlist" class="text-gray-700 hover:text-black">LISTA DE DESEOS</a>
-    </nav>
+      <a href="/" class="text-gray-700 hover:text-black traduccion" data-es="INICIO" data-en="HOME">INICIO</a>
+      <a href="/sneakers" class="text-gray-700 hover:text-black traduccion" data-es="ZAPATOS" data-en="SNEAKERS">ZAPATOS</a>
+      <a href="/clothing" class="text-gray-700 hover:text-black traduccion" data-es="ROPA" data-en="CLOTHING">ROPA</a>
+      <a href="/ofertas" class="text-gray-700 hover:text-black traduccion" data-es="OFERTAS" data-en="OFFERS">OFERTAS</a>
+      <a href="/wishlist" class="text-gray-700 hover:text-black traduccion" data-es="LISTA DE DESEOS" data-en="WISHLIST">LISTA DE DESEOS</a>
+  </nav>
 
     <!-- Buscador -->
-    <input id="buscador-global" type="text" placeholder="Buscar zapatillas..." autocomplete="off" class="input-busqueda">
+    <input id="buscador-global" type="text" class="input-busqueda" 
+       placeholder="Buscar zapatillas..." 
+       data-es="Buscar zapatillas..." data-en="Search sneakers..." />
 
     <!-- Botón carrito -->
-    <button onclick="location.href='/carrito'" class="bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300">
-        🛒 Carrito
-    </button>
+    <button onclick="location.href='/carrito'" class="bg-gray-200 px-3 py-1 rounded-lg hover:bg-gray-300 traduccion" 
+    data-es="🛒 Carrito" data-en="🛒 Cart">
+    🛒 Carrito
+</button>
 
-    <div class="flex items-center space-x-4">
-        <% if (user) { %>
-            <a href="/perfil" class="text-gray-700 hover:text-black">Bienvenido, <%= user.nombre %>!</a>
-            <button onclick="location.href='/logout'">Cerrar Sesión</button>
-        <% } else { %>
-            <button onclick="location.href='/login'">Iniciar Sesión</button>
-            <button onclick="location.href='/register'">Registrarse</button>
-        <% } %>
-    </div>
+<div class="flex items-center space-x-4">
+  <% if (user) { %>
+      <a href="/perfil" class="text-gray-700 hover:text-black traduccion" data-es="Bienvenido, <%= user.nombre %>!" data-en="Welcome, <%= user.nombre %>!">Bienvenido, <%= user.nombre %>!</a>
+      <button onclick="location.href='/logout'" class="traduccion" data-es="Cerrar Sesión" data-en="Log Out">Cerrar Sesión</button>
+  <% } else { %>
+      <button onclick="location.href='/login'" class="traduccion" data-es="Iniciar Sesión" data-en="Login">Iniciar Sesión</button>
+      <button onclick="location.href='/register'" class="traduccion" data-es="Registrarse" data-en="Register">Registrarse</button>
+  <% } %>
+</div>
 </div>
 </header>
 
