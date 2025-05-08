@@ -143,3 +143,52 @@ h1 {
     margin-top: -122px;
   }
 }
+/* MODO OSCURO */
+:root[data-theme="dark"] body {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+
+
+:root[data-theme="dark"] .item-carrito {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border: 1px solid #333;
+}
+
+:root[data-theme="dark"] .item-carrito img {
+  background-color: #2a2a2a;
+}
+
+:root[data-theme="dark"] .item-carrito .info h3 {
+  color: #f0f0f0;
+}
+
+:root[data-theme="dark"] .item-carrito p {
+  color: #c7c7c7;
+}
+
+:root[data-theme="dark"] .btn-eliminar {
+  background-color: #e63946;
+  color: #fff;
+}
+
+:root[data-theme="dark"] .btn-eliminar:hover {
+  background-color: #c0392b;
+}
+
+:root[data-theme="dark"] .btn-pagar {
+  background-color: #4a90e2;
+  color: white;
+}
+
+:root[data-theme="dark"] .btn-pagar:hover {
+  background-color: #357abd;
+}
+
+:root[data-theme="dark"] .mensaje-flash {
+  background-color: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
