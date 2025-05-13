@@ -24,7 +24,7 @@
   <div class="sidebar">
     <ul>
       <li><strong class="traduccion" data-es="📊 Panel de control" data-en="📊 Dashboard">📊 Panel de control</strong></li>
-      <li class="traduccion" data-es="📍 Direcciones (<%= numDirecciones || 0 %>)" data-en="📍 Addresses (<%= numDirecciones || 0 %>)">📍 Direcciones (<%= numDirecciones || 0 %>)</li>
+      <li><a href="/perfil"class="traduccion" data-es="📍 Direcciones (<%= numDirecciones || 0 %>)" data-en="📍 Addresses (<%= numDirecciones || 0 %>)">📍 Direcciones (<%= numDirecciones || 0 %>)</li></a></li>
       <li><a href="/perfil/wishlist" class="traduccion" data-es="💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)" data-en="💖 Wishlist (<%= user.wishlist?.length || 0 %>)">💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)</a></li>
       <li><a href="/logout" class="logout traduccion" data-es="↩ Cerrar sesión" data-en="↩ Log Out">↩ Cerrar sesión</a></li>
     </ul>
@@ -70,7 +70,14 @@
 
     <h2 class="traduccion" data-es="Historial de pedidos" data-en="Order History">Historial de pedidos</h2>
 <% if (!pedidos || pedidos.length === 0) { %>
-  <p class="traduccion" data-es="✅ <a href='/sneakers'>Haz tu primer pedido</a> — No has hecho ningún pedido aún." data-en="✅ <a href='/sneakers'>Make your first order</a> — You haven't made any orders yet.">✅ <a href="/sneakers">Haz tu primer pedido</a> — No has hecho ningún pedido aún.</p>
+ <p>
+  ✅ <a href="/sneakers">
+    <span class="traduccion" data-es="Haz tu primer pedido" data-en="Make your first order">Haz tu primer pedido</span>
+  </a>
+  —
+  <span class="traduccion" data-es="No has hecho ningún pedido aún." data-en="You haven't made any orders yet.">No has hecho ningún pedido aún.</span>
+</p>
+
 <% } else { %>
   <% pedidos.forEach(pedido => { %>
     <div class="pedido-box">

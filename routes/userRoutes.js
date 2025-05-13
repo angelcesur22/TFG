@@ -18,22 +18,22 @@ router.post('/admin/usuarios/editar/:id', isAdmin, userController.editarUsuario)
 router.post('/admin/usuarios/eliminar/:id', isAdmin, userController.eliminarUsuario);
 router.get('/admin/usuarios/:id/pedidos', isAdmin, userController.verPedidosDeUsuario);
 
-router.get('/perfil/wishlist', async (req, res) => {
-    try {
-      const User = require('../models/User');
-      const Producto = require('../models/Producto');
-  
-      const user = await User.findById(req.user._id).populate('wishlist');
-      const wishlist = user.wishlist;
-  
-      res.render('wishlistPerfil', {
-        user,
-        wishlist
-      });
-    } catch (err) {
-      console.error("❌ Error al cargar la wishlist:", err);
-      res.status(500).send("Error al mostrar la lista de deseos.");
-    }
-  });
+router.get('/perfil/wishlist', verificarSesion, async (req, res) => {
+  try {
+    const User = require('../models/User');
+
+    const user = await User.findById(req.user._id).populate('wishlist');
+    const wishlist = user.wishlist;
+
+    res.render('wishlistPerfil', {
+      user,
+      wishlist
+    });
+  } catch (err) {
+    console.error("❌ Error al cargar la wishlist:", err);
+    res.status(500).send("Error al mostrar la lista de deseos.");
+  }
+});
+
 
 module.exports = router;

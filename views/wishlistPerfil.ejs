@@ -1,39 +1,52 @@
 <head>
-    <meta charset="UTF-8">
-    <title>Footlaces | </title>
-    <link rel="stylesheet" href="/stylesheets/perfil.css"> <!-- este -->
+  <meta charset="UTF-8">
+  <title>Footlaces | </title>
+  <link rel="stylesheet" href="/stylesheets/perfil.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<%- include("header", { user: user }) %>
+<%- include("partials/header", { user: user }) %>
 
 <div class="perfil-container">
   <div class="sidebar">
     <ul>
-      <li><strong>📊 Panel de control</strong></li>
-      <li>📍 Direcciones (<%= user.direcciones?.length || 0 %>)</li>
-      <li><strong>💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)</strong></li>
-      <li><a href="/logout" class="logout">↩ Cerrar sesión</a></li>
+      <li><strong class="traduccion" data-es="📊 Panel de control" data-en="📊 Dashboard">📊 Panel de control</strong></li>
+      <li><a href="/perfil" class="traduccion" data-es="📍 Direcciones (<%= user.direcciones?.length || 0 %>)" data-en="📍 Addresses (<%= user.direcciones?.length || 0 %>)">📍 Direcciones (<%= user.direcciones?.length || 0 %>)</a></li>
+      <li><strong class="traduccion" data-es="💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)" data-en="💖 Wishlist (<%= user.wishlist?.length || 0 %>)">💖 Lista de deseos (<%= user.wishlist?.length || 0 %>)</strong></li>
+      <li><a href="/logout" class="logout traduccion" data-es="↩ Cerrar sesión" data-en="↩ Log out">↩ Cerrar sesión</a></li>
     </ul>
   </div>
 
   <div class="perfil-main">
-    <h2>Tu lista de deseos</h2>
-    
+    <h2 class="traduccion" data-es="Tu lista de deseos" data-en="Your Wishlist">Tu lista de deseos</h2>
+
     <% if (!wishlist || wishlist.length === 0) { %>
-      <p>💔 Aún no has añadido productos a tu lista de deseos.</p>
+      <p class="traduccion" data-es="💔 Aún no has añadido productos a tu lista de deseos." data-en="💔 You haven't added any products to your wishlist yet.">💔 Aún no has añadido productos a tu lista de deseos.</p>
     <% } else { %>
-        <div class="tarjetas-deseos">
-            <% wishlist.forEach(producto => { %>
-              <div class="tarjeta-producto">
-                <a href="/producto/<%= producto._id %>" class="card-producto-link">
-                  <img src="<%= producto.imagenes[0] %>" alt="<%= producto.nombre %>">
-                  <h3><%= producto.nombre %></h3>
-                  <p>Desde <%= Math.min(...producto.tallas.map(t => t.precio)) %>€</p>
-                </a>
+      <div class="tarjetas-deseos">
+        <% wishlist.forEach(producto => { %>
+          <div class="tarjeta-producto">
+            <a href="/producto/<%= producto._id %>" class="card-producto-link">
+              <img src="<%= producto.imagenes[0] %>" alt="<%= producto.nombre %>">
+              <div class="info-producto">
+                <p class="nombre-producto"><%= producto.nombre %></p>
+                <p class="precio-producto traduccion" data-es="Desde <%= Math.min(...producto.tallas.map(t => t.precio)) %>€" data-en="From <%= Math.min(...producto.tallas.map(t => t.precio)) %>€">Desde <%= Math.min(...producto.tallas.map(t => t.precio)) %>€</p>
               </div>
-            <% }) %>
+            </a>
           </div>
-          
+        <% }) %>
+      </div>
     <% } %>
   </div>
 </div>
+
+<script>
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (prefersDark) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.body.classList.add('dark');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.body.classList.add('light');
+  }
+</script>
 <%- include('partials/footer') %>

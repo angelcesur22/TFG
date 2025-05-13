@@ -147,6 +147,26 @@ const actualizarPerfil = async (req, res) => {
       res.status(500).send('Error al actualizar el perfil');
     }
   };
+
+ const verWishlist = async (req, res) => {
+  try {
+    console.log("🛠 Entrando a verWishlist");
+    console.log("🔐 Sesión:", req.session);
+    console.log("👤 req.user:", req.user);
+    console.log("🧾 req.session.user:", req.session.user);
+
+    const user = await User.findById(req.session.user._id).populate('wishlist');
+    console.log("✅ Usuario encontrado:", user);
+
+    res.render('wishlistPerfil', { user, wishlist: user.wishlist });
+  } catch (error) {
+    console.error('❌ Error al cargar wishlist:', error);
+    res.status(500).send('Error al cargar la wishlist');
+  }
+};
+
+
+exports.verWishlist = verWishlist;
 exports.editarUsuario = editarUsuario;
 exports.eliminarUsuario = eliminarUsuario;
 exports.mostrarEditarUsuario = mostrarEditarUsuario;
