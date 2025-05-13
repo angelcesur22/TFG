@@ -164,6 +164,10 @@ router.get('/pedido/confirmado', (req, res) => {
     mensaje: '✅ ¡Gracias por tu compra! Revisa tu correo para más detalles.'
   });
 });
+router.get('/perfil/anadir-direccion', (req, res) => {
+  res.redirect('/perfil');
+});
+
 router.get('/perfil', verificarSesion, userController.verPerfil);
 router.post('/perfil/editar', verificarSesion, userController.actualizarPerfil);
 
@@ -186,6 +190,10 @@ router.get('/wishlist', verificarSesion, async (req, res) => {
     res.status(500).send('Error al cargar la lista de deseos');
   }
 });
+router.get('/perfil/anadir-direccion', (req, res) => {
+  res.redirect('/perfil');
+});
+
 
 module.exports = router;
 

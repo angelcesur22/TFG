@@ -17,6 +17,12 @@ router.post('/admin/usuarios/editar/:id', isAdmin, userController.editarUsuario)
 // Eliminar un usuario
 router.post('/admin/usuarios/eliminar/:id', isAdmin, userController.eliminarUsuario);
 router.get('/admin/usuarios/:id/pedidos', isAdmin, userController.verPedidosDeUsuario);
+router.post('/perfil/anadir-direccion', verificarSesion, userController.agregarDireccion);
+router.get('/perfil/anadir-direccion', (req, res) => {
+  console.log('🔁 GET /perfil/anadir-direccion recibido — redirigiendo a /perfil');
+  res.redirect('/perfil');
+});
+
 
 router.get('/perfil/wishlist', verificarSesion, async (req, res) => {
   try {

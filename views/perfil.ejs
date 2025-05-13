@@ -67,6 +67,43 @@
         </td>
       </tr>
     </table>
+    <br>
+    <!-- Botón para abrir modal -->
+<button class="btn" onclick="document.getElementById('modal-direccion').classList.remove('hidden')">
+  Añadir dirección
+</button>
+
+<!-- Modal de añadir dirección -->
+<div id="modal-direccion" class="modal-devolucion hidden">
+  <div class="modal-contenido">
+    <h3>Añadir nueva dirección</h3>
+    <form action="/perfil/anadir-direccion" method="POST">
+    <label for="linea1">Dirección:</label>
+<input type="text" name="linea1" required><br>
+
+<label for="linea2">Línea adicional (opcional):</label>
+<input type="text" name="linea2"><br>
+
+
+      <label for="ciudad">Ciudad:</label>
+      <input type="text" name="ciudad" required><br>
+
+      <label for="provincia">Provincia:</label>
+      <input type="text" name="provincia" required><br>
+
+      <label for="pais">País:</label>
+      <input type="text" name="pais" required><br>
+
+      <label for="codigoPostal">Código Postal:</label>
+      <input type="text" name="codigoPostal" required><br>
+
+      <div class="modal-botones">
+        <button type="submit" class="btn-enviar">Guardar</button>
+        <button type="button" onclick="document.getElementById('modal-direccion').classList.add('hidden')">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
 
     <h2 class="traduccion" data-es="Historial de pedidos" data-en="Order History">Historial de pedidos</h2>
 <% if (!pedidos || pedidos.length === 0) { %>

@@ -88,7 +88,7 @@ app.use('/', authRoutes);
 app.use('/', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/admin/productos', productoRoutes);
-app.use('/users', userRoutes);
+
 
 app.use('/webhook', webhookRoutes);
 app.use((req, res, next) => {

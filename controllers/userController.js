@@ -164,13 +164,46 @@ const actualizarPerfil = async (req, res) => {
     res.status(500).send('Error al cargar la wishlist');
   }
 };
+const agregarDireccion = async (req, res) => {
+  try {
+    console.log("📩 Datos recibidos en req.body:", req.body);
 
+    const { linea1, linea2, ciudad, provincia, pais, codigoPostal } = req.body;
 
-exports.verWishlist = verWishlist;
-exports.editarUsuario = editarUsuario;
-exports.eliminarUsuario = eliminarUsuario;
-exports.mostrarEditarUsuario = mostrarEditarUsuario;
-exports.listarUsuarios = listarUsuarios;
-exports.verPedidosDeUsuario = verPedidosDeUsuario;
-exports.verPerfil = verPerfil;
-exports.actualizarPerfil=actualizarPerfil;
+    const direccion = {
+      linea1,
+      linea2,
+      ciudad,
+      provincia,
+      pais,
+      codigoPostal
+    };
+
+    console.log("📦 Dirección que se va a guardar:", direccion);
+
+    await User.findByIdAndUpdate(
+      req.user._id,
+      { $push: { direcciones: direccion } }
+    );
+
+    // 🆕 Actualizar el usuario en sesión
+    req.session.user = await User.findById(req.user._id);
+
+    res.redirect('/perfil?success=Dirección añadida correctamente');
+  } catch (error) {
+    console.error("❌ Error al añadir dirección:", error);
+    res.redirect('/perfil?error=No se pudo añadir la dirección');
+  }
+};
+
+module.exports = {
+  agregarDireccion,
+  verPerfil,
+  verWishlist,
+  editarUsuario,
+  eliminarUsuario,
+  mostrarEditarUsuario,
+  listarUsuarios,
+  verPedidosDeUsuario,
+  actualizarPerfil
+};

@@ -19,11 +19,12 @@ const userSchema = new mongoose.Schema({
     }
   ],
   direcciones: [{
-    tipo: String,
-    calle: String,
+    linea1: String,
+    linea2: String,
     ciudad: String,
-    codigoPostal: String,
-    pais: String
+    provincia: String,
+    pais: String,
+    codigoPostal: String
   }],
   wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }]
 
