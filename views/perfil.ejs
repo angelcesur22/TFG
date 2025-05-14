@@ -67,12 +67,44 @@
         </td>
       </tr>
     </table>
+<br>
+<br>
+    <!-- Botón para abrir el modal de cambiar contraseña -->
+<button class="btn" onclick="document.getElementById('modal-password').classList.remove('hidden')">
+  Cambiar contraseña
+</button>
+
+<!-- Modal de cambiar contraseña -->
+<div id="modal-password" class="modal-devolucion hidden">
+  <div class="modal-contenido">
+    <h3>Cambiar contraseña</h3>
+    <form action="/perfil/cambiar-password" method="POST">
+      <label for="actual">Contraseña actual:</label>
+      <input type="password" name="actual" required><br>
+
+      <label for="nueva">Nueva contraseña:</label>
+      <input type="password" name="nueva" required><br>
+
+      <label for="confirmar">Confirmar nueva contraseña:</label>
+      <input type="password" name="confirmar" required><br>
+
+      <div class="modal-botones">
+        <button type="submit" class="btn-enviar">Actualizar</button>
+        <button type="button" onclick="document.getElementById('modal-password').classList.add('hidden')">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+    <br>
     <br>
     <!-- Botón para abrir modal -->
 <button class="btn" onclick="document.getElementById('modal-direccion').classList.remove('hidden')">
   Añadir dirección
 </button>
-
+<br>
+<br>
 <!-- Modal de añadir dirección -->
 <div id="modal-direccion" class="modal-devolucion hidden">
   <div class="modal-contenido">

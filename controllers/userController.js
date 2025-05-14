@@ -1,5 +1,7 @@
 const Pedido = require('../models/Pedido'); // Asegúrate que la ruta del modelo Pedido es correcta
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+
 // Función para listar usuarios
 const listarUsuarios = async (req, res) => {
     try {
@@ -195,6 +197,30 @@ const agregarDireccion = async (req, res) => {
     res.redirect('/perfil?error=No se pudo añadir la dirección');
   }
 };
+const cambiarContraseña = async (req, res) => {
+  const { actual, nueva, confirmar } = req.body;
+
+  if (nueva !== confirmar) {
+    return res.redirect('/perfil?error=Las nuevas contraseñas no coinciden');
+  }
+
+  try {
+    const usuario = await User.findById(req.user._id);
+
+    const esValida = await bcrypt.compare(actual, usuario.contraseña);
+    if (!esValida) {
+      return res.redirect('/perfil?error=La contraseña actual es incorrecta');
+    }
+
+    usuario.contraseña = await bcrypt.hash(nueva, 10);
+    await usuario.save();
+
+    res.redirect('/perfil?success=Contraseña cambiada correctamente');
+  } catch (error) {
+    console.error('Error al cambiar contraseña:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+};
 
 module.exports = {
   agregarDireccion,
@@ -205,5 +231,6 @@ module.exports = {
   mostrarEditarUsuario,
   listarUsuarios,
   verPedidosDeUsuario,
-  actualizarPerfil
+  actualizarPerfil,
+  cambiarContraseña
 };

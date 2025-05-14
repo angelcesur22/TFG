@@ -40,6 +40,8 @@ router.get('/perfil/wishlist', verificarSesion, async (req, res) => {
     res.status(500).send("Error al mostrar la lista de deseos.");
   }
 });
+router.post('/perfil/cambiar-password', verificarSesion, userController.cambiarContraseña);
+
 
 
 module.exports = router;
