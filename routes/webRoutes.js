@@ -193,6 +193,13 @@ router.get('/wishlist', verificarSesion, async (req, res) => {
 router.get('/perfil/anadir-direccion', (req, res) => {
   res.redirect('/perfil');
 });
+router.get('/comunidad', verificarSesion, (req, res) => {
+  res.render('comunidad', { user: req.user });
+});
+
+router.get('/vender', verificarSesion, (req, res) => {
+  res.render('vender', { user: req.user });
+});
 
 
 module.exports = router;

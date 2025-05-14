@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidad | FootLaces</title>
+  <link rel="stylesheet" href="/stylesheets/header.css">
+  <link rel="stylesheet" href="/stylesheets/footer.css">
+  <link rel="stylesheet" href="/stylesheets/comunidad.css">
+</head>
+<body>
+
+  <%- include('partials/header', { user: user }) %>
+
+  <main class="comunidad-container">
+    <section class="comunidad-intro">
+      <h1 class="traduccion" data-es="¿Te interesa vender algún producto que ya no usas?" data-en="Interested in selling something you no longer use?">
+        ¿Te interesa vender algún producto que ya no usas?
+      </h1>
+      <p class="traduccion" data-es="Comparte tus sneakers o ropa con otros miembros de la comunidad FootLaces." data-en="Share your sneakers or clothes with other FootLaces community members.">
+        Comparte tus sneakers o ropa con otros miembros de la comunidad FootLaces.
+      </p>
+      <button class="btn-vender" disabled>
+        <a href="vender"><span class="traduccion" data-es="Vender ahora" data-en="Sell now">Vender ahora</span></a>
+      </button>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+
+</body>
+</html>

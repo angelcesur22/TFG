@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vender Producto | FootLaces</title>
+  <link rel="stylesheet" href="/stylesheets/header.css">
+  <link rel="stylesheet" href="/stylesheets/footer.css">
+  <link rel="stylesheet" href="/stylesheets/vender.css">
+</head>
+<body>
+  <%- include('partials/header', { user: user }) %>
+
+  <main class="formulario-vender-container">
+    <h1 class="traduccion" data-es="Formulario para vender un producto" data-en="Form to sell a product">Formulario para vender un producto</h1>
+    <form id="form-vender" method="POST" action="/comunidad/enviar" enctype="multipart/form-data">
+      <label class="traduccion" data-es="Nombre del producto:" data-en="Product name:">Nombre del producto:</label>
+      <input type="text" name="nombre" required>
+    <br>
+      <label class="traduccion" data-es="Marca:" data-en="Brand:">Marca:</label>
+      <input type="text" name="marca" required>
+<br>
+      <label class="traduccion" data-es="Talla:" data-en="Size:">Talla:</label>
+      <input type="text" name="talla" required>
+<br>
+      <label class="traduccion" data-es="Descripción:" data-en="Description:">Descripción:</label>
+      <textarea name="descripcion" rows="4" required></textarea>
+<br>
+      <label class="traduccion" data-es="Precio de venta (€):" data-en="Selling price (€):">Precio de venta (€):</label>
+      <input type="number" name="precio" id="precio" min="1" required>
+<br>
+      <label class="traduccion" data-es="Estado del producto:" data-en="Product condition:">Estado del producto:</label>
+      <select name="estado" required>
+        <option value="">-- Selecciona una opción --</option>
+        <option value="Completamente nuevo con la caja">Completamente nuevo con la caja</option>
+        <option value="Nuevo sin la caja">Nuevo sin la caja</option>
+        <option value="Muy bueno">Muy bueno</option>
+        <option value="Bueno">Bueno</option>
+        <option value="Satisfactorio">Satisfactorio</option>
+      </select>
+<br>
+      <label class="traduccion" data-es="Fotos del producto (mínimo 3):" data-en="Product photos (min 3):">Fotos del producto (mínimo 3):</label>
+      <input type="file" name="imagenes" accept="image/*" multiple required>
+<br>
+      <label>
+        <input type="checkbox" required>
+        <span class="traduccion" data-es="Acepto los términos y condiciones" data-en="I accept the terms and conditions">Acepto los términos y condiciones</span>
+      </label>
+<br>
+      <label>
+        <input type="checkbox" required>
+        <span class="traduccion" data-es="Confirmo que el producto es 100% original" data-en="I confirm the product is 100% original">Confirmo que el producto es 100% original</span>
+      </label>
+<br>
+      <div id="resumen-precio" class="resumen-precio">
+        <p><strong class="traduccion" data-es="Cálculo del precio final:" data-en="Final price calculation:">Cálculo del precio final:</strong></p>
+        <p id="precio-envio" class="traduccion" data-es="Envío: -15€" data-en="Shipping: -15€">Envío: -15€</p>
+        <p id="comision" class="traduccion" data-es="Comisión TFL: 10%" data-en="TFL Commission: 10%">Comisión TFL: 10%</p>
+        <p id="precio-final">PRECIO FINAL (precio final es el dinero que recibira): 0€</p>
+        <p id="precio-web">Tu producto aparecerá en la web con el precio: 0€</p>
+      </div>
+<br>
+      <button type="submit" class="btn-enviar traduccion" data-es="Enviar solicitud de venta" data-en="Submit selling request">Enviar solicitud de venta</button>
+    </form>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    const precioInput = document.getElementById('precio');
+    const precioFinal = document.getElementById('precio-final');
+    const precioWeb = document.getElementById('precio-web');
+
+    precioInput.addEventListener('input', () => {
+      const venta = parseFloat(precioInput.value);
+      if (!isNaN(venta)) {
+        const comision = venta * 0.10;
+        const final = venta - 15 - comision;
+        const web = venta + comision;
+        precioFinal.textContent = `PRECIO FINAL: ${final.toFixed(2)}€`;
+        precioWeb.textContent = `Tu producto aparecerá en la web con el precio: ${web.toFixed(2)}€`;
+      }
+    });
+  </script>
+</body>
+</html>
