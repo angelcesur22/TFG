@@ -6,6 +6,7 @@ const userController = require('../controllers/userController');
 const { isAdmin } = require('../middleware/authMiddleware');
 
 
+
 // Rutas protegidas con el middleware isAdmin
 router.get('/', isAdmin, adminController.panel);
 router.get('/pedidos', isAdmin, pedidoController.listarPedidos);
@@ -20,6 +21,8 @@ router.get('/admin/devoluciones', adminController.verDevoluciones);
 router.post('/admin/devoluciones/aceptar/:id', adminController.aceptarDevolucion);
 router.post('/admin/devoluciones/denegar/:id', adminController.denegarDevolucion);
 router.get('/comunidad', isAdmin, adminController.verProductosComunidad);
+router.post('/comunidad/aprobar/:id', isAdmin, adminController.aprobarProductoComunidad);
+
 
 
 

@@ -195,3 +195,30 @@
     }
   }
   
+  .image-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.image-carousel img {
+  height: 80px;
+  width: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 3px 6px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.carousel-btn:hover {
+  background-color: #cfcfcf;
+}

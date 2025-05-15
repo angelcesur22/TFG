@@ -57,7 +57,9 @@ exports.enviarSolicitudVenta = async (req, res) => {
         return result.secure_url;
       })
     );
-    
+    const productos = await ProductoComunidad.find({ estadoAdmin: 'aprobado' });
+
+
 
     const producto = new ProductoComunidad({    
       usuario: req.user._id,

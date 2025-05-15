@@ -27,7 +27,12 @@ const productoComunidadSchema = new mongoose.Schema({
     type: String,
     enum: ['revisión', 'aprobado', 'rechazado'],
     default: 'revisión'
-  }
+  },
+  motivoRechazo: {
+  type: String,
+  default: ''
+}
+
 });
 
 module.exports = mongoose.model('ProductoComunidad', productoComunidadSchema);

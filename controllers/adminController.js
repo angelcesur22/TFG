@@ -1,5 +1,8 @@
 const Pedido = require('../models/Pedido');
 const transporter = require('../config/mailConfig');
+const ProductoComunidad = require('../models/ProductoComunidad');
+
+
 
 
 
@@ -71,13 +74,34 @@ exports.verDevoluciones = async (req, res) => {
       res.status(500).send('Error al procesar la denegación.');
     }
   };
-  exports.verProductosComunidad = async (req, res) => {
-    try {
-      const productos = await ProductoComunidad.find({ estadoAdmin: 'revisión' }).populate('usuario');
-      res.render('gestionComunidad', { productos });
-    } catch (error) {
-      console.error('Error al cargar productos de comunidad:', error);
-      res.status(500).send('Error al cargar productos de comunidad');
-    }
-  };
-  
+
+
+exports.verProductosComunidad = async (req, res) => {
+  try {
+    const productos = await ProductoComunidad.find().populate('usuario');
+    const productosRevision = productos.filter(p => p.estadoAdmin === 'revisión');
+    const productosNoRevision = productos.filter(p => p.estadoAdmin !== 'revisión');
+
+    res.render('gestionComunidad', {
+      productosRevision,
+      productosNoRevision,
+      user: req.session.user || null
+    });
+  } catch (error) {
+    console.error('Error al cargar productos de comunidad:', error);
+    res.status(500).send('Error al cargar productos de comunidad');
+  }
+};
+
+
+
+exports.aprobarProductoComunidad = async (req, res) => {
+  try {
+    await ProductoComunidad.findByIdAndUpdate(req.params.id, { estadoAdmin: 'aprobado' });
+    res.redirect('/admin/comunidad');
+  } catch (error) {
+    console.error('Error al aprobar producto:', error);
+    res.status(500).send('Error al aprobar el producto.');
+  }
+};
+
