@@ -15,6 +15,8 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const Counter = require('./models/Counter')
 const webhookRoutes = require('./routes/webhookRoutes');
+const comunidadRoutes = require('./routes/comunidadRoutes');
+
 
 
 
@@ -86,6 +88,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 app.use('/', webRoutes);
 app.use('/', authRoutes);
 app.use('/', userRoutes);
+app.use('/', comunidadRoutes);
 app.use('/admin', adminRoutes);
 app.use('/admin/productos', productoRoutes);
 

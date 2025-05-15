@@ -16,6 +16,11 @@ const { verOfertas } = require('../controllers/productoController');
 const { devolverPedido } = require('../controllers/pedidoController');
 const adminController = require('../controllers/adminController');
 const User = require('../models/User');
+const multer = require('multer');
+const { storage } = require('../config/cloudinary'); // asegúrate que la ruta sea correcta
+const upload = multer({ storage });
+const comunidadController = require('../controllers/comunidadController');
+
 
 
 router.post('/devolver-pedido/:id', devolverPedido);
@@ -200,6 +205,9 @@ router.get('/comunidad', verificarSesion, (req, res) => {
 router.get('/vender', verificarSesion, (req, res) => {
   res.render('vender', { user: req.user });
 });
+router.post('/comunidad/enviar', verificarSesion, upload.array('imagenes', 6), comunidadController.enviarSolicitudVenta);
+
+
 
 
 module.exports = router;

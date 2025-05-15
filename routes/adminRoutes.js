@@ -19,5 +19,8 @@ router.post('/pedidos/guardar-cambios', isAdmin, pedidoController.guardarCambios
 router.get('/admin/devoluciones', adminController.verDevoluciones);
 router.post('/admin/devoluciones/aceptar/:id', adminController.aceptarDevolucion);
 router.post('/admin/devoluciones/denegar/:id', adminController.denegarDevolucion);
+router.get('/comunidad', isAdmin, adminController.verProductosComunidad);
+
+
 
 module.exports = router;

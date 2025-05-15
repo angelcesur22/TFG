@@ -71,4 +71,13 @@ exports.verDevoluciones = async (req, res) => {
       res.status(500).send('Error al procesar la denegación.');
     }
   };
+  exports.verProductosComunidad = async (req, res) => {
+    try {
+      const productos = await ProductoComunidad.find({ estadoAdmin: 'revisión' }).populate('usuario');
+      res.render('gestionComunidad', { productos });
+    } catch (error) {
+      console.error('Error al cargar productos de comunidad:', error);
+      res.status(500).send('Error al cargar productos de comunidad');
+    }
+  };
   

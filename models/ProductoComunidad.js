@@ -1,3 +1,4 @@
+// models/ProductoComunidad.js
 const mongoose = require('mongoose');
 
 const productoComunidadSchema = new mongoose.Schema({
@@ -21,7 +22,12 @@ const productoComunidadSchema = new mongoose.Schema({
   },
   imagenes: [String],
   fecha: { type: Date, default: Date.now },
-  vendido: { type: Boolean, default: false }
+  vendido: { type: Boolean, default: false },
+  estadoAdmin: {
+    type: String,
+    enum: ['revisión', 'aprobado', 'rechazado'],
+    default: 'revisión'
+  }
 });
 
 module.exports = mongoose.model('ProductoComunidad', productoComunidadSchema);

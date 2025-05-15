@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión Comunidad</title>
+  <link rel="stylesheet" href="/stylesheets/adminpanel.css">
+  <link rel="stylesheet" href="/stylesheets/listaproductos.css">
+</head>
+<body>
+  <%- include('headercrud') %>
+
+  <div class="container-tabla">
+    <h1>Productos en revisión</h1>
+
+    <% if (productos && productos.length > 0) { %>
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Usuario</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% productos.forEach(p => { %>
+            <tr>
+              <td><%= p.nombre %></td>
+              <td><%= p.marca %></td>
+              <td><%= p.precio %>€</td>
+              <td><%= p.estado %></td>
+              <td><%= p.usuario?.nombre || 'No disponible' %></td>
+              <td>
+                <!-- Aquí se agregarán botones de aprobar/rechazar -->
+                <button class="btn-verde">Aprobar</button>
+                <button class="btn-rojo">Rechazar</button>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p>No hay productos en revisión actualmente.</p>
+    <% } %>
+  </div>
+</body>
+</html>
