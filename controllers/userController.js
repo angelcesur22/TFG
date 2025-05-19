@@ -1,6 +1,7 @@
 const Pedido = require('../models/Pedido'); // Asegúrate que la ruta del modelo Pedido es correcta
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const ProductoComunidad = require('../models/ProductoComunidad');
 
 // Función para listar usuarios
 const listarUsuarios = async (req, res) => {
@@ -221,6 +222,15 @@ const cambiarContraseña = async (req, res) => {
     res.status(500).send('Error interno del servidor');
   }
 };
+const verVentas = async (req, res) => {
+  try {
+    const productos = await ProductoComunidad.find({ usuario: req.user._id });
+    res.render('ventas', { user: req.user, productos });
+  } catch (error) {
+    console.error('Error cargando ventas del usuario:', error);
+    res.status(500).send('Error al cargar las ventas');
+  }
+};
 
 module.exports = {
   agregarDireccion,
@@ -232,5 +242,6 @@ module.exports = {
   listarUsuarios,
   verPedidosDeUsuario,
   actualizarPerfil,
-  cambiarContraseña
+  cambiarContraseña,
+  verVentas
 };

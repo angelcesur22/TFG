@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Ventas | FootLaces</title>
+  <link rel="stylesheet" href="/stylesheets/header.css">
+  <link rel="stylesheet" href="/stylesheets/footer.css">
+  <link rel="stylesheet" href="/stylesheets/perfil.css">
+</head>
+<body>
+  <%- include('partials/header', { user: user }) %>
+
+  <div class="perfil-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="/perfil" class="traduccion" data-es="👤 Perfil" data-en="👤 Profile">👤 Perfil</a></li>
+        <li><a href="/perfil/historial" class="traduccion" data-es="🛒 Historial de pedidos" data-en="🛒 Order History">🛒 Historial de pedidos</a></li>
+        <li><a href="/perfil/ventas" class="traduccion" data-es="📦 Ventas" data-en="📦 Sales">📦 Ventas</a></li>
+        <li><a href="/perfil/wishlist" class="traduccion" data-es="❤️ Lista de deseos" data-en="❤️ Wishlist">❤️ Lista de deseos</a></li>
+        <li><a href="/logout" class="traduccion" data-es="🚪 Cerrar sesión" data-en="🚪 Logout">🚪 Cerrar sesión</a></li>
+      </ul>
+    </aside>
+
+    <section class="perfil-content">
+      <h2 class="traduccion" data-es="Mis Ventas" data-en="My Sales">Mis Ventas</h2>
+
+      <% if (productos.length > 0) { %>
+        <% productos.forEach(p => { %>
+          <div class="pedido-box">
+            <div class="producto-item">
+              <img src="<%= p.imagenes[0] %>" alt="<%= p.nombre %>" />
+              <div>
+                <h3><%= p.nombre %></h3>
+                <p><span class="traduccion" data-es="Talla" data-en="Size">Talla</span>: <%= p.talla %></p>
+                <p><span class="traduccion" data-es="Precio" data-en="Price">Precio</span>: <%= p.precio %>€</p>
+                <p><span class="traduccion" data-es="Estado" data-en="Status">Estado</span>: <%= p.estadoAdmin %></p>
+                <% if (p.estadoAdmin === 'rechazado') { %>
+                  <p><span class="traduccion" data-es="Motivo de rechazo" data-en="Rejection Reason">Motivo de rechazo</span>: <%= p.motivoRechazo %></p>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p class="traduccion" data-es="No has publicado productos aún." data-en="You haven't listed any products yet.">No has publicado productos aún.</p>
+      <% } %>
+    </section>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

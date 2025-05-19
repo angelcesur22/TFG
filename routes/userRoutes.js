@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const { verificarSesion, isAdmin } = require('../middleware/authMiddleware');
+const { verVentas } = require('../controllers/userController');
+
  // ✅ Asegúrate de usar tu middleware correctamente
 
 // Listar usuarios
@@ -42,6 +44,8 @@ router.get('/perfil/wishlist', verificarSesion, async (req, res) => {
 });
 router.post('/perfil/cambiar-password', verificarSesion, userController.cambiarContraseña);
 
+
+router.get('/perfil/ventas', verificarSesion, verVentas);
 
 
 module.exports = router;
