@@ -105,3 +105,51 @@ exports.aprobarProductoComunidad = async (req, res) => {
   }
 };
 
+exports.actualizarEstadosComunidad = async (req, res) => {
+  try {
+    const { productoId, nuevoEstadoAdmin } = req.body;
+    await ProductoComunidad.findByIdAndUpdate(productoId, { estadoAdmin: nuevoEstadoAdmin });
+    res.redirect('/admin/comunidad');
+  } catch (error) {
+    console.error('Error al actualizar estado del producto:', error);
+    res.status(500).send('Error al actualizar estado.');
+  }
+};
+exports.rechazarProductoComunidad = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { motivo } = req.body;
+
+    await ProductoComunidad.findByIdAndUpdate(id, {
+      estadoAdmin: 'rechazado',
+      motivoRechazo: motivo
+    });
+
+    res.redirect('/admin/comunidad');
+  } catch (error) {
+    console.error('Error al rechazar producto:', error);
+    res.status(500).send('Error al rechazar producto');
+  }
+};
+exports.eliminarProductoComunidad = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await ProductoComunidad.findByIdAndDelete(id);
+    res.redirect('/admin/comunidad');
+  } catch (error) {
+    console.error('Error al eliminar el producto de comunidad:', error);
+    res.status(500).send('Error al eliminar producto.');
+  }
+};
+
+
+exports.verComunidadPublica = async (req, res) => {
+  try {
+    const productos = await ProductoComunidad.find({ estadoAdmin: 'aprobado' });
+    res.render('comunidad', { productos, user: req.session.user || null });
+  } catch (error) {
+    console.error('Error al cargar productos de comunidad:', error);
+    res.status(500).send('Error interno al mostrar productos de comunidad');
+  }
+};
+

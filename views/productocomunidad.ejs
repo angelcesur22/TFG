@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title><%= producto.nombre %> | Comunidad FootLaces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/producto.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <%- include('partials/header') %>
+<div class="product-container">
+  <div class="product-card">
+    <div class="product-images">
+      <div id="carousel">
+        <% if (producto.imagenes && producto.imagenes.length > 0) { %>
+          <% producto.imagenes.forEach((img, i) => { %>
+            <img src="<%= img %>" class="product-image" style="display: <%= i === 0 ? 'block' : 'none' %>;" data-index="<%= i %>">
+          <% }) %>
+        <% } %>
+        <div class="carousel-controls">
+          <button id="prev">◀</button>
+          <button id="next">▶</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <h2><%= producto.nombre %></h2>
+      <p><strong>Brand:</strong> <%= producto.marca %></p>
+      <p><strong>Description:</strong> <%= producto.descripcion %></p>
+      <p><strong>Condition:</strong> <%= producto.estado %></p>
+      <p><strong>Posted by:</strong> <%= producto.usuario?.nombre || 'Usuario' %></p>
+      <p><strong>Price:</strong></p>
+      <h3><%= producto.precio %>€</h3>
+      <p><strong>Size:</strong> <%= producto.talla %></p>
+
+      <form method="POST" action="/carrito/agregar">
+        <input type="hidden" name="productoId" value="<%= producto._id %>" />
+        <input type="hidden" name="talla" value="<%= producto.talla %>" />
+        <button type="submit" class="add-to-cart">Add to Cart</button>
+      </form>
+
+      <div class="accordion">
+        <details>
+          <summary><strong>Description</strong></summary>
+          <p><%= producto.descripcion %></p>
+        </details>
+        <details>
+          <summary><strong>Authenticity</strong></summary>
+          <p>All community products are reviewed before being listed. Only verified users may list items for sale.</p>
+        </details>
+        <details>
+          <summary><strong>Shipping and delivery</strong></summary>
+          <p>Products are shipped within 3-5 business days. Returns are accepted within 14 days.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentIndex = 0;
+  const images = document.querySelectorAll('#carousel .product-image');
+
+  function showImage(index) {
+    images.forEach((img, i) => {
+      img.style.display = i === index ? 'block' : 'none';
+    });
+  }
+
+  document.getElementById('prev').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+  });
+
+  document.getElementById('next').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+  });
+</script>
+
+
+<%- include('partials/footer') %>
+
+<style>
+  .product-container { display: flex; justify-content: center; padding: 40px; }
+  .product-card { display: flex; flex-direction: row; background: #1a1a1a; color: white; padding: 30px; border-radius: 12px; max-width: 1000px; }
+  .product-images { flex: 1; display: flex; flex-direction: column; align-items: center; margin-right: 20px; }
+  .product-image { width: 100%; max-width: 300px; border-radius: 10px; }
+  .carousel-controls { display: flex; justify-content: space-between; width: 100%; max-width: 300px; margin-top: 10px; }
+  .carousel-controls button { background-color: #444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+  .product-info { flex: 1; }
+  .add-to-cart { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 6px; margin: 15px 0; cursor: pointer; }
+  .accordion details { background: #2a2a2a; border-radius: 6px; padding: 10px; margin: 10px 0; }
+  .accordion summary { cursor: pointer; }
+</style>
+</body>
+</html>

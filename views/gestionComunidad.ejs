@@ -27,11 +27,6 @@
       </thead>
       <tbody>
         <% productosRevision.forEach((p, index) => { %>
-            <script>
-              window["images_<%= index %>"] = <%- JSON.stringify(p.imagenes) %>;
-              window["currentIndex_<%= index %>"] = 0;
-            </script>
-
         <tr>
           <td><%= p.nombre %></td>
           <td><%= p.marca %></td>
@@ -41,11 +36,14 @@
           <td>
             <div class="image-carousel">
               <button class="carousel-btn prev" onclick="changeImage(<%= index %>, -1)">&#8592;</button>
-              <img id="img-<%= index %>" src="<%= p.imagenes[0] %>" alt="Imagen producto">
+              <img id="img-<%= index %>" src="<%= p.imagenes[0] %>" alt="Imagen producto" style="height: 80px; border-radius: 4px; object-fit: cover;">
               <button class="carousel-btn next" onclick="changeImage(<%= index %>, 1)">&#8594;</button>
             </div>
+            <script>
+              window["images_<%= index %>"] = <%- JSON.stringify(p.imagenes) %>;
+              window["currentIndex_<%= index %>"] = 0;
+            </script>
           </td>
-
           <td><%= p.usuario?.nombre || 'No disponible' %></td>
           <td>
             <form action="/admin/comunidad/aprobar/<%= p._id %>" method="POST" style="display:inline;">
@@ -72,11 +70,13 @@
           <th>Estado</th>
           <th>Estado Admin</th>
           <th>Motivo Rechazo</th>
+          <th>Imagen</th>
           <th>Usuario</th>
+          <th>Cambiar Estado</th>
         </tr>
       </thead>
       <tbody>
-        <% productosNoRevision.forEach(p => { %>
+        <% productosNoRevision.forEach((p, idx) => { %>
         <tr>
           <td><%= p.nombre %></td>
           <td><%= p.marca %></td>
@@ -84,7 +84,26 @@
           <td><%= p.estado %></td>
           <td><%= p.estadoAdmin %></td>
           <td><%= p.motivoRechazo || '-' %></td>
+          <td>
+            <% if (p.imagenes && p.imagenes.length > 0) { %>
+              <img src="<%= p.imagenes[0] %>" alt="Imagen producto" style="height: 60px; border-radius: 4px; object-fit: cover;">
+            <% } %>
+          </td>
           <td><%= p.usuario?.nombre || 'No disponible' %></td>
+          <td>
+            <form action="/admin/comunidad/guardar-estados" method="POST" onsubmit="return confirmarCambioEstado('<%= p.nombre %>')">
+              <input type="hidden" name="productoId" value="<%= p._id %>">
+              <select name="nuevoEstadoAdmin">
+                <option value="revisión" <%= p.estadoAdmin === 'revisión' ? 'selected' : '' %>>En revisión</option>
+                <option value="aprobado" <%= p.estadoAdmin === 'aprobado' ? 'selected' : '' %>>Aprobado</option>
+                <option value="rechazado" <%= p.estadoAdmin === 'rechazado' ? 'selected' : '' %>>Rechazado</option>
+              </select>
+              <button type="submit" class="buttonadd">Guardar</button>
+            </form>
+            <form action="/admin/comunidad/eliminar/<%= p._id %>" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este producto?')">
+              <button class="buttondelete" type="submit">Eliminar</button>
+            </form>
+          </td>
         </tr>
         <% }); %>
       </tbody>
@@ -96,7 +115,7 @@
     <div id="modalRechazo" class="modal" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:white; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:1000;">
       <form id="formRechazo" method="POST">
         <h3>Motivo del rechazo:</h3>
-        <textarea name="motivoRechazo" required style="width:100%; height:100px;"></textarea>
+        <textarea name="motivo" required style="width:100%; height:100px;"></textarea>
         <br><br>
         <button type="submit" class="buttondelete">Enviar</button>
         <button type="button" onclick="cerrarModal()" class="buttonadd">Cancelar</button>
@@ -113,26 +132,18 @@
       function cerrarModal() {
         document.getElementById('modalRechazo').style.display = 'none';
       }
-       
 
-  const images_<%= index %> = <%- JSON.stringify(p.imagenes) %>;
-  let currentIndex_<%= index %> = 0;
+      function changeImage(idx, direction) {
+        const images = window["images_" + idx];
+        const currentKey = "currentIndex_" + idx;
+        window[currentKey] = (window[currentKey] + direction + images.length) % images.length;
+        document.getElementById('img-' + idx).src = images[window[currentKey]];
+      }
 
-  function changeImage(idx, direction) {
-    const images = window["images_" + idx];
-    const currentKey = "currentIndex_" + idx;
-    window[currentKey] = (window[currentKey] + direction + images.length) % images.length;
-    document.getElementById('img-' + idx).src = images[window[currentKey]];
-  }
+      function confirmarCambioEstado(nombreProducto) {
+        return confirm(`¿Seguro que quieres cambiar el estado de "${nombreProducto}"?`);
+      }
+
     </script>
-    <script>
-  function changeImage(idx, direction) {
-    const images = window["images_" + idx];
-    const currentKey = "currentIndex_" + idx;
-    window[currentKey] = (window[currentKey] + direction + images.length) % images.length;
-    document.getElementById('img-' + idx).src = images[window[currentKey]];
-  }
-</script>
-
   </body>
 </html>

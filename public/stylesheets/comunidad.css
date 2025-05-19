@@ -1,0 +1,189 @@
+/* comunidad.css */
+
+.comunidad-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #333;
+}
+
+.comunidad-intro {
+  background-color: #f8f9fa;
+  color: #333;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.vender-section h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.vender-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-vender {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+.btn-vender a {
+  color: white;
+  text-decoration: none;
+}
+
+.filtros-comunidad {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.filtros-comunidad form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.filtros-comunidad input,
+.filtros-comunidad select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 1rem;
+  flex: 1 1 180px;
+}
+
+.filtros-comunidad button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  flex: 1 1 120px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.product-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+  color: #333;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  height: 200px;
+}
+
+.carousel-btn {
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 6px;
+  pointer-events: auto;
+  z-index: 10;
+  color: #333;
+}
+
+.product-card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.product-card a:visited,
+.product-card a:active,
+.product-card a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.vendedor {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+p {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  color: #333;
+}
+
+/* MODO OSCURO */
+:root[data-theme="dark"] .comunidad-container {
+  color: white;
+}
+
+:root[data-theme="dark"] .comunidad-intro {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+:root[data-theme="dark"] .filtros-comunidad {
+  background: #2c2c2c;
+}
+
+:root[data-theme="dark"] .filtros-comunidad input,
+:root[data-theme="dark"] .filtros-comunidad select {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #444;
+}
+
+:root[data-theme="dark"] .product-card {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  color: white;
+}
+
+:root[data-theme="dark"] .carousel-btn {
+  background-color: #444;
+  color: white;
+}
+
+:root[data-theme="dark"] .vendedor,
+:root[data-theme="dark"] p {
+  color: #ccc;
+}
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}

@@ -14,17 +14,87 @@
 
   <main class="comunidad-container">
     <section class="comunidad-intro">
-      <h1 class="traduccion" data-es="¿Te interesa vender algún producto que ya no usas?" data-en="Interested in selling something you no longer use?">
-        ¿Te interesa vender algún producto que ya no usas?
-      </h1>
-      <p class="traduccion" data-es="Comparte tus sneakers o ropa con otros miembros de la comunidad FootLaces." data-en="Share your sneakers or clothes with other FootLaces community members.">
-        Comparte tus sneakers o ropa con otros miembros de la comunidad FootLaces.
-      </p>
-      <button class="btn-vender" disabled>
-        <a href="vender"><span class="traduccion" data-es="Vender ahora" data-en="Sell now">Vender ahora</span></a>
-      </button>
+      <div class="vender-section">
+        <h1 class="traduccion" data-es="¿Te interesa vender algún producto que ya no usas?" data-en="Interested in selling something you no longer use?">
+          ¿Te interesa vender algún producto que ya no usas?
+        </h1>
+        <p class="traduccion" data-es="Comparte tus sneakers o ropa con otros miembros de la comunidad FootLaces." data-en="Share your sneakers or clothes with other FootLaces community members.">
+          Comparte tus sneakers o ropa con otros miembros de la comunidad FootLaces.
+        </p>
+        <button class="btn-vender" disabled>
+          <a href="vender"><span class="traduccion" data-es="Vender ahora" data-en="Sell now">Vender ahora</span></a>
+        </button>
+      </div>
+    </section>
+
+    <section class="filtros-comunidad">
+      <form action="/comunidad" method="get">
+        <input type="text" name="buscar" placeholder="Buscar por nombre o marca" value="<%= typeof buscar !== 'undefined' ? buscar : '' %>" />
+
+        <select name="estado">
+          <option value="">Estado</option>
+          <option value="Completamente nuevo con la caja">Completamente nuevo con la caja</option>
+          <option value="Nuevo sin la caja">Nuevo sin la caja</option>
+          <option value="Muy bueno">Muy bueno</option>
+          <option value="Bueno">Bueno</option>
+          <option value="Satisfactorio">Satisfactorio</option>
+        </select>
+
+        <input type="text" name="talla" placeholder="Talla" value="<%= typeof talla !== 'undefined' ? talla : '' %>" />
+
+        <input type="number" name="min" placeholder="Precio mínimo" min="0" value="<%= typeof min !== 'undefined' ? min : '' %>" />
+        <input type="number" name="max" placeholder="Precio máximo" min="0" value="<%= typeof max !== 'undefined' ? max : '' %>" />
+
+        <button type="submit">Filtrar</button>
+      </form>
     </section>
   </main>
+
+<% if (productos.length > 0) { %>
+  <div class="grid">
+    <% productos.forEach((p, index) => { %>
+      <div class="product-card">
+        <div class="image-carousel">
+          <button class="carousel-btn" onclick="changeImage(event, <%= index %>, -1)">←</button>
+          <a href="/comunidad/productocomunidad/<%= p._id %>">
+            <img id="img-<%= index %>" src="<%= p.imagenes[0] %>" alt="Imagen de <%= p.nombre %>">
+          </a>
+          <button class="carousel-btn" onclick="changeImage(event, <%= index %>, 1)">→</button>
+        </div>
+        <script>
+          window["images_<%= index %>"] = <%- JSON.stringify(p.imagenes) %>;
+          window["currentIndex_<%= index %>"] = 0;
+        </script>
+        <a href="/comunidad/productocomunidad/<%= p._id %>">
+          <h3 style="text-decoration: none; color: inherit;"><%= p.nombre %></h3>
+        </a>
+        <p>Marca: <%= p.marca %></p>
+        <p>Precio: <%= p.precio %>€</p>
+        <p class="vendedor traduccion" data-es="Usuario vendedor:" data-en="Seller user:">
+          Usuario vendedor: <strong><%= p.usuario.nombre %></strong>
+        </p>
+
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <% if (buscar || estado || talla || min || max) { %>
+    <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+  <% } else { %>
+    <p>No hay productos comunitarios disponibles.</p>
+  <% } %>
+<% } %>
+
+<script>
+  function changeImage(event, idx, direction) {
+    event.stopPropagation();
+    event.preventDefault();
+    const images = window["images_" + idx];
+    const key = "currentIndex_" + idx;
+    window[key] = (window[key] + direction + images.length) % images.length;
+    document.getElementById("img-" + idx).src = images[window[key]];
+  }
+</script>
 
   <%- include('partials/footer') %>
 

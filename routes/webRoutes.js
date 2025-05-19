@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 const { login, registerUser } = require('../controllers/authController');
 const Producto = require('../models/Producto'); 
+const ProductoComunidad = require('../models/ProductoComunidad');
+
 const Pedido = require('../models/Pedido');
 const pedidoController = require('../controllers/pedidoController');
 const { verificarSesion } = require('../middleware/authMiddleware');
@@ -20,6 +22,10 @@ const multer = require('multer');
 const { storage } = require('../config/cloudinary'); // asegúrate que la ruta sea correcta
 const upload = multer({ storage });
 const comunidadController = require('../controllers/comunidadController');
+const { verComunidadPublica } = require('../controllers/adminController');
+
+
+
 
 
 
@@ -198,15 +204,32 @@ router.get('/wishlist', verificarSesion, async (req, res) => {
 router.get('/perfil/anadir-direccion', (req, res) => {
   res.redirect('/perfil');
 });
-router.get('/comunidad', verificarSesion, (req, res) => {
-  res.render('comunidad', { user: req.user });
-});
+
 
 router.get('/vender', verificarSesion, (req, res) => {
   res.render('vender', { user: req.user });
 });
 router.post('/comunidad/enviar', verificarSesion, upload.array('imagenes', 6), comunidadController.enviarSolicitudVenta);
 
+router.get('/comunidad', verComunidadPublica);
+
+router.get('/comunidad/productocomunidad/:id', async (req, res) => {
+  try {
+    const producto = await ProductoComunidad.findById(req.params.id).populate('usuario');
+
+    if (!producto || producto.estadoAdmin !== 'aprobado') {
+      return res.status(404).render('error', { message: 'Producto no encontrado', error: {} });
+    }
+
+    res.render('productocomunidad', {
+      producto,
+      user: req.session.user || null
+    });
+  } catch (error) {
+    console.error('Error al cargar producto comunidad:', error.message);
+    res.status(500).send('Error al cargar producto comunidad');
+  }
+});
 
 
 

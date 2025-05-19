@@ -7,6 +7,7 @@ const { isAdmin } = require('../middleware/authMiddleware');
 
 
 
+
 // Rutas protegidas con el middleware isAdmin
 router.get('/', isAdmin, adminController.panel);
 router.get('/pedidos', isAdmin, pedidoController.listarPedidos);
@@ -22,6 +23,12 @@ router.post('/admin/devoluciones/aceptar/:id', adminController.aceptarDevolucion
 router.post('/admin/devoluciones/denegar/:id', adminController.denegarDevolucion);
 router.get('/comunidad', isAdmin, adminController.verProductosComunidad);
 router.post('/comunidad/aprobar/:id', isAdmin, adminController.aprobarProductoComunidad);
+router.post('/comunidad/guardar-estados', isAdmin, adminController.actualizarEstadosComunidad);
+router.post('/comunidad/rechazar/:id', isAdmin, adminController.rechazarProductoComunidad);
+router.post('/comunidad/eliminar/:id', isAdmin, adminController.eliminarProductoComunidad);
+
+
+
 
 
 
