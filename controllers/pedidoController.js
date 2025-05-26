@@ -550,10 +550,10 @@ exports.confirmarDevolucion = async (req, res) => {
       `
     });
 
-    res.render('confirmarDevolucion', {
-      mensajeExito: '✅ Devolución confirmada correctamente. Revisa tu correo para más detalles.',
-      pedidoId: pedido._id
-    });
+    res.render('confirmacionDevolucion', {
+  user: req.session.user || null
+});
+
   } catch (error) {
     console.error('❌ Error al confirmar devolución:', error);
     res.status(500).send('Error al confirmar la devolución');
