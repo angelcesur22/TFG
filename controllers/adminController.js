@@ -28,7 +28,7 @@ exports.verDevoluciones = async (req, res) => {
         subject: '✅ Devolución aceptada',
         html: `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f8f8f8; border-radius: 8px; text-align: center;">
-    <h2 style="color: #222;">Hola ${usuario.nombre}!</h2>
+    <h2 style="color: #222;">Hola ${pedido.usuario.nombre}!</h2>
 
     <p style="font-size: 16px;">
       Tu solicitud de devolución del pedido <strong>${pedido.numeroPedido}</strong> ha sido
