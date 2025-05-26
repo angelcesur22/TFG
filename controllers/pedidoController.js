@@ -69,7 +69,7 @@ exports.actualizarEstado = async (req, res) => {
           subject: '📦 Instrucciones para devolver tu pedido',
           html: `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f4f4f4; border-radius: 10px; text-align: center;">
-    <h2 style="color: #222;">¡Hola ${usuario.nombre}!</h2>
+    <h2 style="color: #222;">¡Hola ${pedido.usuario.nombre}!</h2>
     <p style="font-size: 16px;">Tu solicitud de devolución ha sido <strong>aprobada</strong>.</p>
 
     <div style="text-align: left; margin-top: 20px; background: #fff; padding: 20px; border-radius: 8px;">
