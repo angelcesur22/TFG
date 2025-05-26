@@ -243,7 +243,7 @@ const verPerfilVendedor = async (req, res) => {
     const reseñaExitosa = req.session.reseñaExitosa;
     req.session.reseñaExitosa = null;
 
-    res.render('perfilVendedor', {
+    res.render('perfilvendedor', {
       vendedor,
       productos,
       reseñas,
