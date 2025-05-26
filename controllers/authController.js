@@ -157,7 +157,18 @@ exports.registerUser = async (req, res) => {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Verificación de cuenta',
-        html: `<h2>Verificación de cuenta</h2><p>Haz clic en el siguiente enlace para verificar tu cuenta:</p><a href="${url}">Verificar cuenta</a>`
+        html: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;">
+  <h2 style="color: #333; text-align: center;">¡Bienvenido a FootLaces!</h2>
+  <p style="font-size: 16px; color: #555;">Hola <strong>${nombre}</strong>,</p>
+  <p style="font-size: 15px; color: #555;">Gracias por registrarte. Solo queda un paso para activar tu cuenta.</p>
+  <div style="text-align: center; margin: 30px 0;">
+    <a href="${url}" style="background-color: #4CAF50; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold;">Verificar cuenta</a>
+  </div>
+  <p style="font-size: 14px; color: #888;">Si no te registraste en FootLaces, puedes ignorar este mensaje.</p>
+  <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+  <p style="text-align: center; font-size: 12px; color: #aaa;">© ${new Date().getFullYear()} FootLaces</p>
+</div>`
     });
     
     console.log("✅ Correo enviado exitosamente:", email);
