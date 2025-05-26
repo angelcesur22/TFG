@@ -68,16 +68,35 @@ exports.actualizarEstado = async (req, res) => {
           to: usuario.email,
           subject: '📦 Instrucciones para devolver tu pedido',
           html: `
-            <p>Hola ${usuario.nombre},</p>
-            <p>Tu solicitud de devolución ha sido aprobada.</p>
-            <ol>
-              <li>Empaqueta el producto correctamente.</li>
-              <li>Incluye una copia con el número de pedido: <strong>${pedido.numeroPedido}</strong>.</li>
-              <li>Envíalo mediante el transportista de tu elección.</li>
-            </ol>
-            <a href="${process.env.BASE_URL}/confirmar-devolucion/${pedido._id}">Confirmar que he devuelto el producto</a>
-            <p>Si tienes dudas, contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
-          `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f4f4f4; border-radius: 10px; text-align: center;">
+    <h2 style="color: #222;">¡Hola ${usuario.nombre}!</h2>
+    <p style="font-size: 16px;">Tu solicitud de devolución ha sido <strong>aprobada</strong>.</p>
+
+    <div style="text-align: left; margin-top: 20px; background: #fff; padding: 20px; border-radius: 8px;">
+      <h3 style="color: #444;">Pasos a seguir:</h3>
+      <ol style="padding-left: 20px; color: #333;">
+        <li>Empaqueta el producto correctamente.</li>
+        <li>Incluye una copia con el número de pedido: <strong>${pedido.numeroPedido}</strong>.</li>
+        <li>Envíalo mediante el transportista de tu elección.</li>
+      </ol>
+    </div>
+
+    <p style="margin-top: 30px;">
+      <a href="${process.env.BASE_URL}/confirmar-devolucion/${pedido._id}" 
+         style="display: inline-block; background-color: #0051ff; color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; margin-top: 20px;">
+         Confirmar que he devuelto el producto
+      </a>
+    </p>
+
+    <p style="margin-top: 30px; font-size: 14px; color: #555;">
+      Si tienes dudas, contáctanos en 
+      <a href="mailto:contactfootlaces@gmail.com" style="color: #0051ff;">contactfootlaces@gmail.com</a>.
+    </p>
+
+    <p style="margin-top: 20px; font-size: 14px; color: #777;">Gracias por confiar en <strong>FootLaces</strong> 💙</p>
+  </div>
+`
+
         }); 
       } else {
         // EMAIL GENERAL para cualquier otro estado
@@ -157,17 +176,24 @@ exports.actualizarEstado = async (req, res) => {
                         to: usuario.email,
                         subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
                         html: `
-                            <h1>¡Hola ${usuario.nombre}!</h1>
-                            <p>Tu pedido <strong>${pedido.numeroPedido}</strong> ha cambiado a estado: <strong>${nuevoEstado}</strong>.</p>
-                            <h3>Resumen del pedido:</h3>
-                            <ul>
-                                ${pedido.productos.map(p => `
-                                    <li>${p.producto.nombre} - Talla ${p.talla} - Cantidad ${p.cantidad}</li>
-                                `).join('')}
-                            </ul>
-                            <br>
-                            <p>Gracias por confiar en nosotros 💙</p>
-                        `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f4f4f4; border-radius: 8px; text-align: center;">
+    <h2 style="color: #222;">¡Hola ${usuario.nombre}!</h2>
+    <p style="font-size: 16px;">Tu pedido <strong>${pedido.numeroPedido}</strong> ha cambiado a estado:</p>
+    <p style="font-size: 18px; font-weight: bold; color: #0051ff;">${nuevoEstado}</p>
+    
+    <div style="background: #fff; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: left;">
+      <h3 style="border-bottom: 1px solid #ddd; padding-bottom: 8px;">Resumen del pedido:</h3>
+      <ul style="padding-left: 20px;">
+        ${pedido.productos.map(p => `
+          <li style="margin: 8px 0;">${p.producto.nombre} - Talla ${p.talla} - Cantidad ${p.cantidad}</li>
+        `).join('')}
+      </ul>
+    </div>
+
+    <p style="font-size: 14px; color: #555;">Gracias por confiar en <strong>FootLaces</strong> </p>
+    <p style="font-size: 12px; color: #999;">Este es un mensaje automático. Por favor, no respondas a este correo.</p>
+  </div>
+`
                     };
                     await transporter.sendMail(mailOptions);
                 }
@@ -318,18 +344,18 @@ exports.crearPedido = async (req, res) => {
             subject: `¡Gracias por tu pedido, ${usuario.nombre}!`,
             text: `Pedido realizado correctamente por ${usuario.nombre}. Producto: ${producto.nombre}. Cantidad: ${cantidad}`,
             html: `
-  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; text-align: center; padding: 20px;">
-    <img src="https://yourdomain.com/images/LogoTFL.png" alt="FootLaces Logo" style="width: 120px; margin-bottom: 20px;" />
-    <h1 style="color: #333;">¡Gracias por tu compra, ${usuario.nombre}!</h1>
-    <p style="font-size: 16px;">Has realizado el siguiente pedido:</p>
-    <img src="${producto.imagenes[0]}" alt="${producto.nombre}" style="width: 200px; border-radius: 10px; margin: 20px auto;" />
-    <p><strong>Producto:</strong> ${producto.nombre}</p>
-    <p><strong>Precio:</strong> ${producto.precio}€</p>
-    <p><strong>Cantidad:</strong> ${cantidad}</p>
-    <p><strong>Estado:</strong> Pendiente</p>
-    <hr style="margin: 30px 0;">
-    <p style="font-size: 14px; color: #777;">Gracias por confiar en FootLaces.</p>
-  </div>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; text-align: center; padding: 20px;">
+        <img src="https://footlaces.com/images/LogoTFL.png" alt="FootLaces Logo" style="width: 120px; margin-bottom: 20px;" />
+        <h1 style="color: #333;">¡Gracias por tu compra, ${usuario.nombre}!</h1>
+        <p style="font-size: 16px;">Has realizado el siguiente pedido:</p>
+        <img src="${producto.imagenes[0]}" alt="${producto.nombre}" style="width: 200px; border-radius: 10px; margin: 20px auto;" />
+        <p><strong>Producto:</strong> ${producto.nombre}</p>
+        <p><strong>Precio:</strong> ${producto.precio}€</p>
+        <p><strong>Cantidad:</strong> 1</p>
+        <p><strong>Estado:</strong> Pendiente</p>
+        <hr style="margin: 30px 0;">
+        <p style="font-size: 14px; color: #777;">Gracias por confiar en FootLaces.</p>
+      </div>
 `
 
         };
@@ -449,18 +475,33 @@ exports.cancelarPedido = async (req, res) => {
       await pedido.save();
   
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: `"FootLaces" <${process.env.EMAIL_USER}>`,
         to: pedido.usuario.email,
         subject: '✅ Solicitud de devolución enviada',
         html: `
-          <h3>Hola ${pedido.usuario.nombre},</h3>
-          <p>Hemos recibido tu solicitud de devolución del pedido <strong>${pedido.numeroPedido}</strong>.</p>
-          <p><strong>Motivo:</strong> ${motivo}</p>
-          <p>En un plazo de 48 horas (días laborables) recibirás un correo con la resolución de la solicitud.</p>
-          <p>Si no lo recibes, por favor contáctanos en <a href="mailto:contactfootlaces@gmail.com">contactfootlaces@gmail.com</a>.</p>
-          <br>
-          <p>Gracias por confiar en Footlaces.</p>
-        `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f5f5f5; border-radius: 8px; text-align: center;">
+    <h2 style="color: #222;">¡Hola ${usuario.nombre}!</h2>
+
+    <p style="font-size: 16px;">
+      Hemos recibido tu <strong>solicitud de devolución</strong> del pedido <strong>${pedido.numeroPedido}</strong>.
+    </p>
+
+    <p style="font-size: 16px; margin-top: 20px;">
+      <strong>Motivo:</strong> ${motivo}
+    </p>
+
+    <p style="font-size: 14px; margin-top: 20px; color: #555;">
+      En un plazo de 48 horas (días laborables) recibirás un correo con la resolución de tu solicitud.
+    </p>
+
+    <p style="font-size: 14px; margin-top: 20px; color: #555;">
+      Si no lo recibes, por favor contáctanos en 
+      <a href="mailto:contactfootlaces@gmail.com" style="color: #0051ff;">contactfootlaces@gmail.com</a>.
+    </p>
+
+    <p style="font-size: 14px; margin-top: 30px; color: #777;">Gracias por confiar en <strong>FootLaces</strong> 💙</p>
+  </div>
+`
       });
   
       res.redirect('/perfil?success=✅ Solicitud de devolución enviada correctamente');

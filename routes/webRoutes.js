@@ -236,6 +236,57 @@ router.get('/comunidad/productocomunidad/:id', async (req, res) => {
   }
 });
 
+router.get('/test-correo-pedido', async (req, res) => {
+  const transporter = require('../config/mailConfig');
+  const usuario = {
+    nombre: "Usuario Test",
+    email: "testangel2212@gmail.com"
+  };
+ 
+const pedido = {
+    numeroPedido: "PED-123456789"
+  };
+
+  const motivo = "Producto defectuoso";
+
+  const mailOptions = {
+    from: `"FootLaces" <${process.env.EMAIL_USER}>`,
+    to: usuario.email,
+    subject: "✅ Solicitud de devolución enviada",
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f5f5f5; border-radius: 8px; text-align: center;">
+        <h2 style="color: #222;">¡Hola ${usuario.nombre}!</h2>
+
+        <p style="font-size: 16px;">
+          Hemos recibido tu <strong>solicitud de devolución</strong> del pedido <strong>${pedido.numeroPedido}</strong>.
+        </p>
+
+        <p style="font-size: 16px; margin-top: 20px;">
+          <strong>Motivo:</strong> ${motivo}
+        </p>
+
+        <p style="font-size: 14px; margin-top: 20px; color: #555;">
+          En un plazo de 48 horas (días laborables) recibirás un correo con la resolución de tu solicitud.
+        </p>
+
+        <p style="font-size: 14px; margin-top: 20px; color: #555;">
+          Si no lo recibes, por favor contáctanos en 
+          <a href="mailto:contactfootlaces@gmail.com" style="color: #0051ff;">contactfootlaces@gmail.com</a>.
+        </p>
+
+        <p style="font-size: 14px; margin-top: 30px; color: #777;">Gracias por confiar en <strong>FootLaces</strong> 💙</p>
+      </div>
+    `
+  };
+  try {
+    await transporter.sendMail(mailOptions);
+    res.send("✅ Correo de prueba enviado correctamente.");
+  } catch (error) {
+    console.error("❌ Error al enviar el correo:", error);
+    res.status(500).send("Error al enviar correo de prueba.");
+  }
+});
+
 
 
 module.exports = router;
