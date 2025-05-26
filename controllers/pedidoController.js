@@ -159,7 +159,7 @@ exports.actualizarEstado = async (req, res) => {
                         to: usuario.email,
                         subject: '📦 Instrucciones para devolver tu pedido',
                         html: `
-                            <p>Hola ${usuario.nombre},</p>
+                            <p>Hola ${pedido.usuario.nombre},</p>
                             <p>Tu solicitud de devolución ha sido aprobada.</p>
                             <ol>
                               <li>Empaqueta el producto correctamente.</li>

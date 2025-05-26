@@ -27,28 +27,11 @@ exports.verDevoluciones = async (req, res) => {
         to: pedido.usuario.email,
         subject: '✅ Devolución aceptada',
         html: `
-  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f8f8f8; border-radius: 8px; text-align: center;">
-    <h2 style="color: #222;">Hola ${pedido.usuario.nombre}!</h2>
-
-    <p style="font-size: 16px;">
-      Tu solicitud de devolución del pedido <strong>${pedido.numeroPedido}</strong> ha sido
-      <span style="color: ${estado === 'aceptada' ? '#2ecc71' : '#e74c3c'}; font-weight: bold;">
-        ${estado === 'aceptada' ? 'aceptada' : 'rechazada'}.
-      </span>
-    </p>
-
-    <p style="font-size: 16px; margin-top: 20px;">
-      <strong>Motivo:</strong> ${motivoRespuesta}
-    </p>
-
-    <p style="font-size: 14px; margin-top: 30px; color: #555;">
-      Si tienes dudas, puedes escribirnos a 
-      <a href="mailto:contactfootlaces@gmail.com" style="color: #0051ff;">contactfootlaces@gmail.com</a>.
-    </p>
-
-    <p style="font-size: 14px; margin-top: 30px; color: #777;">Gracias por confiar en <strong>FootLaces</strong> 💙</p>
-  </div>
-`
+          <h3>Hola ${pedido.usuario.nombre},</h3>
+          <p>Tu solicitud de devolución del pedido <strong>${pedido.numeroPedido}</strong> ha sido <strong>aceptada</strong>.</p>
+          <p>Pronto recibirás más instrucciones sobre el proceso de devolución.</p>
+          <p>Gracias por confiar en Footlaces.</p>
+        `
       });
   
       res.redirect('/admin/devoluciones');
