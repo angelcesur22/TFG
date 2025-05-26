@@ -510,42 +510,52 @@ exports.cancelarPedido = async (req, res) => {
       res.status(500).send('Error al procesar la devolución');
     }
   };
-  exports.confirmarDevolucion = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { email } = req.body;
-  
-      const pedido = await Pedido.findById(id).populate('usuario');
-  
-      if (!pedido) {
-        return res.status(404).send('Pedido no encontrado');
-      }
-  
-      if (pedido.usuario.email !== email) {
-        return res.status(400).send('El correo no coincide con el del pedido');
-      }
-  
-      pedido.estado = 'Devuelto';
-      await pedido.save();
-  
-      // ✉️ Enviar correo de confirmación
-      await transporter.sendMail({
-        from: `"FootLaces" <${process.env.EMAIL_USER}>`,
-        to: pedido.usuario.email,
-        subject: `📦 Confirmación de devolución para el pedido ${pedido.numeroPedido}`,
-        html: `
-          <h3>Hola ${pedido.usuario.nombre},</h3>
-          <p>Hemos recibido tu confirmación de devolución del pedido <strong>${pedido.numeroPedido}</strong>.</p>
-          <p>En breve revisaremos el paquete y gestionaremos el reembolso si corresponde.</p>
-          <br>
-          <p>Gracias por tu confianza,</p>
-          <p>Equipo Footlaces</p>
-        `
-      });
-  
-      res.render('confirmarDevolucion', { mensajeExito: '✅ Devolución confirmada correctamente. Revisa tu correo para más detalles.', pedidoId: pedido._id });
-    } catch (error) {
-      console.error('❌ Error al confirmar devolución:', error);
-      res.status(500).send('Error al confirmar la devolución');
+exports.confirmarDevolucion = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Si es GET, mostrar solo el formulario vacío
+    if (req.method === 'GET') {
+      return res.render('confirmarDevolucion', { mensajeExito: null, pedidoId: id });
     }
-  };
+
+    // Si es POST, procesar el formulario
+    const { email } = req.body;
+
+    const pedido = await Pedido.findById(id).populate('usuario');
+
+    if (!pedido) {
+      return res.status(404).send('Pedido no encontrado');
+    }
+
+    if (pedido.usuario.email !== email) {
+      return res.status(400).send('El correo no coincide con el del pedido');
+    }
+
+    pedido.estado = 'Devuelto';
+    await pedido.save();
+
+    // ✉️ Enviar correo de confirmación
+    await transporter.sendMail({
+      from: `"FootLaces" <${process.env.EMAIL_USER}>`,
+      to: pedido.usuario.email,
+      subject: `📦 Confirmación de devolución para el pedido ${pedido.numeroPedido}`,
+      html: `
+        <h3>Hola ${pedido.usuario.nombre},</h3>
+        <p>Hemos recibido tu confirmación de devolución del pedido <strong>${pedido.numeroPedido}</strong>.</p>
+        <p>En breve revisaremos el paquete y gestionaremos el reembolso si corresponde.</p>
+        <br>
+        <p>Gracias por tu confianza,</p>
+        <p>Equipo Footlaces</p>
+      `
+    });
+
+    res.render('confirmarDevolucion', {
+      mensajeExito: '✅ Devolución confirmada correctamente. Revisa tu correo para más detalles.',
+      pedidoId: pedido._id
+    });
+  } catch (error) {
+    console.error('❌ Error al confirmar devolución:', error);
+    res.status(500).send('Error al confirmar la devolución');
+  }
+};
