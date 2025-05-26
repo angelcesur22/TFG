@@ -154,7 +154,7 @@ exports.registerUser = async (req, res) => {
 
       // 🔥 Enviar correo de verificación
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: `"FootLaces" <${process.env.EMAIL_USER}>`,
         to: email,
         subject: 'Verificación de cuenta',
         html: `

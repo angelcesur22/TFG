@@ -64,7 +64,7 @@ exports.actualizarEstado = async (req, res) => {
       if (estado.trim().toLowerCase() === 'pendiente de devolución')
 {
         await transporter.sendMail({
-          from: process.env.EMAIL_USER,
+          from: `"FootLaces" <${process.env.EMAIL_USER}>`,
           to: usuario.email,
           subject: '📦 Instrucciones para devolver tu pedido',
           html: `
@@ -101,7 +101,7 @@ exports.actualizarEstado = async (req, res) => {
       } else {
         // EMAIL GENERAL para cualquier otro estado
         const mailOptions = {
-          from: process.env.EMAIL_USER,
+          from: `"FootLaces" <${process.env.EMAIL_USER}>`,
           to: usuario.email,
           subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
           html: `<h1>¡Hola ${usuario.nombre}!</h1>
@@ -172,7 +172,7 @@ exports.actualizarEstado = async (req, res) => {
                     });
                 } else {
                     const mailOptions = {
-                        from: process.env.EMAIL_USER,
+                        from: `"FootLaces" <${process.env.EMAIL_USER}>`,
                         to: usuario.email,
                         subject: `Actualización de tu pedido ${pedido.numeroPedido}`,
                         html: `
@@ -339,7 +339,7 @@ exports.crearPedido = async (req, res) => {
 
         // 🔥 Aquí configuramos Nodemailer para enviar un correo de prueba
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: `"FootLaces" <${process.env.EMAIL_USER}>`,
             to: usuario.email,
             subject: `¡Gracias por tu pedido, ${usuario.nombre}!`,
             text: `Pedido realizado correctamente por ${usuario.nombre}. Producto: ${producto.nombre}. Cantidad: ${cantidad}`,
@@ -530,7 +530,7 @@ exports.cancelarPedido = async (req, res) => {
   
       // ✉️ Enviar correo de confirmación
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: `"FootLaces" <${process.env.EMAIL_USER}>`,
         to: pedido.usuario.email,
         subject: `📦 Confirmación de devolución para el pedido ${pedido.numeroPedido}`,
         html: `
@@ -543,7 +543,7 @@ exports.cancelarPedido = async (req, res) => {
         `
       });
   
-      res.send('✅ Devolución confirmada correctamente. Revisa tu correo para más detalles.');
+      res.render('confirmarDevolucion', { mensajeExito: '✅ Devolución confirmada correctamente. Revisa tu correo para más detalles.', pedidoId: pedido._id });
     } catch (error) {
       console.error('❌ Error al confirmar devolución:', error);
       res.status(500).send('Error al confirmar la devolución');

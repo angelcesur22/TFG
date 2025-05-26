@@ -8,6 +8,28 @@
 </head>
 <body>
   <%- include('partials/header') %>
+  <% if (mensajeExito) { %>
+  <div id="mensaje-exito" style="
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 6px;
+      font-weight: 500;
+      text-align: center;
+    ">
+    <%= mensajeExito %>
+  </div>
+  <script>
+    setTimeout(() => {
+      const mensaje = document.getElementById('mensaje-exito');
+      if (mensaje) mensaje.style.display = 'none';
+    }, 15000);
+  </script>
+<% } %>
+
 
   <main class="contenedor-confirmacion">
     <section class="formulario-devolucion">

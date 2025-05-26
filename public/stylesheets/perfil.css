@@ -388,3 +388,10 @@
 :root[data-theme="dark"] .precio-producto {
   color: #f0f0f0;
 }
+.producto-item img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 20px;
+}
