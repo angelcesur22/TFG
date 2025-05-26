@@ -23,10 +23,8 @@ const { storage } = require('../config/cloudinary'); // asegúrate que la ruta s
 const upload = multer({ storage });
 const comunidadController = require('../controllers/comunidadController');
 const { verComunidadPublica } = require('../controllers/adminController');
-
-
-
-
+router.get('/vendedor/:id', userController.verPerfilVendedor);
+router.post('/vendedor/:id/resenar', userController.enviarResena);
 
 
 router.post('/devolver-pedido/:id', devolverPedido);
@@ -221,10 +219,17 @@ router.get('/comunidad/productocomunidad/:id', async (req, res) => {
       return res.status(404).render('error', { message: 'Producto no encontrado', error: {} });
     }
 
+    const relacionados = await ProductoComunidad.aggregate([
+      { $match: { estadoAdmin: "aprobado", _id: { $ne: producto._id } } },
+      { $sample: { size: 4 } }
+    ]);
+
     res.render('productocomunidad', {
       producto,
+      relacionados,
       user: req.session.user || null
     });
+
   } catch (error) {
     console.error('Error al cargar producto comunidad:', error.message);
     res.status(500).send('Error al cargar producto comunidad');

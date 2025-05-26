@@ -145,11 +145,25 @@ exports.eliminarProductoComunidad = async (req, res) => {
 
 exports.verComunidadPublica = async (req, res) => {
   try {
-    const productos = await ProductoComunidad.find({ estadoAdmin: 'aprobado' });
-    res.render('comunidad', { productos, user: req.session.user || null });
+    const productos = await ProductoComunidad.find({ estadoAdmin: 'aprobado' })
+      .populate('usuario');
+
+    const productosFiltrados = productos.filter(p => p.usuario && p.usuario.nombre);
+
+    // 🧪 Log para depurar usuarios poblados
+    console.log('🧪 Usuarios poblados:', productosFiltrados.map(p => ({
+      producto: p.nombre,
+      usuario: p.usuario,
+      nombre: p.usuario?.nombre
+    })));
+
+    res.render('comunidad', { productos: productosFiltrados, user: req.session.user || null });
   } catch (error) {
     console.error('Error al cargar productos de comunidad:', error);
-    res.status(500).send('Error interno al mostrar productos de comunidad');
+    if (!res.headersSent) {
+      res.status(500).send('Error interno al mostrar productos de comunidad');
+    }
   }
 };
+
 

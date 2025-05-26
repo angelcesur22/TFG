@@ -2,6 +2,7 @@ const Pedido = require('../models/Pedido'); // Asegúrate que la ruta del modelo
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const ProductoComunidad = require('../models/ProductoComunidad');
+const Reseña = require('../models/Reseña');
 
 // Función para listar usuarios
 const listarUsuarios = async (req, res) => {
@@ -231,6 +232,54 @@ const verVentas = async (req, res) => {
     res.status(500).send('Error al cargar las ventas');
   }
 };
+const verPerfilVendedor = async (req, res) => {
+  try {
+    const vendedorId = req.params.id;
+    const vendedor = await User.findById(vendedorId);
+    const productos = await ProductoComunidad.find({ usuario: vendedorId, estadoAdmin: 'aprobado' });
+
+    const reseñas = await Reseña.find({ vendedor: vendedorId }).populate('autor');
+
+    const reseñaExitosa = req.session.reseñaExitosa;
+    req.session.reseñaExitosa = null;
+
+    res.render('perfilVendedor', {
+      vendedor,
+      productos,
+      reseñas,
+      user: req.session.user || null,
+      reseñaExitosa
+    });
+  } catch (error) {
+    console.error('Error al cargar perfil del vendedor:', error);
+    res.status(500).send('No se pudo cargar el perfil del vendedor');
+  }
+};
+
+const enviarResena = async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send('Debes iniciar sesión para escribir una reseña.');
+  }
+
+  try {
+    const { comentario, valoracion } = req.body;
+    const vendedorId = req.params.id;
+
+    await Reseña.create({
+      autor: req.session.user._id,
+      vendedor: vendedorId,
+      comentario,
+      valoracion
+    });
+
+    req.session.reseñaExitosa = true;
+    res.redirect(`/vendedor/${vendedorId}`);
+  } catch (error) {
+    console.error('Error al guardar reseña:', error);
+    res.status(500).send('Error al enviar la reseña.');
+  }
+};
+
 
 module.exports = {
   agregarDireccion,
@@ -243,5 +292,7 @@ module.exports = {
   verPedidosDeUsuario,
   actualizarPerfil,
   cambiarContraseña,
-  verVentas
+  verVentas,
+  verPerfilVendedor,
+  enviarResena
 };

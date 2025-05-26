@@ -70,9 +70,17 @@
         </a>
         <p>Marca: <%= p.marca %></p>
         <p>Precio: <%= p.precio %>€</p>
-        <p class="vendedor traduccion" data-es="Usuario vendedor:" data-en="Seller user:">
-          Usuario vendedor: <strong><%= p.usuario.nombre %></strong>
-        </p>
+        <p>
+  Vendedor: <br>
+  <% if (user) { %>
+  <a href="/vendedor/<%= p.usuario._id %>" class="vendedor-link"><br><%= p.usuario.nombre %></a>
+<% } else { %>
+  <a href="/login" class="vendedor-link"><br><%= p.usuario.nombre %></a>
+<% } %>
+
+</p>
+
+
 
       </div>
     <% }) %>

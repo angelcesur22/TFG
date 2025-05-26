@@ -58,6 +58,21 @@
     </div>
   </div>
 </div>
+<div class="related-container">
+  <h2>Productos relacionados</h2>
+  <div class="related-grid">
+    <% relacionados.forEach(p => { %>
+      <div class="related-card">
+        <a href="/comunidad/productocomunidad/<%= p._id %>">
+          <img src="<%= p.imagenes[0] %>" alt="<%= p.nombre %>">
+          <h4><%= p.nombre %></h4>
+          <p>Desde <%= p.precio %>€</p>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
 
 <script>
   let currentIndex = 0;

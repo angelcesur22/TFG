@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil del Vendedor</title>
+  <link rel="stylesheet" href="/stylesheets/comunidad.css">
+  <link rel="stylesheet" href="/stylesheets/perfilvendedor.css">
+
+</head>
+<body>
+  <%- include('partials/header', { user: user }) %>
+
+  <main class="comunidad-container">
+    <% if (reseñaExitosa) { %>
+  <div id="mensaje-exito" style="background: #4CAF50; color: white; padding: 10px; border-radius: 6px; text-align: center;">
+    ¡Reseña enviada con éxito!
+  </div>
+<% } %>
+
+    <h1>Perfil de <%= vendedor.nombre %></h1>
+
+    <!-- Formulario de reseña -->
+    <form action="/vendedor/<%= vendedor._id %>/resenar" method="POST">
+
+      <div class="reseña-box">
+        <label>Valora al vendedor:</label><br>
+        <div id="estrellas">
+          <% for (let i = 1; i <= 5; i++) { %>
+            <span class="estrella" data-value="<%= i %>">&#9733;</span>
+          <% } %>
+        </div>
+        <input type="hidden" name="valoracion" id="valoracion" value="0">
+        <textarea name="comentario" rows="3" placeholder="Escribe tu reseña..." required></textarea><br>
+        <button type="submit">Enviar reseña</button>
+      </div>
+    </form>
+
+    <!-- Reseñas de otros usuarios -->
+    <h2>Reseñas de usuarios</h2>
+    <% if (reseñas.length > 0) { %>
+      <% reseñas.forEach(r => { %>
+        <div class="reseña-box">
+          <strong><%= r.autor.nombre %></strong>
+          <div>
+            <% for (let i = 0; i < r.valoracion; i++) { %>
+              <span class="estrella selected">&#9733;</span>
+            <% } %>
+          </div>
+          <p><%= r.comentario %></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No hay reseñas aún.</p>
+    <% } %>
+
+    <!-- Otros productos del vendedor -->
+    <h2>Productos de <%= vendedor.nombre %></h2>
+    <div class="producto-grid">
+      <% productos.forEach(p => { %>
+        <div class="producto-card">
+          <a href="/comunidad/productocomunidad/<%= p._id %>">
+            <img src="<%= p.imagenes[0] %>" alt="<%= p.nombre %>" style="width:100%; height:200px; object-fit:cover">
+            <h3><%= p.nombre %></h3>
+            <p>Precio: <%= p.precio %>€</p>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.estrella').forEach(star => {
+      star.addEventListener('click', () => {
+        const valor = star.dataset.value;
+        document.getElementById('valoracion').value = valor;
+        document.querySelectorAll('.estrella').forEach(s => s.classList.remove('selected'));
+        for (let i = 0; i < valor; i++) {
+          document.querySelectorAll('.estrella')[i].classList.add('selected');
+        }
+      });
+    });
+   
+  const mensaje = document.getElementById('mensaje-exito');
+  if (mensaje) {
+    setTimeout(() => {
+      mensaje.style.display = 'none';
+    }, 3000);
+  }
+
+
+  </script>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
