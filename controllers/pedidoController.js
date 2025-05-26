@@ -317,13 +317,21 @@ exports.crearPedido = async (req, res) => {
             to: usuario.email,
             subject: `¡Gracias por tu pedido, ${usuario.nombre}!`,
             text: `Pedido realizado correctamente por ${usuario.nombre}. Producto: ${producto.nombre}. Cantidad: ${cantidad}`,
-            html: `<h1>¡Gracias por tu compra!</h1>
-                   <p>Producto: ${producto.nombre}</p>
-                   <p>Precio: ${producto.precio}</p>
-                   <p>Cantidad: ${cantidad}</p>
-                   <p>Estado: Pendiente</p>
-                   <br>
-                   <p>¡Gracias por confiar en nosotros!</p>`
+            html: `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; text-align: center; padding: 20px;">
+    <img src="https://yourdomain.com/images/LogoTFL.png" alt="FootLaces Logo" style="width: 120px; margin-bottom: 20px;" />
+    <h1 style="color: #333;">¡Gracias por tu compra, ${usuario.nombre}!</h1>
+    <p style="font-size: 16px;">Has realizado el siguiente pedido:</p>
+    <img src="${producto.imagenes[0]}" alt="${producto.nombre}" style="width: 200px; border-radius: 10px; margin: 20px auto;" />
+    <p><strong>Producto:</strong> ${producto.nombre}</p>
+    <p><strong>Precio:</strong> ${producto.precio}€</p>
+    <p><strong>Cantidad:</strong> ${cantidad}</p>
+    <p><strong>Estado:</strong> Pendiente</p>
+    <hr style="margin: 30px 0;">
+    <p style="font-size: 14px; color: #777;">Gracias por confiar en FootLaces.</p>
+  </div>
+`
+
         };
 
         console.log('📧 MailOptions configurados: ', mailOptions);

@@ -11,10 +11,10 @@
   <h1 class="traduccion" data-es="Tu carrito" data-en="Your Cart">Tu carrito</h1>
   <div class="carrito-container">
     <% if (mensaje) { %>
-      <div class="mensaje-flash traduccion" data-es="<%= mensaje %>" data-en="<%= mensaje %>"><%= mensaje %></div>
-        <%= mensaje %>
-      </div>
-    <% } %>
+  <div class="mensaje-flash traduccion" data-es="<%= mensaje %>" data-en="<%= mensaje %>">
+    <%= mensaje %>
+  </div>
+<% } %>
     
     <% if (carrito.length === 0) { %>
       <p class="traduccion" data-es="Tu carrito está vacío" data-en="Your cart is empty">Tu carrito está vacío</p>
